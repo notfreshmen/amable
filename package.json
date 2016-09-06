@@ -1,0 +1,13 @@
+{
+  "name": "psn",
+  "version": "0.1.0",
+  "description": "Prayer social network",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notfreshmen/psn.git"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2"
+  }
+}

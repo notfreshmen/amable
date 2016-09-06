@@ -1,5 +1,5 @@
 #!/usr/bin/env python
 
-from app import psn
+from psn import app
 
-psn.app.run(debug=True)
+app.run(debug=True)

@@ -1,4 +1,6 @@
 *.pyc
 .coverage
-**/__pycache__/**
+__pycache__/
 venv/
+node_modules/
+static/css

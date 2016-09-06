@@ -5,6 +5,8 @@ flask
 nose
 coverage
 codeclimate-test-reporter
+rednose
 
 # utilities
 pycodestyle
+honcho
