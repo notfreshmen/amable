@@ -10,7 +10,7 @@ server:
 	python run.py
 
 test:
-	nosetests --with-coverage --cover-package=psn --rednose
+	nosetests
 
 lint:
 	pycodestyle .
