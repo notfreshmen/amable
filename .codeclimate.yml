@@ -1,7 +1,12 @@
 ---
 engines:
-  fixme:
+  pep8:
     enabled: true
+
 ratings:
-  paths: []
-exclude_paths: []
+  paths:
+    - "psn/**/*.py"
+
+exclude_paths:
+  - "venv"
+  - "node_modules"
