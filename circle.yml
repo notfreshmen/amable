@@ -6,3 +6,6 @@ test:
   override:
     - make test
     - make lint
+
+  post:
+    - codeclimate-test-reporter --file .coverage
