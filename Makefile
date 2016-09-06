@@ -13,4 +13,4 @@ test:
 	nosetests --with-coverage --cover-package=psn --rednose
 
 lint:
-	pycodestyle . --show-source --show-pep8 --exclude=venv/*,node_modules/* --ignore=E402
+	pycodestyle .
