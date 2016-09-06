@@ -10,7 +10,7 @@ server:
 	python run.py
 
 test:
-	nosetests --with-coverage --cover-package=app
+	nosetests --with-coverage --cover-package=psn --rednose
 
 lint:
-	pycodestyle psn/
+	pycodestyle . --show-source --show-pep8 --exclude=venv/* --ignore=E402
