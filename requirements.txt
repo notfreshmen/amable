@@ -3,3 +3,8 @@ flask
 
 # testing
 nose
+coverage
+codeclimate-test-reporter
+
+# utilities
+pycodestyle

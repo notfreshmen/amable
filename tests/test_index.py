@@ -1,9 +1,3 @@
-# from nose import with_setup
-# from app import app
-
-import nose
-import os
-
 from context import psn
 
 def test_index():
