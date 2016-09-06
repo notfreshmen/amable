@@ -4,32 +4,38 @@
 
 ## Installation
 
-You'll need Python 3.5.1 installed. Then, create the virtual environment with `pyvenv`:
+You'll need Python 3.5.1 and installed. You can do this with [pyenv](https://github.com/yyuu/pyenv).
+
+Then, you'll need to create the virtual environment with `pyvenv`, so run:
 
 ```
-$ pyvenv venv
+$ make env
 ```
 
-Then install the dependencies:
+To install dependencies, run:
 
 ```
-$ pip install -r requirements.txt
+$ make install
 ```
+
+Now, you should have everything you need installed.
 
 ## Development
 
 ### Running a development server
 
+To start a development server, run:
+
 ```
-$ python run.py
+$ make server
 ```
 
-A server will start on [http://localhost:5000](http://localhost:5000).
+It will start on [http://localhost:5000](http://localhost:5000).
 
 ### Running tests
 
-We're using `nose` for tests. To run all of the tests, just use:
+We're using [nose](http://nose.readthedocs.io/en/latest/) for tests. To run all of the tests, run:
 
 ```
-$ nosetests
+$ make test
 ```
