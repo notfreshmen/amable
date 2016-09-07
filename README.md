@@ -58,6 +58,16 @@ $ make server
 
 It will start on [http://localhost:5000](http://localhost:5000).
 
+### Starting a console
+
+To start a REPL with access to the application, run:
+
+```
+$ make console
+```
+
+This will give you access to the `psn` module.
+
 ### Building assets
 
 To just build the assets, run:
