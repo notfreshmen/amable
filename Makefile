@@ -6,8 +6,11 @@ env:
 install:
 	pip install -r requirements.txt
 
+console:
+	PYTHONSTARTUP=./console.py python
+
 server:
-	python run.py
+	python ./server.py
 
 test:
 	nosetests
