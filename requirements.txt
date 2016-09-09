@@ -2,10 +2,10 @@
 flask
 
 # testing
-nose
+mamba
+expects
 coverage
 codeclimate-test-reporter
-rednose
 
 # utilities
 pycodestyle

@@ -14,7 +14,10 @@ server:
 	python ./server.py
 
 test:
-	nosetests
+	mamba --enable-coverage --format=documentation
 
 lint:
 	pycodestyle .
+
+coverage:
+	coverage report
