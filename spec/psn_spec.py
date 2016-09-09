@@ -1,8 +1,7 @@
+from expects import *
+
 from psn import app
 from flask import Flask
-from flask import Blueprint
-
-from expects import *
 
 
 with context('psn'):

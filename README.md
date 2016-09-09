@@ -84,8 +84,24 @@ $ gulp watch
 
 ### Running tests
 
-We're using [nose](http://nose.readthedocs.io/en/latest/) for tests. To run all of the tests, run:
+We're using [mamba](https://github.com/nestorsalceda/mamba) for tests. To run all of the tests, run:
 
 ```
 $ make test
+```
+
+### Linting
+
+To run code linting, run:
+
+```
+$ make lint
+```
+
+### Coverage
+
+To show test coverage, run:
+
+```
+$ make coverage
 ```
