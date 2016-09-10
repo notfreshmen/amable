@@ -1,6 +1,6 @@
 from expects import *
 
-from psn import app
+from psn import *
 from flask import Flask
 
 
