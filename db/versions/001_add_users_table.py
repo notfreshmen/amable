@@ -1,6 +1,7 @@
 from sqlalchemy import *
 from migrate import *
 
+
 meta = MetaData()
 
 users = Table(
@@ -9,6 +10,7 @@ users = Table(
     Column('username', String(80), unique=True),
     Column('email', String(120), unique=True)
 )
+
 
 def upgrade(migrate_engine):
     meta.bind = migrate_engine
