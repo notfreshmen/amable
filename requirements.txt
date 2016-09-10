@@ -1,6 +1,12 @@
 # general
 flask
 
+# models
+Flask-SQLAlchemy
+
+# miscellaneous
+python-dotenv
+
 # testing
 mamba
 expects
