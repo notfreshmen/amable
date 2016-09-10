@@ -21,3 +21,8 @@ lint:
 
 coverage:
 	coverage report
+
+db_setup:
+	createuser -U postgres -h localhost -p 5432 psn
+	createdb -h localhost -p 5432 psn_development
+	python db/manage.py version_control

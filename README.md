@@ -4,7 +4,7 @@
 
 ## Installation
 
-### Web Server
+### General
 
 You'll need Python 3.5.1 installed. You can do this with [pyenv](https://github.com/yyuu/pyenv).
 
@@ -24,6 +24,12 @@ To install dependencies, run:
 
 ```
 $ make install
+```
+
+To set up the database, you'll need [PostgreSQL](https://www.postgresql.org/) installed. To set up the development database, run:
+
+```
+$ make db_setup
 ```
 
 ### Assets
@@ -67,6 +73,32 @@ $ make console
 ```
 
 This will give you access to the `psn` module.
+
+### Database
+
+#### Creating a new migration
+
+To make a new migration, use the database script:
+
+```
+$ python db/manage.py script "add users table"
+```
+
+#### Running the migrations
+
+To run the migrations:
+
+```
+$ python db/manage.py upgrade
+```
+
+#### Rollback migrations
+
+To rollback the previous migration:
+
+```
+$ python db/manage.py downgrade
+```
 
 ### Building assets
 
