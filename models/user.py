@@ -1,4 +1,4 @@
-from psn import *
+from amable import *
 
 
 class User(db.Model):

@@ -6,13 +6,13 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from psn.blueprints.base import base
+from amable.blueprints.base import base
 
 
 load_dotenv(join(dirname(__file__), '..', '.env'))
 
 app = Flask(__name__)
-app.config.from_envvar('PSN_SETTINGS')
+app.config.from_envvar('amable_SETTINGS')
 
 
 from models import db

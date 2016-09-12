@@ -1,7 +1,7 @@
 from expects import *
 from flask_sqlalchemy import SQLAlchemy
 
-from psn import db
+from amable import db
 
 
 with context('models'):

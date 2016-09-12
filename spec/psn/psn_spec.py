@@ -1,10 +1,10 @@
 from expects import *
 
-from psn import *
+from amable import *
 from flask import Flask
 
 
-with context('psn'):
+with context('amable'):
     with context('app'):
         with it('is a Flask instance'):
             expect(app).to(be_a(Flask))
