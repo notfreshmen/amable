@@ -1,5 +1,5 @@
 #!/usr/bin/env python
 
-from psn import app
+from amable import app
 
 app.run(debug=True)

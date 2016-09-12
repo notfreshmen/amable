@@ -5,7 +5,7 @@ engines:
 
 ratings:
   paths:
-    - "psn/**/*.py"
+    - "amable/**/*.py"
 
 exclude_paths:
   - "venv"

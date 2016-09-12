@@ -1,6 +1,6 @@
-# Prayer Social Network (PSN)
+# Prayer Social Network (amable)
 
-[![CircleCI](https://img.shields.io/circleci/project/notfreshmen/psn.svg?maxAge=2592000?style=flat-square)](https://circleci.com/gh/notfreshmen/psn) [![Code Climate](https://img.shields.io/codeclimate/github/notfreshmen/psn.svg?maxAge=2592000?style=flat-square)](https://codeclimate.com/github/notfreshmen/psn) [![Code Climate](https://img.shields.io/codeclimate/coverage/github/notfreshmen/psn.svg?maxAge=2592000?style=flat-square)](https://codeclimate.com/github/notfreshmen/psn/coverage)
+[![CircleCI](https://img.shields.io/circleci/project/notfreshmen/amable.svg?maxAge=2592000?style=flat-square)](https://circleci.com/gh/notfreshmen/amable) [![Code Climate](https://img.shields.io/codeclimate/github/notfreshmen/amable.svg?maxAge=2592000?style=flat-square)](https://codeclimate.com/github/notfreshmen/amable) [![Code Climate](https://img.shields.io/codeclimate/coverage/github/notfreshmen/amable.svg?maxAge=2592000?style=flat-square)](https://codeclimate.com/github/notfreshmen/amable/coverage)
 
 ## Installation
 
@@ -72,7 +72,7 @@ To start a REPL with access to the application, run:
 $ make console
 ```
 
-This will give you access to the `psn` module.
+This will give you access to the `amable` module.
 
 ### Database
 

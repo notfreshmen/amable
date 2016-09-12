@@ -1,10 +1,10 @@
 from expects import *
 
-from psn import app
+from amable import app
 
 client = app.test_client()
 
-with context('psn'):
+with context('amable'):
     with context('blueprints'):
         with context('base'):
             with context('index'):

@@ -1,6 +1,6 @@
 from expects import *
 
-from psn import User
+from amable import User
 
 
 with context('models'):
