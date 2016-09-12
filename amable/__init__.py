@@ -12,7 +12,7 @@ from amable.blueprints.base import base
 load_dotenv(join(dirname(__file__), '..', '.env'))
 
 app = Flask(__name__)
-app.config.from_envvar('amable_SETTINGS')
+app.config.from_envvar('AMABLE_SETTINGS')
 
 
 from models import db
