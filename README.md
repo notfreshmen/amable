@@ -1,4 +1,4 @@
-# Prayer Social Network (amable)
+# Amable
 
 [![CircleCI](https://img.shields.io/circleci/project/notfreshmen/amable.svg?maxAge=2592000?style=flat-square)](https://circleci.com/gh/notfreshmen/amable) [![Code Climate](https://img.shields.io/codeclimate/github/notfreshmen/amable.svg?maxAge=2592000?style=flat-square)](https://codeclimate.com/github/notfreshmen/amable) [![Code Climate](https://img.shields.io/codeclimate/coverage/github/notfreshmen/amable.svg?maxAge=2592000?style=flat-square)](https://codeclimate.com/github/notfreshmen/amable/coverage)
 
