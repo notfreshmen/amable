@@ -17,3 +17,6 @@ codeclimate-test-reporter
 # utilities
 pycodestyle
 honcho
+
+# database migrations
+psycopg2 
