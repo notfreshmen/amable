@@ -1,9 +1,7 @@
-from amable import *
 from amable import util
-from datetime import datetime
+from models import db
+from datetime import datetime as dt
 from sqlalchemy import event
-import hashlib
-import uuid
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,7 +20,19 @@ class User(db.Model):
     date_created = db.Column(db.String(128))
     date_modified = db.Column(db.String(128))
 
-    def __init__(self, username, email, password, name, bio, website, location, phone, dob, profile_image=None, role=None):
+    def __init__(
+            self,
+            username,
+            email,
+            password,
+            name,
+            bio,
+            website,
+            location,
+            phone,
+            dob,
+            profile_image=None,
+            role=None):
         self.username = username
         self.email = email
 
@@ -50,20 +60,23 @@ class User(db.Model):
         else:
             self.profile_image = ""
 
-        now = datetime.datetime(year, month, day, hour, minute, second)
+        now = dt.now()
+        nowISO = now.isoformat()
 
-        self.date_created = now
-        self.date_modified = now
+        self.date_created = nowISO
+        self.date_modified = nowISO
 
 
 
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def createSession(self):
+        Session = sessionmaker()
 
 
-    def after_insert_listener(mapper, connection, target):
+def after_insert_listener(mapper, connection, target):
         # 'target' is the inserted object
-        target.date_modified = datetime.datetime(year, month, day, hour, minute, second)
+        target.date_modified = dt.now().isoformat()
 
-    event.listen(self, 'after_insert', after_insert_listener)
+event.listen(User, 'after_insert', after_insert_listener)
