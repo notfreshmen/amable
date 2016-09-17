@@ -17,5 +17,4 @@ app.config.from_envvar('AMABLE_SETTINGS')
 from models import db
 from models.user import User
 
-
 app.register_blueprint(base)
