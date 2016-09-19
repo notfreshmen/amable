@@ -31,7 +31,7 @@ coverage:
 	coverage report
 
 db_setup:
-	createuser -U postgres -h localhost -p 5432 -d -P amable # -createDB|-PromptPWD
+	createuser -U postgres -h localhost -p 5432 -d -w amable
 	createdb -U amable -h localhost -p 5432 amable_development
 	python db/manage.py version_control
 

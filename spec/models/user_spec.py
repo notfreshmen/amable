@@ -22,7 +22,6 @@ with context('models'):
                         phone="4018888888",
                         dob="1999-01-08")
 
-
                     expect(user.username).to(equal('pablo'))
 
                 with it('change attribute'):

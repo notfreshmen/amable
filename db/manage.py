@@ -2,7 +2,6 @@
 
 import sys
 import os
-from amable import app
 
 from migrate.versioning.shell import main
 
@@ -11,6 +10,9 @@ from migrate.versioning.shell import main
 basedir = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.insert(0, basedir + '/../')
+
+
+from amable import app
 
 if __name__ == '__main__':
     main(url=app.config['SQLALCHEMY_DATABASE_URI'],

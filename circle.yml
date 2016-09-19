@@ -2,6 +2,11 @@ machine:
   python:
     version: 3.5.1
 
+database:
+  override:
+    - make db_setup
+    - python db/manage.py upgrade
+
 test:
   override:
     - make test
