@@ -34,3 +34,6 @@ db_setup:
 	createuser -U postgres -h localhost -p 5432 -d -P amable # -createDB|-PromptPWD
 	createdb -U amable -h localhost -p 5432 amable_development
 	python db/manage.py version_control
+
+version_control:
+	python db/manage.py version_control
