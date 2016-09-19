@@ -1,5 +1,4 @@
-from amable import util
-from models import db
+from amable import util, db
 from datetime import datetime as dt
 from sqlalchemy import event
 
@@ -72,12 +71,8 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-    def createSession(self):
-        Session = sessionmaker()
-
-
 def after_insert_listener(mapper, connection, target):
         # 'target' is the inserted object
         target.date_modified = dt.now().isoformat()
 
-event.listen(User, 'after_insert', after_insert_listener)
+event.listen(User, 'after_update', after_insert_listener)
