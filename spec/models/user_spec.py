@@ -4,12 +4,12 @@ from models import listen
 from amable import session
 
 
-
-
 with context('models'):
     with context('user'):
         with context('User'):
+
             with context('__init__'):
+
                 with it('sets the username'):
                     user = User(
                         username="pablo",
@@ -24,7 +24,7 @@ with context('models'):
 
                     expect(user.username).to(equal('pablo'))
 
-                with it('change attribute'):
+                with it('changes attributes'):
                     user = User(
                         username="pablo",
                         email="pablo@pablo.com",

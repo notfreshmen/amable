@@ -3,6 +3,7 @@ from models import db
 from datetime import datetime as dt
 from sqlalchemy import event
 
+
 class Report(db.Model):
     __tablename__ = 'reports'
     id = db.Column(db.Integer, primary_key=True)
@@ -14,38 +15,36 @@ class Report(db.Model):
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
-    def __init__(
-            self,
-            title,
-            content,
-            user_id,
-            category = "misc"
-            ):
+    def __init__(self,
+                 title,
+                 content,
+                 user_id,
+                 category="misc"
+                 ):
 
         self.title = title
         self.content = content
         self.user_id = user_id
-        
+
         # Available Categories
         # misc|bug|question|important
         self.category = category
 
-        
-        now = dt.now().isoformat # Current Time to Insert into Database
-        
+        # Current Time to Insert into Database
+        now = dt.now().isoformat
+
         # Default Values
         self.resolved = False
 
-        self.date_created = now 
+        self.date_created = now
         self.date_modified = now
 
     def __repr__(self):
         return '<Repoprt %r>' % self.username
 
+
 def after_insert_listener(mapper, connection, target):
-        # 'target' is the inserted object
+    # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()
 
 event.listen(Report, 'after_update', after_insert_listener)
-
-        

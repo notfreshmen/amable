@@ -2,6 +2,7 @@ from amable import util, db
 from datetime import datetime as dt
 from sqlalchemy import event
 
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -20,30 +21,34 @@ class User(db.Model):
     date_created = db.Column(db.String(128), nullable=False)
     date_modified = db.Column(db.String(128), nullable=False)
 
-    def __init__(
-            self,
-            username,
-            email,
-            password,
-            name,
-            bio,
-            website,
-            location,
-            phone,
-            dob,
-            profile_image=None,
-            role=None):
+    def __init__(self,
+                 username,
+                 email,
+                 password,
+                 name,
+                 bio,
+                 website,
+                 location,
+                 phone,
+                 dob,
+                 profile_image=None,
+                 role=None
+                 ):
+
         self.username = username
         self.email = email
 
-        hashedPassword = util.hash_password(password) # Hash the password. SHA256
-        splitPassword = hashedPassword.split(":") # Split the password and the salt
+        # Hash the password. SHA256
+        hashedPassword = util.hash_password(password)
+
+        # Split the password and the salt
+        splitPassword = hashedPassword.split(":")
 
         self.password = splitPassword[0]
         self.salt = splitPassword[1]
 
         self.name = name
-        
+
         if role is not None:
             self.role = role
         else:
@@ -66,10 +71,9 @@ class User(db.Model):
         self.date_created = nowISO
         self.date_modified = nowISO
 
-
-
     def __repr__(self):
         return '<User %r>' % self.username
+
 
 def after_insert_listener(mapper, connection, target):
         # 'target' is the inserted object
