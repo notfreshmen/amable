@@ -1,5 +1,4 @@
-from amable import util
-from models import db
+from amable import util, db
 from datetime import datetime as dt
 from sqlalchemy import event
 
@@ -40,7 +39,7 @@ class Report(db.Model):
         self.date_modified = now
 
     def __repr__(self):
-        return '<Repoprt %r>' % self.username
+        return '<Report %r>' % self.title
 
 
 def after_insert_listener(mapper, connection, target):
