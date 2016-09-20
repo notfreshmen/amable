@@ -44,8 +44,8 @@ class User(db.Model):
         # Split the password and the salt
         splitPassword = hashedPassword.split(":")
 
-        self.password = splitPassword[0]
-        self.salt = splitPassword[1]
+        self.password = splitPassword[0]  # Password
+        self.salt = splitPassword[1]     # Salt
 
         self.name = name
 
@@ -77,6 +77,7 @@ class User(db.Model):
 
 def after_insert_listener(mapper, connection, target):
         # 'target' is the inserted object
-        target.date_modified = dt.now().isoformat()
+    target.date_modified = dt.now().isoformat()
+
 
 event.listen(User, 'after_update', after_insert_listener)
