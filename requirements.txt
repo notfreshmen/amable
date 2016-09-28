@@ -5,6 +5,12 @@ flask
 Flask-SQLAlchemy
 sqlalchemy-migrate
 
+# assets
+Flask-Assets
+libsass
+cssmin
+jsmin
+
 # miscellaneous
 python-dotenv
 
