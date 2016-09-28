@@ -21,6 +21,11 @@ class User(db.Model):
     profile_image = db.Column(db.String(128))
     date_created = db.Column(db.String(128), nullable=False)
     date_modified = db.Column(db.String(128), nullable=False)
+    reports = relationship("Report", backref="user")
+    posts = relationship("Post", backref="user")
+    postReports = relationship("PostReport", backref="user")
+    postUpvotes = relationship("PostUpvote", backref="user")
+
 
     def __init__(self,
                  username,

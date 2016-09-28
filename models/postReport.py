@@ -6,9 +6,9 @@ from sqlalchemy import event
 class PostReport(db.Model):
     __tablename__ = 'post_reports'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)
-    post_id = db.Column(db.Integer)
-    content = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, ForeignKey('users.id'))
+    post_id = db.Column(db.Integer, ForeignKey('posts.id'))
+    content = db.Column(db.Text)
     reason = db.Column(db.String(64))
     resolved = db.Column(db.Boolean)
     date_created = db.Column(db.DateTime)
