@@ -1,0 +1,18 @@
+@import "susy/susy";
+
+$total-columns: 12;
+$column-width: 3em;
+$gutter-width: 1em;
+
+$susy: (
+  columns: $total-columns,
+  gutters: $gutter-width / $column-width,
+  column-width: $column-width
+);
+
+@mixin row() {
+  @include container;
+
+  box-sizing: border-box;
+  padding: 0 rhythm(1)
+}

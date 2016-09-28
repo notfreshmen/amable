@@ -1,0 +1,10 @@
+.footer {
+  background: $color-grey-light;
+  font-size: $font-size-n1;
+
+  &__container {
+    @include clearfix;
+
+    padding: rhythm(0.5) rhythm(0.75);
+  }
+}

@@ -1,0 +1,23 @@
+.nav {
+  &--inline {
+    li {
+      display: inline-block;
+
+      & + li {
+        margin-left: rhythm(0.5);
+      }
+    }
+
+    @media (max-width: $breakpoint) {
+      display: block;
+    }
+  }
+
+  &--right {
+    float: right;
+
+    @media (max-width: $breakpoint) {
+      float: left;
+    }
+  }
+}

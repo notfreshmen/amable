@@ -1,0 +1,17 @@
+.desktop-hidden {
+  @media (min-width: $breakpoint) {
+    display: none !important;
+  }
+}
+
+.mobile-hidden {
+  @media (max-width: $breakpoint) {
+    display: none !important;
+  }
+}
+
+.mobile-visible {
+  @media (max-width: $breakpoint) {
+    display: block;
+  }
+}

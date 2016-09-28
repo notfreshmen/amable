@@ -1,0 +1,52 @@
+.header {
+  background: $color-blue;
+  color: $color-white;
+  margin-bottom: rhythm(1);
+
+  a {
+    color: $color-white;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__container {
+    @include clearfix;
+
+    padding: rhythm(0.5) rhythm(0.75);
+  }
+
+  &__logo {
+    display: inline-block;
+    font-weight: $font-weight-bold;
+    margin-right: rhythm(1);
+
+    a {
+      opacity: 1;
+    }
+  }
+
+  &__nav {
+    display: inline-block;
+    font-size: $font-size-n1;
+  }
+
+  &__toggle {
+    display: inline-block;
+    float: right;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: $breakpoint) {
+    .header {
+      &__logo {
+        // display: block;
+      }
+    }
+  }
+}
