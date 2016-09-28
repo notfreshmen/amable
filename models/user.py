@@ -1,4 +1,5 @@
-from amable import util, db
+from amable import db
+from amable.utils.password import hash_password
 from datetime import datetime as dt
 from sqlalchemy import event
 
@@ -39,7 +40,7 @@ class User(db.Model):
         self.email = email
 
         # Hash the password. SHA256
-        hashedPassword = util.hash_password(password)
+        hashedPassword = hash_password(password)
 
         # Split the password and the salt
         splitPassword = hashedPassword.split(":")

@@ -1,4 +1,4 @@
-from amable import util, db
+from amable import db
 from datetime import datetime as dt
 from sqlalchemy import event
 
