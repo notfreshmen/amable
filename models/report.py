@@ -8,7 +8,7 @@ class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128))
     content = db.Column(db.Text)
-    user_id = db.Column(db.Integer, ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category = db.Column(db.String(128))
     resolved = db.Column(db.Boolean)
     date_created = db.Column(db.DateTime)

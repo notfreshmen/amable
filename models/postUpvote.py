@@ -5,8 +5,8 @@ from sqlalchemy import event
 class PostUpvote(db.Model):
     __tablename__ = 'post_upvotes'
     id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, ForeignKey("posts.id"))
-    user_id = db.Column(db.Integer, ForeignKey("users.id"))
+    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
