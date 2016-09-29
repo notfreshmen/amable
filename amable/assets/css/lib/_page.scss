@@ -1,0 +1,59 @@
+.page {
+  &__header {
+    border-bottom: 2px solid $color-grey-light;
+    margin-bottom: rhythm(1);
+    padding-bottom: rhythm(0.5);
+  }
+
+  &__title {
+    // font-size: $font-size-2;
+    // font-weight: $font-weight-medium;
+    margin-bottom: 0;
+  }
+
+  &__description {
+    margin-bottom: 0 !important;
+    margin-top: rhythm(0.5);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: $font-weight-medium;
+    margin-bottom: rhythm(0.5);
+  }
+
+  h1 {
+    font-size: $font-size-3;
+  }
+
+  h2 {
+    font-size: $font-size-2;
+  }
+
+  h3 {
+    font-size: $font-size-1;
+  }
+
+  h4 {
+    font-size: $font-size-0;
+  }
+
+  h5 {
+    color: $color-grey-darkest;
+    font-size: $font-size-n1;
+    text-transform: uppercase;
+  }
+
+  h6 {
+    color: $color-grey-darkest;
+    font-size: $font-size-n2;
+    text-transform: uppercase;
+  }
+
+  p, ul, ol {
+    margin-bottom: rhythm(1);
+  }
+
+  ul, ol {
+    margin-left: rhythm(1);
+  }
+}

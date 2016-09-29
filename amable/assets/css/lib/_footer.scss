@@ -1,6 +1,7 @@
 .footer {
   background: $color-grey-light;
   font-size: $font-size-n1;
+  margin-top: rhythm(1);
 
   &__container {
     @include clearfix;

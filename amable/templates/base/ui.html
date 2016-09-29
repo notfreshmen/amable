@@ -1,4 +1,61 @@
 {% extends "application.html" %}
 {% block content %}
-  Got some content here!
+  <div class="page">
+    <header class="page__header">
+      <h2 class="page__title">User Interface Style Guide</h2>
+      <p class="page__description">This style guide is for user interface elements.</p>
+    </header>
+    <section class="page__block">
+      <h3>Typography</h3>
+      <p>All type is set in <a href="https://typekit.com/fonts/aktiv-grotesk">Aktiv Grotesk</a>.</p>
+      <h4>Headers</h4>
+      <div class="sg__example">
+        <h1>Header 1</h1>
+        <h2>Header 2</h2>
+        <h3>Header 3</h3>
+        <h4>Header 4</h4>
+        <h5>Header 5</h5>
+        <h6>Header 6</h6>
+      </div>
+      <h4>Lists</h4>
+      <div class="sg__example">
+        <ul>
+          <li>Unordered list item 1</li>
+          <li>Unordered list item 2</li>
+          <li>Unordered list item 3</li>
+        </ul>
+        <ol>
+          <li>Ordered list item 1</li>
+          <li>Ordered list item 2</li>
+          <li>Ordered list item 3</li>
+        </ol>
+      </div>
+    </section>
+    <section class="page__block">
+      <h3>Forms</h3>
+      <div class="sg__example">
+        <form class="form">
+          <div class="form__group">
+            <label class="form__label">Email</label>
+            <input type="email" class="form__control">
+          </div>
+          <div class="form__group">
+            <label class="form__label">Text</label>
+            <input type="text" class="form__control">
+          </div>
+          <div class="form__group">
+            <label class="form__label">Textarea</label>
+            <textarea class="form__control"></textarea>
+          </div>
+        </form>
+      </div>
+    </section>
+    <section class="page__block">
+      <h3>Buttons</h3>
+      <div class="sg__example">
+        <a class="btn">Default Button</a>
+        <a class="btn btn--blue">Blue Button</a>
+      </div>
+    </section>
+  </div>
 {% endblock %}
