@@ -1,4 +1,4 @@
-from models import db
+from amable import db
 from datetime import datetime as dt
 from sqlalchemy import event
 
@@ -10,17 +10,11 @@ class PostUpvote(db.Model):
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
-    def __init__(
-            self,
-            post_id,
-            user_id
-    ):
+    def __init__(self, post_id, user_id):
+        self.post_id = post_id
+        self.user_id = user_id
 
-    	self.post_id = post_id
-    	self.user_id = user_id
-
-        # Default Values
-        now = dt.now().isoformat  # Current Time to Insert into Database
+        now = dt.now().isoformat
         self.date_created = now
         self.date_modified = now
 
@@ -29,7 +23,7 @@ class PostUpvote(db.Model):
 
 
 def after_insert_listener(mapper, connection, target):
-        # 'target' is the inserted object
+    # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
