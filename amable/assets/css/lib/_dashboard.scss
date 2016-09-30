@@ -1,0 +1,38 @@
+.dashboard {
+  &__header {
+    @include container;
+
+    border-bottom: 1px solid $color-grey-light;
+    padding-bottom: rhythm(0.5);
+  }
+
+  &__form {
+    aside {
+      @include span(2 of 24);
+      @include post(1 of 24);
+    }
+
+    section {
+      @include span(last 21 of 24);
+    }
+
+    textarea {
+      height: rhythm(3);
+      width: 100%;
+    }
+  }
+
+  &__content {
+    @include container;
+
+    margin-top: rhythm(0.5);
+  }
+
+  &__stream {
+    @include span(20 of 24);
+  }
+
+  &__filters {
+    @include span(last 4 of 24);
+  }
+}

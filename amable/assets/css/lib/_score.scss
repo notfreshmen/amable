@@ -1,0 +1,21 @@
+.score {
+  width: 100%;
+
+  &__action, &__number {
+    display: block;
+    line-height: 1.25rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  &__action {
+    a {
+      color: $color-grey-darkest;
+    }
+  }
+
+  &__number {
+    color: $color-grey-darkest;
+    font-sizr: $font-size-n1;
+  }
+}

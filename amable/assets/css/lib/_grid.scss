@@ -1,13 +1,11 @@
 @import "susy/susy";
 
-$total-columns: 12;
-$column-width: 3em;
-$gutter-width: 1em;
-
 $susy: (
-  columns: $total-columns,
-  gutters: $gutter-width / $column-width,
-  column-width: $column-width
+  columns: 24,
+  gutters: 1/4,
+  math: fluid,
+  output: float,
+  gutter-position: inside
 );
 
 @mixin row() {

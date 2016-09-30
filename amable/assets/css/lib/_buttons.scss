@@ -1,4 +1,5 @@
 .btn {
+  border: none;
   border-radius: 2px;
   background: $color-grey-light;
   color: $color-text;
@@ -24,5 +25,10 @@
       background: $color-blue-dark;
       color: $color-white;
     }
+  }
+
+  &--small {
+    font-size: $font-size-n1;
+    line-height: rhythm(0.5);
   }
 }
