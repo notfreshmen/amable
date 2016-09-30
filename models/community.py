@@ -1,8 +1,14 @@
-from amable import db
 from datetime import datetime as dt
-from sqlalchemy import event
 
-class Communities(db.Model):
+from amable import db
+
+from .base import Base
+
+from sqlalchemy import event
+from sqlalchemy.orm import relationship
+
+
+class Community(Base):
     __tablename__ = 'communities'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
@@ -14,7 +20,7 @@ class Communities(db.Model):
     num_upvotes = db.Column(db.Integer)
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
-    posts = relationship("Post", backref="community")
+    posts = relationship('Post', backref="community")
 
     def __init__(
             self,
@@ -46,4 +52,4 @@ def after_insert_listener(mapper, connection, target):
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(Communities, 'after_update', after_insert_listener)
+event.listen(Community, 'after_update', after_insert_listener)

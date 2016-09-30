@@ -1,14 +1,16 @@
-from amable import db
 from datetime import datetime as dt
+
+from amable import db
+
+from .base import Base
+
+from . import *
+
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
 
-import models
 
-# from models.postReport import PostReport
-# from models.postUpvote import PostUpvote
-
-class Post(db.Model):
+class Post(Base):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
     text_brief = db.Column(db.String(142))
@@ -20,8 +22,8 @@ class Post(db.Model):
     community_id = db.Column(db.Integer, db.ForeignKey('communities.id'))
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
-    reports = relationship(models.PostReport, backref="post")
-    postUpvotes = relationship(models.PostUpvote, backref="post")
+    reports = relationship('PostReport', backref="post")
+    post_upvotes = relationship('PostUpvote', backref="post")
 
     def __init__(
             self,

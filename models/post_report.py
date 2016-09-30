@@ -1,9 +1,13 @@
-from amable import db
 from datetime import datetime as dt
+
+from amable import db
+
+from .base import Base
+
 from sqlalchemy import event
 
 
-class PostReport(db.Model):
+class PostReport(Base):
     __tablename__ = 'post_reports'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
