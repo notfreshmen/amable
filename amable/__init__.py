@@ -17,6 +17,11 @@ from amable.blueprints.base import base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
+# from amable.amable.models import initialize_sql
+
+# Base
+from amable.models import Base
+
 # DotEnv Setup
 load_dotenv(join(dirname(__file__), '..', '.env'))
 

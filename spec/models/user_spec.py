@@ -1,6 +1,6 @@
 from expects import *
-from models.user import User
-from models import listen
+from amable.models.user import User
+from amable.models import listen
 from amable import session
 
 

@@ -1,18 +1,32 @@
 from expects import *
-from models.report import Report
+from amable.models.report import Report
+from amable.models.user import User
 from amable import session
 
-with context('models'):
+s = session()
+
+with context('amable.models'):
     with context('report'):
         with context('Report'):
 
             with context('__init__'):
 
                 with it('create report'):
+                    user = User(
+                        username="pablo",
+                        email="pablo@pablo.com",
+                        password="pablo",
+                        name="Pablo",
+                        bio="Pablo",
+                        website="reev.us",
+                        location="pablo",
+                        phone="4018888888",
+                        dob="1999-01-08")
+
                     report = Report(
                         title="Hey Pablo",
                         content="Jokes!",
-                        user_id=1,
+                        user_id=user.id,
                         category="misc"
                     )
 

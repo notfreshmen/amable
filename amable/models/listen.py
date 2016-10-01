@@ -1,5 +1,5 @@
 from sqlalchemy import event
-from models.user import User
+from amable.models.user import User
 from datetime import datetime as dt
 
 

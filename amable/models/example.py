@@ -2,8 +2,10 @@ from amable import db
 from datetime import datetime as dt
 from sqlalchemy import event
 
+from models import Base
 
-class XXXX(db.Model):
+
+class XXXX(Base):
     __tablename__ = 'reports'
     id = db.Column(db.Integer, primary_key=True)
     XXXX = db.Column(db.String(128))
@@ -20,7 +22,7 @@ class XXXX(db.Model):
     ):
 
         # Default Values
-        now = dt.now().isoformat  # Current Time to Insert into Database
+        now = dt.now().isoformat  # Current Time to Insert into Datamodels
         self.date_created = now
         self.date_modified = now
 

@@ -2,7 +2,9 @@ from amable import db
 from datetime import datetime as dt
 from sqlalchemy import event
 
-class PostUpvote(db.Model):
+from models import Base
+
+class PostUpvote(Base):
     __tablename__ = 'post_upvotes'
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))

@@ -37,3 +37,6 @@ db_setup:
 
 version_control:
 	python db/manage.py version_control
+
+db_upgrade:
+	python db/manage.py upgrade

@@ -2,7 +2,9 @@ from amable import db
 from datetime import datetime as dt
 from sqlalchemy import event
 
-class Communities(db.Model):
+from models import Base
+
+class Communities(Base):
     __tablename__ = 'communities'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
@@ -33,7 +35,7 @@ class Communities(db.Model):
         self.num_upvotes = num_upvotes
 
         # Default Values
-        now = dt.now().isoformat  # Current Time to Insert into Database
+        now = dt.now().isoformat  # Current Time to Insert into Datamodels
         self.date_created = now
         self.date_modified = now
 
