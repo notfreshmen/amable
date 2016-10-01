@@ -1,6 +1,4 @@
-from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
 
 
 # def initialize_sql(engine):

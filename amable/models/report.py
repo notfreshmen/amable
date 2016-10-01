@@ -35,8 +35,11 @@ class Report(Base):
         # Default Values
         self.resolved = False
 
-        self.date_created = now
-        self.date_modified = now
+        now = dt.now()
+        nowISO = now.isoformat()
+
+        self.date_created = nowISO
+        self.date_modified = nowISO
 
     def __repr__(self):
         return '<Report %r>' % self.title

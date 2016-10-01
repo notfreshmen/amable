@@ -7,6 +7,10 @@ from amable.utils.password import hash_password
 from .base import Base
 
 from . import *
+from .report import Report
+from .post import Post
+from .postReport import PostReport
+from .postUpvote import PostUpvote
 
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
@@ -29,10 +33,10 @@ class User(Base):
     profile_image = db.Column(db.String(128))
     date_created = db.Column(db.String(128), nullable=False)
     date_modified = db.Column(db.String(128), nullable=False)
-    reports = relationship('Report', backref="user")
-    posts = relationship('Post', backref="user")
-    post_reports = relationship('PostReport', backref="user")
-    post_upvotes = relationship('PostUpvote', backref="user")
+    reports = relationship(Report, backref="user")
+    posts = relationship(Post, backref="user")
+    post_reports = relationship(PostReport, backref="user")
+    post_upvotes = relationship(PostUpvote, backref="user")
 
 
     def __init__(self,

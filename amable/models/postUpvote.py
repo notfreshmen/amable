@@ -2,7 +2,7 @@ from amable import db
 from datetime import datetime as dt
 from sqlalchemy import event
 
-from models import Base
+from .base import Base
 
 class PostUpvote(Base):
     __tablename__ = 'post_upvotes'

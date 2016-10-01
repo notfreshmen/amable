@@ -52,6 +52,7 @@ with context('models'):
                     expect(user.date_modified).not_to(equal(userModTime))
 
                     s.delete(user)
+                    s.commit()
 
             with context('__repr__'):
                 with it('returns the username'):
