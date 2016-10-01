@@ -1,18 +1,15 @@
-# from amable import db
-from amable.utils.password import hash_password
 from datetime import datetime as dt
+
+from amable import db
+
+from amable.utils.password import hash_password
+
+from .base import Base
+
+from . import *
+
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
-
-# import amable.models
-
-# from amable.models.post import Post
-# from amable.models.report import Report
-# from amable.models.postReport import PostReport
-# from amable.models.postUpvote import PostUpvote
-
-from amable.models import Base
-from amable import db
 
 
 class User(Base):
@@ -32,10 +29,10 @@ class User(Base):
     profile_image = db.Column(db.String(128))
     date_created = db.Column(db.String(128), nullable=False)
     date_modified = db.Column(db.String(128), nullable=False)
-    reports = relationship("Report", backref="user")
-    posts = relationship("Post", backref="user")
-    postReports = relationship("PostReport", backref="user")
-    postUpvotes = relationship("PostUpvote", backref="user")
+    reports = relationship('Report', backref="user")
+    posts = relationship('Post', backref="user")
+    post_reports = relationship('PostReport', backref="user")
+    post_upvotes = relationship('PostUpvote', backref="user")
 
 
     def __init__(self,

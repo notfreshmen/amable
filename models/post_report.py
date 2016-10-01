@@ -1,49 +1,51 @@
 from datetime import datetime as dt
+
 from amable import db
+
 from .base import Base
+
 from sqlalchemy import event
 
-class Report(Base):
-    __tablename__ = 'reports'
+
+class PostReport(Base):
+    __tablename__ = 'post_reports'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(128))
-    content = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    category = db.Column(db.String(128))
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    content = db.Column(db.Text)
+    reason = db.Column(db.String(64))
     resolved = db.Column(db.Boolean)
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
     def __init__(self,
-                 title,
-                 content,
                  user_id,
-                 category="misc"
+                 post_id,
+                 content,
+                 reason="misc"
                  ):
 
-        self.title = title
-        self.content = content
         self.user_id = user_id
+        self.post_id = post_id
+        self.content = content
 
-        # Available Categories
-        # misc|bug|question|important
-        self.category = category
+        # Available Reasons
+        # misc|offensive|mean
+        self.reason = reason
 
-        # Current Time to Insert into Dataamable.models
         now = dt.now().isoformat
 
         # Default Values
         self.resolved = False
-
         self.date_created = now
         self.date_modified = now
 
     def __repr__(self):
-        return '<Report %r>' % self.title
+        return '<PostReport User : %i | Post : %i>' % self.user_id, self.post_id
 
 
 def after_insert_listener(mapper, connection, target):
     # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()
 
-event.listen(Report, 'after_update', after_insert_listener)
+event.listen(PostReport, 'after_update', after_insert_listener)
