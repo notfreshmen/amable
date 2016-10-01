@@ -33,9 +33,11 @@ session = scoped_session(sessionmaker(bind=engine))
 db = SQLAlchemy(app)
 
 # Blueprints
-from amable.blueprints.base import base
+from amable.blueprints.base import base as base_blueprint
+from amable.blueprints.users import users as users_blueprint
 
-app.register_blueprint(base)
+app.register_blueprint(base_blueprint)
+app.register_blueprint(users_blueprint)
 
 # Assets
 from amable.utils.assets import assets_env
