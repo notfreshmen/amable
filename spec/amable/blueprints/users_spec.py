@@ -17,7 +17,6 @@ with context('amable'):
                 with _it('returns the join page'):
                     pass
 
-
             with context('create'):
                 with _it('creates a new user'):
                     pass
@@ -28,11 +27,9 @@ with context('amable'):
                 with _it('redirects to the dashboard'):
                     pass
 
-
             with context('edit'):
                 with _it('return the account page'):
                     pass
-
 
             with context('update'):
                 with _it('updates the user'):
@@ -40,7 +37,6 @@ with context('amable'):
 
                 with _it('redirects back to the account page'):
                     pass
-
 
             with context('destroy'):
                 with _it('destroys the user'):
