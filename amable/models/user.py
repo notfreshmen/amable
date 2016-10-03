@@ -6,11 +6,12 @@ from amable.utils.password import hash_password
 
 from .base import Base
 
-from . import *
 from .report import Report
 from .post import Post
-from .postReport import PostReport
-from .postUpvote import PostUpvote
+from .post_report import PostReport
+from .post_upvote import PostUpvote
+from .community_user import CommunityUser
+from .comment import Comment
 
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
@@ -37,7 +38,8 @@ class User(Base):
     posts = relationship(Post, backref="user")
     post_reports = relationship(PostReport, backref="user")
     post_upvotes = relationship(PostUpvote, backref="user")
-
+    community_user = relationship(CommunityUser, backref="user")
+    comments = relationship(Comment, backref="user")
 
     def __init__(self,
                  username,
@@ -83,19 +85,18 @@ class User(Base):
         else:
             self.profile_image = ""
 
-        now = dt.now()
-        nowISO = now.isoformat()
-
-        self.date_created = nowISO
-        self.date_modified = nowISO
+        # Default Values
+        now = dt.now().isoformat()  # Current Time to Insert into Datamodels
+        self.date_created = now
+        self.date_modified = now
 
     def __repr__(self):
         return '<User %r>' % self.username
 
 
-def after_insert_listener(mapper, connection, target):
+def before_update_listener(mapper, connection, target):
         # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()
 
 
-event.listen(User, 'after_update', after_insert_listener)
+event.listen(User, 'before_update', before_update_listener)

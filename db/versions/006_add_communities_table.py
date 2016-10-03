@@ -4,8 +4,8 @@ from migrate import *
 
 meta = MetaData()
 # Column('XXXX', String(120)),
-communitites = Table(
-    'communitites', meta,
+communities = Table(
+    'communities', meta,
     Column('id', Integer, primary_key=True),
     Column('name', String(128), unique=False),
     Column('description', Text, unique=False),
@@ -21,9 +21,9 @@ communitites = Table(
 
 def upgrade(migrate_engine):
     meta.bind = migrate_engine
-    communitites.create()
+    communities.create()
 
 
 def downgrade(migrate_engine):
     meta.bind = migrate_engine
-    communitites.drop()
+    communities.drop()

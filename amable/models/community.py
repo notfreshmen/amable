@@ -5,8 +5,13 @@ from amable import db
 from .base import Base
 
 from sqlalchemy import event
+from sqlalchemy.orm import relationship
 
-class Communities(Base):
+from .post import Post
+from .community_user import CommunityUser
+
+
+class Community(Base):
     __tablename__ = 'communities'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
@@ -18,10 +23,12 @@ class Communities(Base):
     num_upvotes = db.Column(db.Integer)
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
-    posts = relationship("Post", backref="community")
+    posts = relationship(Post, backref="community")
+    users = relationship(CommunityUser, backref="community")
 
     def __init__(
             self,
+            name,
             description,
             banner_url,
             thumbnail_url,
@@ -29,6 +36,7 @@ class Communities(Base):
             active,
             num_upvotes=0
     ):
+        self.name = name
         self.description = description
         self.banner_url = banner_url
         self.thumbnail_url = banner_url
@@ -37,7 +45,7 @@ class Communities(Base):
         self.num_upvotes = num_upvotes
 
         # Default Values
-        now = dt.now().isoformat  # Current Time to Insert into Datamodels
+        now = dt.now().isoformat()  # Current Time to Insert into Datamodels
         self.date_created = now
         self.date_modified = now
 
@@ -45,9 +53,9 @@ class Communities(Base):
         return '<Community %r>' % self.name
 
 
-def after_insert_listener(mapper, connection, target):
+def before_update_listener(mapper, connection, target):
         # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(Communities, 'after_update', after_insert_listener)
+event.listen(Community, 'before_update', before_update_listener)

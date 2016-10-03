@@ -11,9 +11,8 @@ with context('amable.models'):
 
             with context('__init__'):
 
-                with it('create report'):
-                    s = session()
-
+                with it('create'):
+                    # Create a user for our report
                     user = User(
                         username="pablo",
                         email="pablo@pablo.com",
@@ -40,19 +39,35 @@ with context('amable.models'):
                     expect(report.title).to(equal('Hey Pablo'))
                     expect(report.user_id).to(equal(user.id))
 
-                    # User.query.filter(User.id==user.id).delete()
-                    # Report.query.filter(Report.id==eport.id).delete()
                     s.delete(report)
                     s.delete(user)
                     s.commit()
 
-                with it('edit report'):
+                with it('edit'):
+                    # Create a user for our report
+                    user = User(
+                        username="pablo",
+                        email="pablo@pablo.com",
+                        password="pablo",
+                        name="Pablo",
+                        bio="Pablo",
+                        website="reev.us",
+                        location="pablo",
+                        phone="4018888888",
+                        dob="1999-01-08")
+
+                    s.add(user)
+                    s.commit()
+
                     report = Report(
                         title="Hey Pablo",
                         content="Jokes!",
-                        user_id=1,
+                        user_id=user.id,
                         category="misc"
                     )
+
+                    s.add(report)
+                    s.commit()
 
                     expect(report.title).to(equal('Hey Pablo'))
                     expect(report.content).to(equal('Jokes!'))
@@ -61,12 +76,17 @@ with context('amable.models'):
                     report.title = "Bye Pablo"
                     report.content = "Statements!"
 
+                    s.commit()
+
                     expect(report.title).to(equal('Bye Pablo'))
                     expect(report.content).to(equal('Statements!'))
 
-                with it('changes attributes and date'):
-                    s = session()
+                    s.delete(user)
+                    s.delete(report)
+                    s.commit()
 
+            with context("listeners"):
+                with it('before_update'):
                     user = User(
                         username="pablo",
                         email="pablo@pablo.com",
@@ -91,7 +111,6 @@ with context('amable.models'):
                     s.commit()
 
                     reportModTime = report.date_modified
-
 
                     expect(report.title).to(equal('Hey Pablo'))
 

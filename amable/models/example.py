@@ -9,7 +9,7 @@ from sqlalchemy import event
 
 # class PostReport(Base):
 class XXXX(Base):
-    __tablename__ = 'reports'
+    __tablename__ = 'XXXX'
     id = db.Column(db.Integer, primary_key=True)
     XXXX = db.Column(db.String(128))
     XXXX = db.Column(db.String(128))
@@ -25,7 +25,7 @@ class XXXX(Base):
     ):
 
         # Default Values
-        now = dt.now().isoformat  # Current Time to Insert into Datamodels
+        now = dt.now().isoformat()  # Current Time to Insert into Datamodels
         self.date_created = now
         self.date_modified = now
 
@@ -33,9 +33,9 @@ class XXXX(Base):
         return '<XXXX %r>' % self.XXXX
 
 
-def after_insert_listener(mapper, connection, target):
+def before_update_listener(mapper, connection, target):
         # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(XXXX, 'after_update', after_insert_listener)
+event.listen(XXXX, 'before_update', before_update_listener)

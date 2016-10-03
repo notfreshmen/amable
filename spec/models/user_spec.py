@@ -4,13 +4,13 @@ from amable.models import listen
 from amable import session
 
 
-with context('models'):
+with context('amable.models'):
     with context('user'):
         with context('User'):
 
             with context('__init__'):
 
-                with it('sets the username'):
+                with it('create'):
                     user = User(
                         username="pablo",
                         email="pablo@pablo.com",
@@ -24,7 +24,26 @@ with context('models'):
 
                     expect(user.username).to(equal('pablo'))
 
-                with it('changes attributes'):
+                with it('edit'):
+                    user = User(
+                        username="pablo",
+                        email="pablo@pablo.com",
+                        password="pablo",
+                        name="Pablo",
+                        bio="Pablo",
+                        website="reev.us",
+                        location="pablo",
+                        phone="4018888888",
+                        dob="1999-01-08")
+
+                    expect(user.username).to(equal('pablo'))
+
+                    user.username = 'max'
+
+                    expect(user.username).to(equal('max'))
+
+            with context("listeners"):
+                with it('before_update'):
                     user = User(
                         username="pablo",
                         email="pablo@pablo.com",

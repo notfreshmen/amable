@@ -4,10 +4,13 @@ from amable import db
 
 from .base import Base
 
-from . import *
+from .post_report import PostReport
+from .post_upvote import PostUpvote
+from .comment import Comment
 
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
+
 
 class Post(Base):
     __tablename__ = 'posts'
@@ -21,8 +24,9 @@ class Post(Base):
     community_id = db.Column(db.Integer, db.ForeignKey('communities.id'))
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
-    reports = relationship('PostReport', backref="post")
-    post_upvotes = relationship('PostUpvote', backref="post")
+    reports = relationship(PostReport, backref="post")
+    post_upvotes = relationship(PostUpvote, backref="post")
+    comments = relationship(Comment, backref="post")
 
     def __init__(
             self,
@@ -32,7 +36,7 @@ class Post(Base):
             image_url,
             user_id,
             community_id,
-            answered = 0
+            answered=False
     ):
         self.text_brief = text_brief
         self.text_long = text_long
@@ -43,7 +47,7 @@ class Post(Base):
         self.community_id = community_id
 
         # Default Values
-        now = dt.now().isoformat  # Current Time to Insert into Datamodels.base
+        now = dt.now().isoformat()  # Current Time to Insert into Datamodels
         self.date_created = now
         self.date_modified = now
 
@@ -51,9 +55,9 @@ class Post(Base):
         return '<Post %r>' % self.id
 
 
-def after_insert_listener(mapper, connection, target):
+def before_update_listener(mapper, connection, target):
         # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(Post, 'after_update', after_insert_listener)
+event.listen(Post, 'before_update', before_update_listener)

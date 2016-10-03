@@ -33,7 +33,7 @@ class PostReport(Base):
         # misc|offensive|mean
         self.reason = reason
 
-        now = dt.now().isoformat
+        now = dt.now().isoformat()
 
         # Default Values
         self.resolved = False
@@ -44,8 +44,8 @@ class PostReport(Base):
         return '<PostReport User : %i | Post : %i>' % self.user_id, self.post_id
 
 
-def after_insert_listener(mapper, connection, target):
+def before_update_listener(mapper, connection, target):
     # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()
 
-event.listen(PostReport, 'after_update', after_insert_listener)
+event.listen(PostReport, 'before_update', before_update_listener)

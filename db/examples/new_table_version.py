@@ -7,10 +7,10 @@ meta = MetaData()
 XXXX = Table(
     'XXXX', meta,
     Column('id', Integer, primary_key=True),
-    Column('XXXX', String(80), unique=False),
-    Column('XXXX', String(128), unique=False),
-    Column('date_created', DateTime, unique=False),
-    Column('date_modified', DateTime, unique=False)
+    Column('XXXX', String(80)),
+    Column('XXXX', String(128)),
+    Column('date_created', DateTime),
+    Column('date_modified', DateTime)
 )
 
 

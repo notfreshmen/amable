@@ -15,8 +15,8 @@ def upgrade(migrate_engine):
     phone = Column("phone", String(10))
     dob = Column("dob", DateTime)
     profile_image = Column("profile_image", String(128))
-    date_created = Column("date_created", String(128), nullable=False)
-    date_modified = Column("date_modified", String(128), nullable=False)
+    date_created = Column("date_created", DateTime, nullable=False)
+    date_modified = Column("date_modified", DateTime, nullable=False)
 
     password.create(users)
     salt.create(users)
@@ -30,13 +30,12 @@ def upgrade(migrate_engine):
     profile_image.create(users)
     date_created.create(users)
     date_modified.create(users)
-
     pass
 
 
 def downgrade(migrate_engine):
     meta = MetaData(bind=migrate_engine)
-    users = Table('account', meta, autoload=True)
+    users = Table('users', meta, autoload=True)
     users.c.password.drop()
     users.c.salt.drop()
     users.c.name.drop()

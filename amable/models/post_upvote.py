@@ -19,7 +19,8 @@ class PostUpvote(Base):
         self.post_id = post_id
         self.user_id = user_id
 
-        now = dt.now().isoformat
+        # Default Values
+        now = dt.now().isoformat()
         self.date_created = now
         self.date_modified = now
 
@@ -27,9 +28,9 @@ class PostUpvote(Base):
         return '<PostUpvote User : %i Post : %i>' % self.user_id, self.post_id
 
 
-def after_insert_listener(mapper, connection, target):
+def before_update_listener(mapper, connection, target):
     # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(PostUpvote, 'after_update', after_insert_listener)
+event.listen(PostUpvote, 'before_update', before_update_listener)

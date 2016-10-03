@@ -8,29 +8,24 @@ from sqlalchemy import event
 
 
 # class PostReport(Base):
-class Comment(Base):
-    __tablename__ = 'comments'
+class CommunityUser(Base):
+    __tablename__ = 'community_users'
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text)
-    hashtags = db.Column(db.Text)
-    parent = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
-    upvote_count = db.Column(db.String(128))
+    community_id = db.Column(db.Integer, db.ForeignKey('communities.id'))
+    moderator = db.Column(db.Boolean)
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
     def __init__(
             self,
-            content,
-            hashtags,
-            parent,
-            upvote_count=0
+            user_id,
+            community_id,
+            moderator=False
     ):
-
-        self.content = content
-        self.hashtags = hashtags
-        self.parent = parent
+        self.user_id = user_id
+        self.community_id = community_id
+        self.moderator = moderator
 
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
@@ -38,7 +33,7 @@ class Comment(Base):
         self.date_modified = now
 
     def __repr__(self):
-        return '<Comment %r>' % self.id
+        return '<CommunityUser %r>' % self.id
 
 
 def before_update_listener(mapper, connection, target):
@@ -46,4 +41,4 @@ def before_update_listener(mapper, connection, target):
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(Comment, 'before_update', before_update_listener)
+event.listen(CommunityUser, 'before_update', before_update_listener)

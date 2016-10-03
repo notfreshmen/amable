@@ -6,6 +6,7 @@ from .base import Base
 
 from sqlalchemy import event
 
+
 class Report(Base):
     __tablename__ = 'reports'
     id = db.Column(db.Integer, primary_key=True)
@@ -37,19 +38,17 @@ class Report(Base):
 
         # Default Values
         self.resolved = False
-
-        now = dt.now()
-        nowISO = now.isoformat()
-
-        self.date_created = nowISO
-        self.date_modified = nowISO
+        now = dt.now().isoformat()  # Current Time to Insert into Datamodels
+        self.date_created = now
+        self.date_modified = now
 
     def __repr__(self):
         return '<Report %r>' % self.title
 
 
-def after_insert_listener(mapper, connection, target):
+def before_update_listener(mapper, connection, target):
     # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()
 
-event.listen(Report, 'after_update', after_insert_listener)
+
+event.listen(Report, 'before_update', before_update_listener)
