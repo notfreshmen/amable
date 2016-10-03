@@ -6,7 +6,7 @@ database:
   override:
     - make db_user_setup
     - make db_setup
-    - python db/manage.py upgrade
+    - AMABLE_ENV=test python db/manage.py upgrade
 
 test:
   override:
