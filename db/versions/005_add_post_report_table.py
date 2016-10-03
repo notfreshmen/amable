@@ -5,7 +5,6 @@ from migrate import *
 meta = MetaData()
 
 post_reports = Table(
-
     'post_reports', meta,
     Column('id', Integer, primary_key=True),
     Column('user_id', Integer),

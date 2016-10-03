@@ -4,11 +4,11 @@ from migrate import *
 
 meta = MetaData()
 # Column('XXXX', String(120)),
-XXXX = Table(
-    'XXXX', meta,
+post_upvote = Table(
+    'post_upvotes', meta,
     Column('id', Integer, primary_key=True),
-    Column('XXXX', String(80), unique=False),
-    Column('XXXX', String(128), unique=False),
+    Column('user_id', Integer, unique=False),
+    Column('post_id', Integer, unique=False),
     Column('date_created', DateTime, unique=False),
     Column('date_modified', DateTime, unique=False)
 )
@@ -16,9 +16,9 @@ XXXX = Table(
 
 def upgrade(migrate_engine):
     meta.bind = migrate_engine
-    XXXX.create()
+    post_upvote.create()
 
 
 def downgrade(migrate_engine):
     meta.bind = migrate_engine
-    XXXX.drop()
+    post_upvote.drop()
