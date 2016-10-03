@@ -1,8 +1,10 @@
-from amable import db
 from datetime import datetime as dt
-from sqlalchemy import event
 
-from models import Base
+from amable import db
+
+from .base import Base
+
+from sqlalchemy import event
 
 class Communities(Base):
     __tablename__ = 'communities'

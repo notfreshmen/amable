@@ -1,6 +1,9 @@
 from datetime import datetime as dt
+
 from amable import db
+
 from .base import Base
+
 from sqlalchemy import event
 
 class Report(Base):

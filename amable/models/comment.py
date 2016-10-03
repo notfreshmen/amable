@@ -8,21 +8,27 @@ from sqlalchemy import event
 
 
 # class PostReport(Base):
-class XXXX(Base):
-    __tablename__ = 'reports'
+class Comment(Base):
+    __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
-    XXXX = db.Column(db.String(128))
-    XXXX = db.Column(db.String(128))
-    XXXX = db.Column(db.String(128))
-    XXXX = db.Column(db.String(128))
-    XXXX = db.Column(db.String(128))
+    content = db.Column(db.Text)
+    hashtags = db.Column(db.Text)
+    parent = db.Column(db.Integer)
+    upvote_count = db.Column(db.String(128))
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
     def __init__(
             self,
-            XXXX
+            content,
+            hashtags,
+            parent,
+            upvote_count=0
     ):
+
+        self.content = content
+        self.hashtags = hashtags
+        self.parent = parent
 
         # Default Values
         now = dt.now().isoformat  # Current Time to Insert into Datamodels
@@ -30,7 +36,7 @@ class XXXX(Base):
         self.date_modified = now
 
     def __repr__(self):
-        return '<XXXX %r>' % self.XXXX
+        return '<Comment %r>' % self.id
 
 
 def after_insert_listener(mapper, connection, target):
@@ -38,4 +44,4 @@ def after_insert_listener(mapper, connection, target):
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(XXXX, 'after_update', after_insert_listener)
+event.listen(Comment, 'after_update', after_insert_listener)
