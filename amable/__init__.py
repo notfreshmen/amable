@@ -29,7 +29,7 @@ load_dotenv(join(dirname(__file__), '..', '.env'))
 # Environment choice
 env = environ.get('AMABLE_ENV')
 
-if env == None:
+if env is None:
     env = 'development'
 
 # App Setup
