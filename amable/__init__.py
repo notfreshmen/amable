@@ -1,4 +1,5 @@
 # OS Functions
+from os import environ
 from os.path import join
 from os.path import dirname
 
@@ -25,9 +26,15 @@ from amable.models.base import Base
 # DotEnv Setup
 load_dotenv(join(dirname(__file__), '..', '.env'))
 
+# Environment choice
+env = environ.get('AMABLE_ENV')
+
+if env == None:
+    env = 'development'
+
 # App Setup
 app = Flask(__name__)
-app.config.from_envvar('AMABLE_SETTINGS')
+app.config.from_envvar('AMABLE_%s_SETTINGS' % env.upper())
 app.register_blueprint(base)
 
 # DB Setup

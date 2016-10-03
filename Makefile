@@ -22,7 +22,7 @@ server:
 	python ./server.py
 
 test:
-	mamba --enable-coverage --format=documentation
+	AMABLE_ENV=test mamba --enable-coverage --format=documentation
 
 lint:
 	pycodestyle .
@@ -30,10 +30,15 @@ lint:
 coverage:
 	coverage report
 
-db_setup:
+db_user_setup:
 	createuser -U postgres -h localhost -p 5432 -d -w amable
+
+db_setup:
 	createdb -U amable -h localhost -p 5432 amable_development
 	python db/manage.py version_control
+
+	createdb -U amable -h localhost -p 5432 amable_test
+	AMABLE_ENV=test python db/manage.py version_control
 
 version_control:
 	python db/manage.py version_control
