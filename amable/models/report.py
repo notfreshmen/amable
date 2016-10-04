@@ -21,13 +21,13 @@ class Report(Base):
     def __init__(self,
                  title,
                  content,
-                 user_id,
+                 user,
                  category="misc"
                  ):
 
         self.title = title
         self.content = content
-        self.user_id = user_id
+        self.user = user
 
         # Available Categories
         # misc|bug|question|important
@@ -46,9 +46,9 @@ class Report(Base):
         return '<Report %r>' % self.title
 
 
-def before_update_listener(mapper, connection, target):
+def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()
 
 
-event.listen(Report, 'before_update', before_update_listener)
+event.listen(Report, 'before_update', update_date_modified)

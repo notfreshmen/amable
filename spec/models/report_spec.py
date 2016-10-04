@@ -1,137 +1,48 @@
 from expects import *
-from amable.models.report import Report
-from amable.models.user import User
+
 from amable import session
+from amable.models.user import User
+from amable.models.report import Report, update_date_modified
+
+from spec.factories.report_factory import ReportFactory
+from spec.factories.user_factory import UserFactory
+
 
 s = session()
 
 with context('amable.models'):
+    with before.each:
+        self.report = ReportFactory.create()
+
+    with after.all:
+        s.query(Report).delete()
+        s.query(User).delete()
+        s.commit()
+
     with context('report'):
         with context('Report'):
-
             with context('__init__'):
-
                 with it('create'):
-                    # Create a user for our report
-                    user = User(
-                        username="pablo",
-                        email="pablo@pablo.com",
-                        password="pablo",
-                        name="Pablo",
-                        bio="Pablo",
-                        website="reev.us",
-                        location="pablo",
-                        phone="4018888888",
-                        dob="1999-01-08")
-
-                    s.add(user)
-                    s.commit()
+                    user = UserFactory.create()
 
                     report = Report(
                         title="Hey Pablo",
                         content="Jokes!",
-                        user_id=user.id,
+                        user=user,
                         category="misc"
                     )
-                    s.add(report)
-                    s.commit()
 
                     expect(report.title).to(equal('Hey Pablo'))
                     expect(report.user_id).to(equal(user.id))
 
-                    s.delete(report)
-                    s.delete(user)
-                    s.commit()
+            with context('__repr__()'):
+                with it('returns the title of the report'):
+                    expect(self.report.__repr__()).to(equal("<Report 'Hey Pablo'>"))
 
-                with it('edit'):
-                    # Create a user for our report
-                    user = User(
-                        username="pablo",
-                        email="pablo@pablo.com",
-                        password="pablo",
-                        name="Pablo",
-                        bio="Pablo",
-                        website="reev.us",
-                        location="pablo",
-                        phone="4018888888",
-                        dob="1999-01-08")
+        with context('update_date_modified'):
+            with it('updates the date for the report'):
+                date_modified = self.report.date_modified
 
-                    s.add(user)
-                    s.commit()
+                update_date_modified(Report, session, self.report)
 
-                    report = Report(
-                        title="Hey Pablo",
-                        content="Jokes!",
-                        user_id=user.id,
-                        category="misc"
-                    )
-
-                    s.add(report)
-                    s.commit()
-
-                    expect(report.title).to(equal('Hey Pablo'))
-                    expect(report.content).to(equal('Jokes!'))
-
-                    # Change info
-                    report.title = "Bye Pablo"
-                    report.content = "Statements!"
-
-                    s.commit()
-
-                    expect(report.title).to(equal('Bye Pablo'))
-                    expect(report.content).to(equal('Statements!'))
-
-                    s.delete(user)
-                    s.delete(report)
-                    s.commit()
-
-            with context("listeners"):
-                with it('before_update'):
-                    user = User(
-                        username="pablo",
-                        email="pablo@pablo.com",
-                        password="pablo",
-                        name="Pablo",
-                        bio="Pablo",
-                        website="reev.us",
-                        location="pablo",
-                        phone="4018888888",
-                        dob="1999-01-08")
-
-                    s.add(user)
-                    s.commit()
-
-                    report = Report(
-                        title="Hey Pablo",
-                        content="Jokes!",
-                        user_id=user.id,
-                        category="misc"
-                    )
-                    s.add(report)
-                    s.commit()
-
-                    reportModTime = report.date_modified
-
-                    expect(report.title).to(equal('Hey Pablo'))
-
-                    # Change info
-                    report.title = "Bye Pablo"
-                    s.commit()
-
-                    expect(report.title).to(equal('Bye Pablo'))
-                    expect(report.date_modified).not_to(equal(reportModTime))
-
-                    s.delete(report)
-                    s.delete(user)
-                    s.commit()
-
-            with context('__repr__'):
-                with it('returns the report'):
-                    report = Report(
-                        title="Hey Pablo",
-                        content="Jokes!",
-                        user_id=1,
-                        category="misc"
-                    )
-
-                    expect(report.__repr__()).to(equal("<Report 'Hey Pablo'>"))
+                expect(self.report.date_modified).not_to(equal(date_modified))
