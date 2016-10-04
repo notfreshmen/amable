@@ -7,7 +7,6 @@ from .base import Base
 from sqlalchemy import event
 
 
-# class PostReport(Base):
 class Comment(Base):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
@@ -23,8 +22,10 @@ class Comment(Base):
     def __init__(
             self,
             content,
+            user,
+            post,
             hashtags,
-            parent,
+            parent=None,
             upvote_count=0
     ):
 
@@ -41,9 +42,9 @@ class Comment(Base):
         return '<Comment %r>' % self.id
 
 
-def before_update_listener(mapper, connection, target):
-        # 'target' is the inserted object
+def update_date_modified(mapper, connection, target):
+    # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(Comment, 'before_update', before_update_listener)
+event.listen(Comment, 'before_update', update_date_modified)

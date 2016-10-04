@@ -53,9 +53,7 @@ class Community(Base):
         return '<Community %r>' % self.name
 
 
-def before_update_listener(mapper, connection, target):
-        # 'target' is the inserted object
+def update_date_modified(mapper, connection, target):
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
-
-event.listen(Community, 'before_update', before_update_listener)
+event.listen(Community, 'before_update', update_date_modified)

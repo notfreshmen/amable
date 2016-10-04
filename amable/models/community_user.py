@@ -19,12 +19,12 @@ class CommunityUser(Base):
 
     def __init__(
             self,
-            user_id,
-            community_id,
+            user,
+            community,
             moderator=False
     ):
-        self.user_id = user_id
-        self.community_id = community_id
+        self.user = user
+        self.community = community
         self.moderator = moderator
 
         # Default Values
@@ -33,12 +33,12 @@ class CommunityUser(Base):
         self.date_modified = now
 
     def __repr__(self):
-        return '<CommunityUser %r>' % self.id
+        return '<CommunityUser %r/%r>' % (self.community.name, self.user.username)
 
 
-def before_update_listener(mapper, connection, target):
-        # 'target' is the inserted object
+def update_date_modified(mapper, connection, target):
+    # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(CommunityUser, 'before_update', before_update_listener)
+event.listen(CommunityUser, 'before_update', update_date_modified)

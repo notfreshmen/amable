@@ -34,8 +34,8 @@ class Post(Base):
             text_long,
             hashtags,
             image_url,
-            user_id,
-            community_id,
+            user,
+            community,
             answered=False
     ):
         self.text_brief = text_brief
@@ -43,8 +43,8 @@ class Post(Base):
         self.answered = answered
         self.hashtags = hashtags
         self.image_url = image_url
-        self.user_id = user_id
-        self.community_id = community_id
+        self.user = user
+        self.community = community
 
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
@@ -55,9 +55,9 @@ class Post(Base):
         return '<Post %r>' % self.id
 
 
-def before_update_listener(mapper, connection, target):
-        # 'target' is the inserted object
+def update_date_modified(mapper, connection, target):
+    # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(Post, 'before_update', before_update_listener)
+event.listen(Post, 'before_update', update_date_modified)

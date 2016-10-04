@@ -31,9 +31,9 @@ class Hashtag(Base):
         return '<Hashtag %r>' % self.tag
 
 
-def before_update_listener(mapper, connection, target):
-        # 'target' is the inserted object
+def update_date_modified(mapper, connection, target):
+    # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(Hashtag, 'before_update', before_update_listener)
+event.listen(Hashtag, 'before_update', update_date_modified)
