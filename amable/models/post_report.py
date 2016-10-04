@@ -3,45 +3,38 @@ from datetime import datetime as dt
 from amable import db
 
 from .base import Base
+from .report import Report
 
 from sqlalchemy import event
 
 
-class PostReport(Base):
-    __tablename__ = 'post_reports'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
-    content = db.Column(db.Text)
-    reason = db.Column(db.String(64))
-    resolved = db.Column(db.Boolean)
-    date_created = db.Column(db.DateTime)
-    date_modified = db.Column(db.DateTime)
+class PostReport(Report):
+    parent_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
 
     def __init__(self,
-                 user_id,
-                 post_id,
+                 title,
                  content,
-                 reason="misc"
+                 user,
+                 post,
+                 category="misc"
                  ):
 
-        self.user_id = user_id
-        self.post_id = post_id
-        self.content = content
+        self.parent = post
 
-        # Available Reasons
-        # misc|offensive|mean
-        self.reason = reason
+        super().__init__(
+            title=title,
+            content=content,
+            user=user,
+            category=category
+        )
 
-        now = dt.now().isoformat()
-
-        # Default Values
-        self.resolved = False
-        self.date_created = now
-        self.date_modified = now
 
     def __repr__(self):
-        return '<PostReport User : %i | Post : %i>' % self.user_id, self.post_id
+        return '<PostReport %r>' % self.title
+
+
+    def post(self):
+        return self.parent
 
 
 def update_date_modified(mapper, connection, target):

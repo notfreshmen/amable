@@ -24,7 +24,7 @@ class Post(Base):
     community_id = db.Column(db.Integer, db.ForeignKey('communities.id'))
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
-    reports = relationship(PostReport, backref="post")
+    reports = relationship(PostReport, backref="parent")
     post_upvotes = relationship(PostUpvote, backref="post")
     comments = relationship(Comment, backref="post")
 
