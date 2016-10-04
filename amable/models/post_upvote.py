@@ -15,9 +15,9 @@ class PostUpvote(Base):
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
-    def __init__(self, post_id, user_id):
-        self.post_id = post_id
-        self.user_id = user_id
+    def __init__(self, post, user):
+        self.post = post
+        self.user = user
 
         # Default Values
         now = dt.now().isoformat()
@@ -25,7 +25,7 @@ class PostUpvote(Base):
         self.date_modified = now
 
     def __repr__(self):
-        return '<PostUpvote User : %i Post : %i>' % self.user_id, self.post_id
+        return '<PostUpvote %r/%r>' % (self.post.id, self.user.username)
 
 
 def update_date_modified(mapper, connection, target):
