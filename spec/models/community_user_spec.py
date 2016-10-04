@@ -7,7 +7,7 @@ from amable import session
 s = session()
 
 with context('amable.models'):
-    with context('community_users'):
+    with context('community_user'):
         with context('CommunityUser'):
 
             with context('__init__'):

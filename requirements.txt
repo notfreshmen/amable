@@ -13,10 +13,11 @@ mamba
 expects
 coverage
 codeclimate-test-reporter
+factory_boy
 
 # utilities
 pycodestyle
 honcho
 
 # database migrations
-psycopg2 
+psycopg2

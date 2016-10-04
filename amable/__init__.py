@@ -15,7 +15,7 @@ from flask_sqlalchemy import SQLAlchemy
 from amable.blueprints.base import base
 
 # Session|Engine(SQLAlchemy)
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
 
 # from amable.amable.models import initialize_sql
@@ -39,6 +39,7 @@ app.register_blueprint(base)
 
 # DB Setup
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
-session = sessionmaker()
-session.configure(bind=engine)
+# session = sessionmaker()
+# session.configure(bind=engine)
+session = scoped_session(sessionmaker(bind=engine))
 db = SQLAlchemy(app)
