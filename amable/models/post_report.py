@@ -20,6 +20,7 @@ class PostReport(Report):
                  ):
 
         self.parent = post
+        self.post = self.parent
 
         super().__init__(
             title=title,
@@ -28,13 +29,8 @@ class PostReport(Report):
             category=category
         )
 
-
     def __repr__(self):
         return '<PostReport %r>' % self.title
-
-
-    def post(self):
-        return self.parent
 
 
 def update_date_modified(mapper, connection, target):

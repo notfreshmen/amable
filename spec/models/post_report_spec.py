@@ -39,6 +39,7 @@ with context('amable.models'):
                     expect(post_report.title).to(equal('Hey Pablo'))
                     expect(post_report.user_id).to(equal(user.id))
                     expect(post_report.parent_id).to(equal(post.id))
+                    expect(post_report.post).to(equal(post))
 
             with context('__repr__()'):
                 with it('returns the title of the post_report'):
