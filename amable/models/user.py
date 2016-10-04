@@ -94,9 +94,8 @@ class User(Base):
         return '<User %r>' % self.username
 
 
-def before_update_listener(mapper, connection, target):
-        # 'target' is the inserted object
+def update_date_modified(mapper, connection, target):
+    # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()
 
-
-event.listen(User, 'before_update', before_update_listener)
+event.listen(User, 'before_update', update_date_modified)

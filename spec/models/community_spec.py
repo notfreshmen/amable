@@ -1,14 +1,14 @@
 from expects import *
 
-from spec.factories.community_factory import CommunityFactory
-
 from amable.models.community import Community, update_date_modified
-from amable import session, db
+from amable import session
+
+from spec.factories.community_factory import CommunityFactory
 
 s = session()
 
 with context('amable.models'):
-    with before.all:
+    with before.each:
         self.community = CommunityFactory.create()
 
     with after.all:
