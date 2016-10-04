@@ -98,4 +98,5 @@ def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()
 
+
 event.listen(User, 'before_update', update_date_modified)

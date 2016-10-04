@@ -44,8 +44,9 @@ class PostReport(Base):
         return '<PostReport User : %i | Post : %i>' % self.user_id, self.post_id
 
 
-def before_update_listener(mapper, connection, target):
+def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
-    target.date_modified = dt.now().isoformat()
+    target.date_modified = dt.now().isoformat()  # Update Date Modified
 
-event.listen(PostReport, 'before_update', before_update_listener)
+
+event.listen(PostReport, 'before_update', update_date_modified)
