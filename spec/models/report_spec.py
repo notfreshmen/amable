@@ -1,8 +1,8 @@
 from expects import *
 
 from amable import session
-from amable.models.user import User
 from amable.models.report import Report, update_date_modified
+from amable.models.user import User
 
 from spec.factories.report_factory import ReportFactory
 from spec.factories.user_factory import UserFactory

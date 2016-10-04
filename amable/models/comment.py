@@ -7,7 +7,6 @@ from .base import Base
 from sqlalchemy import event
 
 
-# class PostReport(Base):
 class Comment(Base):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
@@ -23,8 +22,10 @@ class Comment(Base):
     def __init__(
             self,
             content,
+            user,
+            post,
             hashtags,
-            parent,
+            parent=None,
             upvote_count=0
     ):
 
