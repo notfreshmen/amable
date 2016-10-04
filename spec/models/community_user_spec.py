@@ -1,50 +1,50 @@
 from expects import *
-from amable.models.community_user import CommunityUser
-from amable.models.user import User
-from amable.models.community import Community
+
 from amable import session
+from amable.models.community_user import CommunityUser, update_date_modified
+from amable.models.community import Community
+from amable.models.user import User
+
+from spec.factories.community_user_factory import CommunityUserFactory
+from spec.factories.community_factory import CommunityFactory
+from spec.factories.user_factory import UserFactory
+
 
 s = session()
 
 with context('amable.models'):
+    with before.each:
+        self.community_user = CommunityUserFactory.create()
+
+    with after.all:
+        s.query(CommunityUser).delete()
+        s.query(Community).delete()
+        s.query(User).delete()
+        s.commit()
+
     with context('community_user'):
         with context('CommunityUser'):
-
             with context('__init__'):
-
                 with it("create"):
-                    user = User(
-                        username="pablo",
-                        email="pablo@pablo.com",
-                        password="pablo",
-                        name="Pablo",
-                        bio="Pablo",
-                        website="reev.us",
-                        location="pablo",
-                        phone="4018888888",
-                        dob="1999-01-08")
-
-                    community = Community(
-                        name="The Love",
-                        description="for all the love",
-                        banner_url="love.png",
-                        thumbnail_url="love.png",
-                        nsfw=False,
-                        active=True
-                    )
-
-                    s.add(user)
-                    s.add(community)
-                    s.commit()
+                    community = CommunityFactory.create()
+                    user = UserFactory.create()
 
                     community_user = CommunityUser(
-                        user_id=user.id,
-                        community_id=community.id)
+                        community=community,
+                        user=user)
 
                     expect(community_user.user_id).to(equal(user.id))
                     expect(community_user.community_id).to(equal(community.id))
                     expect(community_user.moderator).to(equal(False))
 
-                    s.delete(user)
-                    s.delete(community)
-                    s.commit()
+            with context('__repr__'):
+                with it('returns the name of the community and the username of the user'):
+                    expect(self.community_user.__repr__()).to(contain("<CommunityUser 'The Love'/'pablo"))
+
+        with context('update_date_modified'):
+            with it('updates the date modified'):
+                date_modified = self.community_user.date_modified
+
+                update_date_modified(CommunityUser, session, self.community_user)
+
+                expect(self.community_user.date_modified).not_to(equal(date_modified))
