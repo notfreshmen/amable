@@ -7,9 +7,7 @@ from migrate.versioning.shell import main
 
 
 # Changing the directory and importing is hacky!
-basedir = os.path.dirname(os.path.abspath(__file__))
-
-sys.path.insert(0, basedir + '/../')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + '/../')
 
 
 from amable import app
