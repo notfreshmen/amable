@@ -29,6 +29,7 @@ $ make install
 To set up the database, you'll need [PostgreSQL](https://www.postgresql.org/) installed. To set up the development database, run:
 
 ```
+$ make db_user_setup
 $ make db_setup
 ```
 
