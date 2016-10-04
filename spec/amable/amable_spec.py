@@ -1,6 +1,6 @@
 from expects import *
 
-from amable import *
+from amable import app
 from flask import Flask
 
 
