@@ -17,6 +17,12 @@ class Report(Base):
     resolved = db.Column(db.Boolean)
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
+    type = db.Column(db.String(20))
+
+    __mapper_args__ = {
+        'polymorphic_on': type,
+        'polymorphic_identity': 'report'
+    }
 
     def __init__(self,
                  title,

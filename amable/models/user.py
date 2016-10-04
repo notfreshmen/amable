@@ -36,7 +36,6 @@ class User(Base):
     date_modified = db.Column(db.String(128), nullable=False)
     reports = relationship(Report, backref="user")
     posts = relationship(Post, backref="user")
-    post_reports = relationship(PostReport, backref="user")
     post_upvotes = relationship(PostUpvote, backref="user")
     community_user = relationship(CommunityUser, backref="user")
     comments = relationship(Comment, backref="user")
