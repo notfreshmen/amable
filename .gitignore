@@ -3,5 +3,7 @@
 __pycache__/
 venv/
 node_modules/
-static/css
 htmlcov/
+amable/static/.webassets-cache
+amable/static/*.css
+amable/static/*.js
