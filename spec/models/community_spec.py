@@ -8,6 +8,9 @@ from amable import session, db
 s = session()
 
 with context('amable.models'):
+    with before.all:
+        self.community = CommunityFactory.create()
+
     with after.all:
         s.query(Community).delete()
         s.commit()
@@ -16,7 +19,7 @@ with context('amable.models'):
         with context('Community'):
             with context('__init__'):
                 with it('create'):
-                    community = Community(
+                    c = Community(
                         name='The Love',
                         description='for all the love',
                         banner_url='love.png',
@@ -25,24 +28,20 @@ with context('amable.models'):
                         active=True
                     )
 
-                    expect(community.name).to(equal('The Love'))
-                    expect(community.description).to(equal('for all the love'))
-                    expect(community.banner_url).to(equal('love.png'))
-                    expect(community.thumbnail_url).to(equal('love.png'))
-                    expect(community.num_upvotes).to(equal(0))
+                    expect(c.name).to(equal('The Love'))
+                    expect(c.description).to(equal('for all the love'))
+                    expect(c.banner_url).to(equal('love.png'))
+                    expect(c.thumbnail_url).to(equal('love.png'))
+                    expect(c.num_upvotes).to(equal(0))
 
             with context('__repr__'):
                 with it("returns it's name"):
-                    community = CommunityFactory.build()
-
-                    expect(community.__repr__()).to(equal("<Community 'The Love'>"))
+                    expect(self.community.__repr__()).to(equal("<Community 'The Love'>"))
 
         with context('update_date_modified'):
             with it('updates the date for the community'):
-                community = CommunityFactory.create()
+                date_modified = self.community.date_modified
 
-                date_modified = community.date_modified
+                update_date_modified(Community, session, self.community)
 
-                update_date_modified(Community, session, community)
-
-                expect(community.date_modified).not_to(equal(date_modified))
+                expect(self.community.date_modified).not_to(equal(date_modified))
