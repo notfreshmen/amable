@@ -1,0 +1,807 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.4
+-- Dumped by pg_dump version 9.5.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE comments (
+    id integer NOT NULL,
+    content text,
+    hashtags text,
+    parent integer,
+    user_id integer,
+    post_id integer,
+    upvote_count character varying(128),
+    date_created timestamp without time zone,
+    date_modified timestamp without time zone
+);
+
+
+ALTER TABLE comments OWNER TO amable;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: amable
+--
+
+CREATE SEQUENCE comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE comments_id_seq OWNER TO amable;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: amable
+--
+
+ALTER SEQUENCE comments_id_seq OWNED BY comments.id;
+
+
+--
+-- Name: communities; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE communities (
+    id integer NOT NULL,
+    name character varying(128),
+    description text,
+    banner_url character varying(128),
+    thumbnail_url character varying(120),
+    nsfw boolean,
+    active boolean,
+    num_upvotes integer,
+    date_created timestamp without time zone,
+    date_modified timestamp without time zone
+);
+
+
+ALTER TABLE communities OWNER TO amable;
+
+--
+-- Name: communities_id_seq; Type: SEQUENCE; Schema: public; Owner: amable
+--
+
+CREATE SEQUENCE communities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE communities_id_seq OWNER TO amable;
+
+--
+-- Name: communities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: amable
+--
+
+ALTER SEQUENCE communities_id_seq OWNED BY communities.id;
+
+
+--
+-- Name: community_users; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE community_users (
+    id integer NOT NULL,
+    user_id integer,
+    community_id integer,
+    moderator boolean,
+    date_created timestamp without time zone,
+    date_modified timestamp without time zone
+);
+
+
+ALTER TABLE community_users OWNER TO amable;
+
+--
+-- Name: community_users_id_seq; Type: SEQUENCE; Schema: public; Owner: amable
+--
+
+CREATE SEQUENCE community_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE community_users_id_seq OWNER TO amable;
+
+--
+-- Name: community_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: amable
+--
+
+ALTER SEQUENCE community_users_id_seq OWNED BY community_users.id;
+
+
+--
+-- Name: hashtags; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE hashtags (
+    id integer NOT NULL,
+    tag character varying(128),
+    date_created timestamp without time zone,
+    date_modified timestamp without time zone
+);
+
+
+ALTER TABLE hashtags OWNER TO amable;
+
+--
+-- Name: hashtags_id_seq; Type: SEQUENCE; Schema: public; Owner: amable
+--
+
+CREATE SEQUENCE hashtags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hashtags_id_seq OWNER TO amable;
+
+--
+-- Name: hashtags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: amable
+--
+
+ALTER SEQUENCE hashtags_id_seq OWNED BY hashtags.id;
+
+
+--
+-- Name: migrate_version; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE migrate_version (
+    repository_id character varying(250) NOT NULL,
+    repository_path text,
+    version integer
+);
+
+
+ALTER TABLE migrate_version OWNER TO amable;
+
+--
+-- Name: post_reports; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE post_reports (
+    id integer NOT NULL,
+    user_id integer,
+    post_id integer,
+    content text,
+    reason character varying(64),
+    resolved boolean,
+    date_created timestamp without time zone,
+    date_modified timestamp without time zone
+);
+
+
+ALTER TABLE post_reports OWNER TO amable;
+
+--
+-- Name: post_reports_id_seq; Type: SEQUENCE; Schema: public; Owner: amable
+--
+
+CREATE SEQUENCE post_reports_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE post_reports_id_seq OWNER TO amable;
+
+--
+-- Name: post_reports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: amable
+--
+
+ALTER SEQUENCE post_reports_id_seq OWNED BY post_reports.id;
+
+
+--
+-- Name: post_upvotes; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE post_upvotes (
+    id integer NOT NULL,
+    user_id integer,
+    post_id integer,
+    date_created timestamp without time zone,
+    date_modified timestamp without time zone
+);
+
+
+ALTER TABLE post_upvotes OWNER TO amable;
+
+--
+-- Name: post_upvotes_id_seq; Type: SEQUENCE; Schema: public; Owner: amable
+--
+
+CREATE SEQUENCE post_upvotes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE post_upvotes_id_seq OWNER TO amable;
+
+--
+-- Name: post_upvotes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: amable
+--
+
+ALTER SEQUENCE post_upvotes_id_seq OWNED BY post_upvotes.id;
+
+
+--
+-- Name: posts; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE posts (
+    id integer NOT NULL,
+    text_brief character varying(142),
+    text_long text,
+    answered boolean,
+    hashtags text,
+    image_url character varying(128),
+    user_id integer,
+    community_id integer,
+    date_created timestamp without time zone,
+    date_modified timestamp without time zone
+);
+
+
+ALTER TABLE posts OWNER TO amable;
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: amable
+--
+
+CREATE SEQUENCE posts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE posts_id_seq OWNER TO amable;
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: amable
+--
+
+ALTER SEQUENCE posts_id_seq OWNED BY posts.id;
+
+
+--
+-- Name: reports; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE reports (
+    id integer NOT NULL,
+    title character varying(80),
+    content character varying(120),
+    user_id integer,
+    category character varying(120),
+    resolved boolean,
+    date_created timestamp without time zone,
+    date_modified timestamp without time zone
+);
+
+
+ALTER TABLE reports OWNER TO amable;
+
+--
+-- Name: reports_id_seq; Type: SEQUENCE; Schema: public; Owner: amable
+--
+
+CREATE SEQUENCE reports_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE reports_id_seq OWNER TO amable;
+
+--
+-- Name: reports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: amable
+--
+
+ALTER SEQUENCE reports_id_seq OWNED BY reports.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: amable
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    username character varying(80),
+    email character varying(120),
+    password character varying(128) NOT NULL,
+    salt character varying(128) NOT NULL,
+    name character varying(128),
+    role character varying(10),
+    bio text,
+    website character varying(128),
+    location character varying(128),
+    phone character varying(10),
+    dob timestamp without time zone,
+    profile_image character varying(128),
+    date_created timestamp without time zone NOT NULL,
+    date_modified timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE users OWNER TO amable;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: amable
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE users_id_seq OWNER TO amable;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: amable
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY comments ALTER COLUMN id SET DEFAULT nextval('comments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY communities ALTER COLUMN id SET DEFAULT nextval('communities_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY community_users ALTER COLUMN id SET DEFAULT nextval('community_users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY hashtags ALTER COLUMN id SET DEFAULT nextval('hashtags_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY post_reports ALTER COLUMN id SET DEFAULT nextval('post_reports_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY post_upvotes ALTER COLUMN id SET DEFAULT nextval('post_upvotes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY posts ALTER COLUMN id SET DEFAULT nextval('posts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY reports ALTER COLUMN id SET DEFAULT nextval('reports_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY comments (id, content, hashtags, parent, user_id, post_id, upvote_count, date_created, date_modified) FROM stdin;
+\.
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: amable
+--
+
+SELECT pg_catalog.setval('comments_id_seq', 1, false);
+
+
+--
+-- Data for Name: communities; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY communities (id, name, description, banner_url, thumbnail_url, nsfw, active, num_upvotes, date_created, date_modified) FROM stdin;
+\.
+
+
+--
+-- Name: communities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: amable
+--
+
+SELECT pg_catalog.setval('communities_id_seq', 31, true);
+
+
+--
+-- Data for Name: community_users; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY community_users (id, user_id, community_id, moderator, date_created, date_modified) FROM stdin;
+\.
+
+
+--
+-- Name: community_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: amable
+--
+
+SELECT pg_catalog.setval('community_users_id_seq', 1, false);
+
+
+--
+-- Data for Name: hashtags; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY hashtags (id, tag, date_created, date_modified) FROM stdin;
+\.
+
+
+--
+-- Name: hashtags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: amable
+--
+
+SELECT pg_catalog.setval('hashtags_id_seq', 1, false);
+
+
+--
+-- Data for Name: migrate_version; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY migrate_version (repository_id, repository_path, version) FROM stdin;
+amable	db	17
+\.
+
+
+--
+-- Data for Name: post_reports; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY post_reports (id, user_id, post_id, content, reason, resolved, date_created, date_modified) FROM stdin;
+\.
+
+
+--
+-- Name: post_reports_id_seq; Type: SEQUENCE SET; Schema: public; Owner: amable
+--
+
+SELECT pg_catalog.setval('post_reports_id_seq', 1, false);
+
+
+--
+-- Data for Name: post_upvotes; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY post_upvotes (id, user_id, post_id, date_created, date_modified) FROM stdin;
+\.
+
+
+--
+-- Name: post_upvotes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: amable
+--
+
+SELECT pg_catalog.setval('post_upvotes_id_seq', 1, false);
+
+
+--
+-- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY posts (id, text_brief, text_long, answered, hashtags, image_url, user_id, community_id, date_created, date_modified) FROM stdin;
+\.
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: amable
+--
+
+SELECT pg_catalog.setval('posts_id_seq', 1, false);
+
+
+--
+-- Data for Name: reports; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY reports (id, title, content, user_id, category, resolved, date_created, date_modified) FROM stdin;
+\.
+
+
+--
+-- Name: reports_id_seq; Type: SEQUENCE SET; Schema: public; Owner: amable
+--
+
+SELECT pg_catalog.setval('reports_id_seq', 36, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: amable
+--
+
+COPY users (id, username, email, password, salt, name, role, bio, website, location, phone, dob, profile_image, date_created, date_modified) FROM stdin;
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: amable
+--
+
+SELECT pg_catalog.setval('users_id_seq', 73, true);
+
+
+--
+-- Name: comments_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: communities_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY communities
+    ADD CONSTRAINT communities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: community_users_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY community_users
+    ADD CONSTRAINT community_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hashtags_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY hashtags
+    ADD CONSTRAINT hashtags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: migrate_version_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY migrate_version
+    ADD CONSTRAINT migrate_version_pkey PRIMARY KEY (repository_id);
+
+
+--
+-- Name: post_reports_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY post_reports
+    ADD CONSTRAINT post_reports_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: post_upvotes_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY post_upvotes
+    ADD CONSTRAINT post_upvotes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: reports_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY reports
+    ADD CONSTRAINT reports_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_email_key; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_username_key; Type: CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
+-- Name: comments_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_post_id_fkey FOREIGN KEY (post_id) REFERENCES posts(id);
+
+
+--
+-- Name: comments_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: community_users_community_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY community_users
+    ADD CONSTRAINT community_users_community_id_fkey FOREIGN KEY (community_id) REFERENCES communities(id);
+
+
+--
+-- Name: community_users_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY community_users
+    ADD CONSTRAINT community_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: post_reports_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY post_reports
+    ADD CONSTRAINT post_reports_post_id_fkey FOREIGN KEY (post_id) REFERENCES posts(id);
+
+
+--
+-- Name: post_reports_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY post_reports
+    ADD CONSTRAINT post_reports_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: post_upvotes_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY post_upvotes
+    ADD CONSTRAINT post_upvotes_post_id_fkey FOREIGN KEY (post_id) REFERENCES posts(id);
+
+
+--
+-- Name: post_upvotes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY post_upvotes
+    ADD CONSTRAINT post_upvotes_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: posts_community_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY posts
+    ADD CONSTRAINT posts_community_id_fkey FOREIGN KEY (community_id) REFERENCES communities(id);
+
+
+--
+-- Name: posts_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY posts
+    ADD CONSTRAINT posts_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: reports_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: amable
+--
+
+ALTER TABLE ONLY reports
+    ADD CONSTRAINT reports_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
