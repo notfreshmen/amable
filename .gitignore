@@ -3,6 +3,7 @@
 __pycache__/
 venv/
 node_modules/
+htmlcov/
 amable/static/.webassets-cache
 amable/static/*.css
 amable/static/*.js

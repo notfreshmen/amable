@@ -2,6 +2,12 @@ machine:
   python:
     version: 3.5.1
 
+database:
+  override:
+    - make db_user_setup
+    - make db_setup
+    - AMABLE_ENV=test python db/manage.py upgrade
+
 test:
   override:
     - make test
