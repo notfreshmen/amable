@@ -14,4 +14,4 @@ with context('amable'):
 
             with context('sass_filter'):
                 with _it('takes SCSS from stdin and outputs CSS to stdout'):
-                    pass
+                    sass_filter.raw_input = lambda _: "body { color: red }"
