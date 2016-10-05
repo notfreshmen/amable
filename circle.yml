@@ -12,6 +12,7 @@ test:
   override:
     - make test
     - make lint
+    - make js_lint
 
   post:
     - codeclimate-test-reporter --file .coverage

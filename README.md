@@ -131,6 +131,14 @@ To run code linting, run:
 $ make lint
 ```
 
+#### JavaScript Linting
+
+To lint our JavaScript, you'll need to install [Node.js](https://nodejs.org/en/) and [standard](https://github.com/feross/standard) globally. Then run:
+
+```
+$ make js_lint
+```
+
 ### Coverage
 
 To show test coverage, run:
