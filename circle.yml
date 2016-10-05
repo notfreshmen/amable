@@ -1,6 +1,8 @@
 machine:
   python:
     version: 3.5.1
+  node:
+    version: 6.5.0
 
 database:
   override:
@@ -12,6 +14,7 @@ test:
   override:
     - make test
     - make lint
+    - make js_lint
 
   post:
     - codeclimate-test-reporter --file .coverage

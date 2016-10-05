@@ -27,6 +27,9 @@ test:
 lint:
 	pycodestyle .
 
+js_lint:
+	npm run lint
+
 coverage:
 	coverage report
 
