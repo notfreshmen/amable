@@ -1,0 +1,28 @@
+{
+  "name": "amable",
+  "version": "0.1.0",
+  "description": "The kindness social network",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notfreshmen/amable.git"
+  },
+  "author": "Not Freshmen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/notfreshmen/amable/issues"
+  },
+  "homepage": "https://github.com/notfreshmen/amable#readme",
+  "devDependencies": {
+    "standard": "^8.3.0"
+  },
+  "standard": {
+    "globals": [ "$" ]
+  }
+}

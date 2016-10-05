@@ -28,7 +28,7 @@ lint:
 	pycodestyle .
 
 js_lint:
-	standard "amable/assets/jsc/**/*.js"
+	npm run lint
 
 coverage:
 	coverage report

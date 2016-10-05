@@ -33,6 +33,12 @@ $ make db_user_setup
 $ make db_setup
 ```
 
+Optionally, to set up some asset-related things, you'll need Node 6.5.0 installed. You can do this with [nvm](https://github.com/creationix/nvm). Then install the dependencies:
+
+```
+$ npm install
+```
+
 ### Assets
 
 You'll need Node.js 6.5.0 installed. You can do this with [nvm](https://github.com/creationix/nvm).
@@ -133,7 +139,7 @@ $ make lint
 
 #### JavaScript Linting
 
-To lint our JavaScript, you'll need to install [Node.js](https://nodejs.org/en/) and [standard](https://github.com/feross/standard) globally. Then run:
+To lint our JavaScript, you'll need to do the optional part above. Then run:
 
 ```
 $ make js_lint
