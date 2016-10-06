@@ -10,8 +10,14 @@ from sqlalchemy import event
 # class PostReport(Base):
 class PostHashtag(Base):
     __tablename__ = 'post_hashtags'
-    post_id = db.Column(db.Integer, primary_key=True)
-    hashtag_id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer,
+                        db.ForeignKey('posts.id'),
+                        primary_key=True)
+
+    hashtag_id = db.Column(db.Integer,
+                           db.ForeignKey('hashtags.id'),
+                           primary_key=True)
+    
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
