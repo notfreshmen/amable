@@ -4,7 +4,10 @@ from amable import db
 
 from .base import Base
 
+from .post_hashtag import PostHashtag
+
 from sqlalchemy import event
+from sqlalchemy.orm import relationship
 
 
 # class PostReport(Base):
@@ -14,6 +17,7 @@ class Hashtag(Base):
     tag = db.Column(db.String(128))
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
+    post_hashtag = relationship(PostHashtag, backref="hashtag")
 
     def __init__(
             self,

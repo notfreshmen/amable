@@ -17,7 +17,7 @@ class PostHashtag(Base):
     hashtag_id = db.Column(db.Integer,
                            db.ForeignKey('hashtags.id'),
                            primary_key=True)
-    
+
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
