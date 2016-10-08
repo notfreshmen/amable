@@ -15,7 +15,6 @@ class PostFactory(factory.alchemy.SQLAlchemyModelFactory):
 
     text_brief = 'A short story'
     text_long = 'A long story'
-    hashtags = '#hashtag'
     image_url = 'foo.jpg'
     user = factory.SubFactory(UserFactory)
     community = factory.SubFactory(CommunityFactory)

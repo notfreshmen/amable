@@ -6,6 +6,7 @@ from .base import Base
 
 from .post_report import PostReport
 from .post_upvote import PostUpvote
+from .post_hashtag import PostHashtag
 from .comment import Comment
 
 from sqlalchemy import event
@@ -18,7 +19,6 @@ class Post(Base):
     text_brief = db.Column(db.String(142))
     text_long = db.Column(db.Text)
     answered = db.Column(db.Boolean)
-    hashtags = db.Column(db.Text)
     image_url = db.Column(db.String(128))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     community_id = db.Column(db.Integer, db.ForeignKey('communities.id'))
@@ -27,12 +27,12 @@ class Post(Base):
     reports = relationship(PostReport, backref="parent")
     post_upvotes = relationship(PostUpvote, backref="post")
     comments = relationship(Comment, backref="post")
+    hashtags = relationship(PostHashtag, backref="post")
 
     def __init__(
             self,
             text_brief,
             text_long,
-            hashtags,
             image_url,
             user,
             community,
@@ -41,7 +41,6 @@ class Post(Base):
         self.text_brief = text_brief
         self.text_long = text_long
         self.answered = answered
-        self.hashtags = hashtags
         self.image_url = image_url
         self.user = user
         self.community = community
