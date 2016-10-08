@@ -1,3 +1,6 @@
+# Update
+sudo yum update -y
+
 # Postgres
 sudo yum install -y postgresql-server postgresql-contrib
 sudo postgresql-setup initdb
