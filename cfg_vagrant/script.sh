@@ -21,8 +21,7 @@ sudo systemctl enable postgresql
 echo 'Enabled Postgres'
 
 # Create new Postgres user create db
-sudo -i -u postgres
-createuser -U postgres -D amable_development
+#sudo -i -u postgres
 createuser -U postgres -D amable
 psql -U postgres -f /var/lib/pgsql/sql_script.sql
 
@@ -50,19 +49,18 @@ fi
 source venv/bin/activate
 make install
 
+sudo -u postgres psql -U postgres -c "alter user amable with password 'domislove';"
 
+python db/manage.py version_control
+python db/manage.py upgrade
 
-# Lets grab Python 3.5.1
-#cd /tmp
-#wget https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tgz
+AMABLE_ENV=test python db/manage.py version_control
+AMABLE_ENV=test python db/manage.py upgrade
 
-# Install Python 3.5.1
-#sudo yum install -y zlib-devel
-#tar xzf Python-3.5.1.tgz
-#cd Python-3.5.1
-#./configure --prefix=/usr/local --with-zlib=/usr/include
-#sudo make altinstall
-
-# install pip
-#cd /tmp
-#wget https://bootstrap.pypa.io/get-pip.py
+# Node
+cd /tmp
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+source ~/.bash_profile
+nvm install v6.5.0
+nvm use v6.5.0
+nvm alias default v6.5.0
