@@ -33,7 +33,6 @@ class Post(Base):
             self,
             text_brief,
             text_long,
-            hashtags,
             image_url,
             user,
             community,
@@ -42,7 +41,6 @@ class Post(Base):
         self.text_brief = text_brief
         self.text_long = text_long
         self.answered = answered
-        self.hashtags = hashtags
         self.image_url = image_url
         self.user = user
         self.community = community

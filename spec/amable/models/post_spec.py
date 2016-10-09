@@ -32,7 +32,6 @@ with context('amable.models'):
                     post = Post(
                         text_brief='A short story',
                         text_long='A long story',
-                        hashtags='#hashtag',
                         image_url='image.jpg',
                         community=community,
                         user=user
