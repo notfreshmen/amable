@@ -30,18 +30,23 @@ psql -U postgres -f /var/lib/pgsql/sql_script.sql
 
 # PYTHON
 
-# We need wget
-sudo yum install -y wget
+# We need wget and git
+sudo yum install -y wget git
 
 
 sudo yum -y update
 sudo yum -y install yum-utils
-sudo yum -y groupinstall development
-sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-sudo yum -y install python35u-3.5.2
-sudo yum -y install python35u-pip
-sudo yum -y install python35u-devel
-sudo yum -y install postgresql-devel
+sudo yum -y groupinstall development zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel python35u-devel
+
+git clone https://github.com/yyuu/pyenv.git /home/vagrant/.pyenv
+
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/vagrant/.bash_profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/vagrant/.bash_profile
+echo 'eval "$(pyenv init -)"' >> /home/vagrant/.bash_profile
+
+source /home/vagrant/.bash_profile
+
+pyenv install 3.5.1
 
 cd /home/vagrant/sync
 
@@ -50,6 +55,9 @@ if [ ! -d "/home/vagrant/sync/venv" ]; then
 fi
 
 source venv/bin/activate
+
+sudo easy_install pip
+
 make install
 
 sudo -u postgres psql -U postgres -c "alter user amable with password 'domislove';"
@@ -63,7 +71,7 @@ AMABLE_ENV=test python db/manage.py upgrade
 # Node
 cd /tmp
 wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
-source ~/.bash_profile
+source /home/vagrant/.bash_profile
 nvm install v6.5.0
 nvm use v6.5.0
 nvm alias default v6.5.0
