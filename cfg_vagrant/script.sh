@@ -36,7 +36,7 @@ sudo yum install -y wget git
 
 sudo yum -y update
 sudo yum -y install yum-utils
-sudo yum -y groupinstall development zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel python35u-devel
+sudo yum -y zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel python35u-devel
 
 git clone https://github.com/yyuu/pyenv.git /home/vagrant/.pyenv
 
