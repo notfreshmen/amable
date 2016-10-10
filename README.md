@@ -152,3 +152,12 @@ To show test coverage, run:
 ```
 $ make coverage
 ```
+### ER Diagrams
+
+To make a new ER diagram:
+
+```
+$ make erd
+```
+
+This will output to `docs/erd.pdf`.
