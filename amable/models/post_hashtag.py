@@ -4,27 +4,31 @@ from amable import db
 
 from .base import Base
 
-from .post_hashtag import PostHashtag
-
 from sqlalchemy import event
-from sqlalchemy.orm import relationship
 
 
 # class PostReport(Base):
-class Hashtag(Base):
-    __tablename__ = 'hashtags'
-    id = db.Column(db.Integer, primary_key=True)
-    tag = db.Column(db.String(128))
+class PostHashtag(Base):
+    __tablename__ = 'post_hashtags'
+    post_id = db.Column(db.Integer,
+                        db.ForeignKey('posts.id'),
+                        primary_key=True)
+
+    hashtag_id = db.Column(db.Integer,
+                           db.ForeignKey('hashtags.id'),
+                           primary_key=True)
+
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
-    post_hashtag = relationship(PostHashtag, backref="hashtag")
 
     def __init__(
             self,
-            tag
+            post_id,
+            hashtag_id
     ):
 
-        self.tag = tag
+        self.post_id = post_id
+        self.hashtag_id = hashtag_id
 
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
@@ -32,7 +36,7 @@ class Hashtag(Base):
         self.date_modified = now
 
     def __repr__(self):
-        return '<Hashtag %r>' % self.tag
+        return '<PostHashTag (Post : %i | Hashtag %i)>' % (self.post_id, self.hashtag_id)
 
 
 def update_date_modified(mapper, connection, target):
@@ -40,4 +44,4 @@ def update_date_modified(mapper, connection, target):
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(Hashtag, 'before_update', update_date_modified)
+event.listen(PostHashtag, 'before_update', update_date_modified)
