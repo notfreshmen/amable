@@ -7,11 +7,11 @@ from .base import Base
 from sqlalchemy import event
 
 
-class PostHashtag(Base):
-    __tablename__ = 'post_hashtags'
-    post_id = db.Column(db.Integer,
-                        db.ForeignKey('posts.id'),
-                        primary_key=True)
+class CommentHashtag(Base):
+    __tablename__ = 'comment_hashtags'
+    comment_id = db.Column(db.Integer,
+                           db.ForeignKey('comments.id'),
+                           primary_key=True)
 
     hashtag_id = db.Column(db.Integer,
                            db.ForeignKey('hashtags.id'),
@@ -22,11 +22,11 @@ class PostHashtag(Base):
 
     def __init__(
             self,
-            post_id,
+            comment_id,
             hashtag_id
     ):
 
-        self.post_id = post_id
+        self.comment_id = comment_id
         self.hashtag_id = hashtag_id
 
         # Default Values
@@ -35,7 +35,7 @@ class PostHashtag(Base):
         self.date_modified = now
 
     def __repr__(self):
-        return '<PostHashtag (Post : %i | Hashtag %i)>' % (self.post_id, self.hashtag_id)
+        return '<CommentHashtag (Comment : %i | Hashtag %i)>' % (self.comment_id, self.hashtag_id)
 
 
 def update_date_modified(mapper, connection, target):
