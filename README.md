@@ -43,10 +43,11 @@ $ npm install
 
 You'll need Node.js 6.5.0 installed. You can do this with [nvm](https://github.com/creationix/nvm).
 
-Then, just install the dependencies with `npm`:
+Then, just install the dependencies with `yarn`:
 
 ```
-$ npm install
+$ curl -o- -L https://yarnpkg.com/install.sh | bash
+$ yarn
 ```
 
 ## Development
