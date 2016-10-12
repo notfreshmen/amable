@@ -43,4 +43,4 @@ def update_date_modified(mapper, connection, target):
     target.date_modified = dt.now().isoformat()  # Update Date Modified
 
 
-event.listen(PostHashtag, 'before_update', update_date_modified)
+event.listen(CommentHashtag, 'before_update', update_date_modified)
