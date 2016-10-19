@@ -14,7 +14,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
 
 
-
 # DotEnv Setup
 load_dotenv(join(dirname(__file__), '..', '.env'))
 
@@ -34,8 +33,6 @@ session = scoped_session(sessionmaker(bind=engine))
 db = SQLAlchemy(app)
 
 
-	
-	
 # Blueprints
 from amable.blueprints.base import base
 
