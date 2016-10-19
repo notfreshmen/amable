@@ -4,53 +4,69 @@
 
 ## Installation
 
-### General
-
-You'll need Python 3.5.1 installed. You can do this with [pyenv](https://github.com/yyuu/pyenv).
-
-Then, you'll need to create the virtual environment with `pyvenv`, so run:
+You'll need [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org/) installed on your machine. Then, with a command line (Terminal on macOS and Linux, PowerShell or Command Prompt on Windows), you'll need to install the [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) Vagrant plugin:
 
 ```
-$ make env
+$ vagrant plugin install vagrant-vbguest
 ```
 
-Now activate the environment. This will depend on your system, but with Bash:
+Then you can switch directories to wherever you have Amable and run:
 
 ```
-$ source venv/bin/activate
+$ vagrant up
 ```
 
-To install dependencies, run:
+This will boot the virtual machine and provision it.
+
+### Troubleshooting
+
+#### VirtualBox Guest Additions don't work on macOS
+
+If you get an error something like this:
 
 ```
-$ make install
+Failed to mount folders in Linux guest. This is usually because
+the "vboxsf" file system is not available. Please verify that
+the guest additions are properly installed in the guest and
+can work properly. The command attempted was:
+
+mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` home_vagrant_sync /home/vagrant/sync
+mount -t vboxsf -o uid=`id -u vagrant`,gid=`id -g vagrant` home_vagrant_sync /home/vagrant/sync
+
+The error output from the last command was:
+
+/sbin/mount.vboxsf: mounting failed with the error: No such device
 ```
 
-To set up the database, you'll need [PostgreSQL](https://www.postgresql.org/) installed. To set up the development database, run:
+VirtualBox Guest Additions aren't working properly. Log into the box:
 
 ```
-$ make db_user_setup
-$ make db_setup
+$ vagrant ssh
 ```
 
-Optionally, to set up some asset-related things, you'll need Node 6.5.0 installed. You can do this with [nvm](https://github.com/creationix/nvm). Then install the dependencies:
+And then run:
 
 ```
-$ npm install
+$ sudo yum install -y kernel.x86_64 0:3.10.0-327.36.1.el7 kernel-devel
+$ sudo ln -s /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions
+$ exit
 ```
 
-### Assets
-
-You'll need Node.js 6.5.0 installed. You can do this with [nvm](https://github.com/creationix/nvm).
-
-Then, just install the dependencies with `yarn`:
+Now reload the box, and it should work:
 
 ```
-$ curl -o- -L https://yarnpkg.com/install.sh | bash
-$ yarn
+$ vagrant reload
 ```
 
 ## Development
+
+To start any development, first start the Vagrant box, SSH into it, and change to the Amable directory.:
+
+```
+$ vagrant up
+$ vagrant ssh
+$ cd sync/
+```
 
 ### Running everything
 
