@@ -66,7 +66,6 @@ To start any development, first start the Vagrant box, SSH into it, and change t
 $ vagrant up
 $ vagrant ssh
 $ cd sync/
->>>>>>> use pyenv instead of straight python.
 ```
 
 ### Running everything

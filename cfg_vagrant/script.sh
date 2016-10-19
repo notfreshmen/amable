@@ -75,3 +75,5 @@ source /home/vagrant/.bash_profile
 nvm install v6.5.0
 nvm use v6.5.0
 nvm alias default v6.5.0
+curl -o- -L https://yarnpkg.com/install.sh | bash
+yarn
