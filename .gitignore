@@ -1,5 +1,7 @@
 *.pyc
 .coverage
+.DS_Store
+.vagrant/
 __pycache__/
 venv/
 node_modules/

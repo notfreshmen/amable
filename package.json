@@ -2,32 +2,18 @@
   "name": "amable",
   "version": "0.1.0",
   "description": "The kindness social network",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "lint": "standard"
-  },
+  "main": "Gulpfile.js",
   "repository": {
-    "url": "git+https://github.com/notfreshmen/amable.git",
+    "url": "git@github.com:notfreshmen/amable.git",
     "type": "git"
   },
   "author": "Not Freshmen",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/notfreshmen/amable/issues"
-  },
-  "homepage": "https://github.com/notfreshmen/amable#readme",
   "devDependencies": {
-    "standard": "^8.3.0"
-  },
-  "standard": {
-    "globals": [
-      "$"
-    ]
-  },
-  "dependencies": {
-    "jquery": "^3.1.1"
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^2.0.0",
+    "lodash": "^4.16.4"
   }
 }
