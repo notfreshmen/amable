@@ -1,0 +1,16 @@
+@import "susy/susy";
+
+$susy: (
+  columns: 24,
+  gutters: 1/4,
+  math: fluid,
+  output: float,
+  gutter-position: inside
+);
+
+@mixin row() {
+  @include container;
+
+  box-sizing: border-box;
+  padding: 0 rhythm(1)
+}

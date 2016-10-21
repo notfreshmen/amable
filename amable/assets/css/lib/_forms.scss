@@ -1,0 +1,44 @@
+.form {
+  &__label, label {
+    display: block;
+    font-size: $font-size-n1;
+  }
+
+  &__control, input {
+    border: 1px solid $color-grey-light;
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: block;
+    font-size: $font-size-n1;
+    font-family: $font-family-sans-serif;
+    line-height: 1rem;
+    outline: none;
+    padding: rhythm(0.25);
+    width: 50%;
+
+    &:focus {
+      border-color: $color-grey;
+    }
+
+    &--right {
+      float: right;
+    }
+  }
+
+  &__group {
+    @include container;
+
+    & + & {
+      margin-top: rhythm(0.5);
+    }
+
+    &--footer {
+      margin-top: rhythm(0.25);
+
+      * {
+        display: inline-block;
+        float: right;
+      }
+    }
+  }
+}

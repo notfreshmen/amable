@@ -1,0 +1,23 @@
+html {
+  font-size: $font-size-base;
+}
+
+body {
+  background: $color-white;
+  color: $color-text;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-0;
+  line-height: $line-height-normal;
+}
+
+a {
+  color: $color-blue;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-blue-dark;
+  }
+}

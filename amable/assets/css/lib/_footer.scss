@@ -1,0 +1,24 @@
+.footer {
+  background: $color-grey-light;
+  color: $color-grey-dark;
+  font-size: $font-size-n1;
+  margin-top: rhythm(1);
+
+  a {
+    color: $color-grey-darkest;
+
+    &:hover {
+      color: darken($color-grey-darkest, 10%);
+    }
+  }
+
+  &__container {
+    @include clearfix;
+
+    padding: rhythm(0.5) rhythm(0.75);
+  }
+
+  &__copyright, &__nav {
+    display: inline-block;
+  }
+}

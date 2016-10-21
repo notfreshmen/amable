@@ -12,18 +12,46 @@
     {% assets "css" %}
       <link href="{{ ASSET_URL }}" rel="stylesheet">
     {% endassets %}
+
+    <script src="https://use.typekit.net/rpe8rjq.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
   </head>
   <body>
-    <header role="banner">
-      <h1><a href="/">Amable</a></h1>
+    <header class="header" role="banner">
+      <div class="header__container">
+        <h1 class="header__logo">
+          <a href="/">Amable</a>
+        </h1>
+        <a class="header__toggle desktop-hidden"><i class="ss-icon">rows</i></a>
+        <nav class="header__nav nav nav--inline mobile-hidden">
+          <ul class="nav__list">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Communities</a></li>
+          </ul>
+        </nav>
+        <nav class="header__nav nav nav--inline nav--right mobile-hidden">
+          <ul class="nav__list">
+            <li><a href="#">Join</a></li>
+            <li><a href="#">Login</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <main role="main">
+    <main class="main" role="main">
       {% block content %}{% endblock %}
     </main>
 
-    <footer role="footer">
-      <p>&copy; 2016 <a href="/">Amable</a></p>
+    <footer class="footer" role="footer">
+      <div class="footer__container">
+        <p class="footer__copyright">&copy; 2016 <a href="/">Amable</a></p>
+        <nav class="footer__nav nav nav--inline nav--right">
+          <ul class="nav__list">
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
     </footer>
 
     {% assets "jsc" %}
