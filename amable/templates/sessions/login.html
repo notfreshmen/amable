@@ -1,0 +1,18 @@
+{% extends "application.html" %}
+{% block content %}
+  <div class="page">
+    <form class="form" method="POST" action="/sessions/create">
+      <div class="form__group">
+        <label class="form__label">Email</label>
+        <input type="email" class="form__control" name="email">
+      </div>
+      <div class="form__group">
+        <label class="form__label">Password</label>
+        <input type="password" class="form__control" name="password">
+      </div>
+      <div class="form__group">
+        <button class="btn btn--blue" type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

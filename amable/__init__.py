@@ -35,8 +35,10 @@ db = SQLAlchemy(app)
 
 # Blueprints
 from amable.blueprints.base import base
+from amable.blueprints.sessions import sessions
 
 app.register_blueprint(base)
+app.register_blueprint(sessions)
 
 # Assets
 from amable.utils.assets import assets_env
