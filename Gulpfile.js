@@ -6,7 +6,10 @@ var concat = require('gulp-concat')
 var uglify = require('gulp-uglify')
 
 var css_src = './amable/assets/css/**/*.scss'
-var jsc_src = './amable/assets/jsc/**/*.js'
+var jsc_src = [
+  './node_modules/jquery/dist/jquery.js',
+  './amable/assets/jsc/**/*.js'
+]
 
 gulp.task('css', function () {
   var dest = './amable/static/css/'
