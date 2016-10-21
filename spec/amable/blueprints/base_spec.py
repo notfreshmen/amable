@@ -8,7 +8,5 @@ with context('amable'):
     with context('blueprints'):
         with context('base'):
             with context('index'):
-                with it('returns hello world'):
-                    res = client.get('/')
-
-                    expect(res.data).to(equal(b'Hello world'))
+                with _it('has a dashboard'):
+                    pass
