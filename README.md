@@ -16,7 +16,18 @@ Then you can switch directories to wherever you have Amable and run:
 $ vagrant up
 ```
 
-This will boot the virtual machine and provision it.
+This will boot the virtual machine. In order to install everything for Amable, SSH into it:
+
+```
+$ vagrant ssh
+```
+
+Then run the script and restart your session.
+
+```
+$ sh /home/vagrant/sync/cfg_vagrant/script.sh
+$ exec $SHELL -l
+```
 
 ### Troubleshooting
 
@@ -52,10 +63,18 @@ $ sudo ln -s /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBox
 $ exit
 ```
 
-Now reload the box, and it should work:
+Now reload the box and SSH in again:
 
 ```
 $ vagrant reload
+$ vagrant ssh
+```
+
+Then run the installation script:
+
+```
+$ sh /home/vagrant/sync/cfg_vagrant/script.sh
+$ exec $SHELL -l
 ```
 
 ## Development
