@@ -42,5 +42,8 @@ app.register_blueprint(users_blueprint)
 # Assets
 from amable.utils.assets import assets_env
 
+# Filters
+from amable.utils.filters import time_since
+
 # Base
 from amable.models.base import Base

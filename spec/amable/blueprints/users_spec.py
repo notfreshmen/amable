@@ -1,15 +1,23 @@
 from expects import *
 
-from amable import app
+from amable import app, session
+
+from spec.factories.user_factory import UserFactory
+
 
 client = app.test_client()
+s = session()
 
 with context('amable'):
     with context('blueprints'):
         with context('users'):
             with context('show'):
+                with before.all:
+                    self.user = UserFactory.create()
+                    s.commit()
+
                 with it('returns the user page'):
-                    res = client.get('/pablo')
+                    res = client.get('/{0}'.format(self.user.username))
 
                     expect(res.data).to(contain(b'pablo'))
 
