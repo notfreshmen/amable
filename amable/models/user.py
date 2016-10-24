@@ -84,13 +84,9 @@ class User(Base):
         self.dob = dob
 
         if profile_image is None:
-<<<<<<< HEAD
             image_num = format(randrange(1, 11), '03')
 
             self.profile_image = '/static/img/default{0}.jpg'.format(image_num)
-=======
-            self.profile_image = '/static/img/default{0}.jpg'.format(format(randrange(1,11), '03'))
->>>>>>> add some kickass default avatars.
         else:
             self.profile_image = profile_image
 
