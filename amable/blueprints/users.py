@@ -1,10 +1,12 @@
 from flask import Blueprint
-from flask import render_template, abort
+from flask import render_template, abort, request, redirect, url_for
 
 from amable import session
 
 from amable.models.user import User
 from amable.models.post import Post
+
+from amable.forms.user_create_form import UserCreateForm
 
 
 users = Blueprint('users', __name__, template_folder='../templates/users')
@@ -26,12 +28,28 @@ def show(username):
 
 @users.route('/join')
 def new():
-    return render_template('new.html')
+    return render_template('new.html', form=UserCreateForm())
 
 
 @users.route('/users', methods=['POST'])
 def create():
-    return "Create a user"
+    form = UserCreateForm(request.form)
+
+    if form.validate():
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            name=form.name.data,
+            password=form.password.data
+        )
+
+        db.commit()
+
+        # log in here at some point
+
+        return redirect(url_for('base.index'))
+
+    return render_template('new.html', form=form)
 
 
 @users.route('/account')

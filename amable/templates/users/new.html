@@ -1,4 +1,45 @@
 {% extends "application.html" %}
 {% block content %}
-  
+  <div class="page">
+    <header class="page__header">
+      <h2 class="page__title">Join</h2>
+      <p class="page__description">Join Amable today!</p>
+    </header>
+    <section class="page__block">
+      <form class="form" action="{{ url_for('users.create') }}" method="post">
+        {% if form.errors %}
+          <ul class="errors">
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+              {% for error in field_errors %}
+                <li>{{ form[field_name].label.text }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+        <div class="form__group">
+          {{ form.username.label }}
+          {{ form.username(class_="form_control") }}
+        </div>
+        <div class="form__group">
+          {{ form.email.label }}
+          {{ form.email(class_="form_control") }}
+        </div>
+        <div class="form__group">
+          {{ form.name.label }}
+          {{ form.name(class_="form_control") }}
+        </div>
+        <div class="form__group">
+          {{ form.password.label }}
+          {{ form.password(class_="form_control") }}
+        </div>
+        <div class="form__group">
+          {{ form.password_confirmation.label }}
+          {{ form.password_confirmation(class_="form_control") }}
+        </div>
+        <div class="form__group">
+          <button type="submit" class="btn btn--blue btn--small">Join</button>
+        </div>
+      </form>
+    </section>
+  </div>
 {% endblock %}
