@@ -3,12 +3,32 @@
 
   &__sidebar {
     @include span(4 of 24);
+
+    @media (max-width: $breakpoint) {
+      @include span(last 24 of 24);
+      @include container;
+
+      border-bottom: 1px solid $color-grey-light;
+      margin-bottom: rhythm(0.5);
+
+      &__image {
+        @include span(4 of 24);
+      }
+
+      &__details {
+        @include span(last 19 of 24);
+      }
+    }
   }
 
   &__name {
     font-size: $font-size-2;
     font-weight: $font-weight-bold;
     margin-top: rhythm(0.5);
+
+    @media (max-width: $breakpoint) {
+      margin-top: 0;
+    }
   }
 
   &__bio {
@@ -17,6 +37,11 @@
     font-size: $font-size-n1;
     margin-bottom: rhythm(0.5);
     padding-bottom: rhythm(0.5);
+
+    @media (max-width: $breakpoint) {
+      border: none;
+      margin-bottom: 0;
+    }
   }
 
   &__username {
@@ -27,6 +52,10 @@
   &__info {
     font-size: $font-size-n1;
     line-height: $line-height-tight;
+
+    @media (max-width: $breakpoint) {
+      display: none;
+    }
 
     li {
       color: $color-text-light;
@@ -43,5 +72,9 @@
 
   &__posts {
     @include span(last 19 of 24);
+
+    @media (max-width: $breakpoint) {
+      @include span(last 24 of 24);
+    }
   }
 }

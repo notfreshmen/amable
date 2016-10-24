@@ -1,9 +1,9 @@
 <article class="post">
   <aside class="post__left">
-    <img src="{{ post.user.profile_image }}" class="avatar">
+    <a href="{{ url_for('users.show', username=post.user.username) }}"><img src="{{ post.user.profile_image }}" class="avatar"></a>
   </aside>
   <div class="post__content">
-    <h3 class="post__author"><a href="{{ url_for('users.show', username=post.user.username)}}">{{ post.user.name }} <span>@{{ post.user.username }}</span></a></h3>
+    <h3 class="post__author"><a href="{{ url_for('users.show', username=post.user.username) }}">{{ post.user.name }} <span>@{{ post.user.username }}</span></a></h3>
     <div class="post__text">
       {{ post.text_brief_markdown() | safe }}
     </div>
