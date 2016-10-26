@@ -1,4 +1,5 @@
 from datetime import datetime as dt
+from random import randrange
 
 from amable import db
 
@@ -45,11 +46,11 @@ class User(Base):
                  email,
                  password,
                  name,
-                 bio,
-                 website,
-                 location,
-                 phone,
-                 dob,
+                 bio=None,
+                 website=None,
+                 location=None,
+                 phone=None,
+                 dob=None,
                  profile_image=None,
                  role=None
                  ):
@@ -79,10 +80,12 @@ class User(Base):
         self.phone = phone
         self.dob = dob
 
-        if profile_image is not None:
-            self.profile_image = profile_image
+        if profile_image is None:
+            image_num = format(randrange(1, 11), '03')
+
+            self.profile_image = '/static/img/default{0}.jpg'.format(image_num)
         else:
-            self.profile_image = ""
+            self.profile_image = profile_image
 
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
@@ -91,6 +94,18 @@ class User(Base):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def viewable_by(self, user):
+        return True
+
+    def creatable_by(self, user):
+        return True
+
+    def updatable_by(self, user):
+        return self == user or user.role == 'admin'
+
+    def destroyable_by(self, user):
+        return self == user  or user.role == 'admin'
 
 
 def update_date_modified(mapper, connection, target):
