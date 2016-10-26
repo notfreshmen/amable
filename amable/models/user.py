@@ -105,7 +105,7 @@ class User(Base):
         return self == user or user.role == 'admin'
 
     def destroyable_by(self, user):
-        return self == user  or user.role == 'admin'
+        return self == user or user.role == 'admin'
 
 
 def update_date_modified(mapper, connection, target):
