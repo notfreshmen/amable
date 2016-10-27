@@ -10,8 +10,15 @@ def hash_password(password):
         password.encode()).hexdigest() + ':' + salt
 
 
-def check_password(hashed_password, user_password):
-    password, salt = hashed_password.split(':')
-    return password == hashlib.sha256(
-        salt.encode() +
-        user_password.encode()).hexdigest()
+# Check Password
+# Takes in the User object and the password that the user inputed
+def check_password(User, user_input_password):
+    salt = User.salt
+
+    hashed_password_to_check = hashlib.sha256(
+        salt.encode() + user_input_password.encode()).hexdigest()
+
+    # print("check_password() ~ User.salt : " + str(salt))
+    # print("check_password() ~ hashed_password_to_check : " + str(hashed_password_to_check))
+
+    return User.password == hashed_password_to_check
