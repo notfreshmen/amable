@@ -44,14 +44,6 @@ make install
 make db_user_setup
 make db_setup
 
-make version_control
-make db_upgrade
-
-AMABLE_ENV=test make version_control
-AMABLE_ENV=test make db_upgrade
-
-echo 'source /home/vagrant/sync/venv/bin/activate' >> /home/vagrant/.bash_profile
-
 echo '=> Python installed and configured'
 
 # Node
