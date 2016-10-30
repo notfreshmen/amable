@@ -95,17 +95,20 @@ class User(Base):
     def __repr__(self):
         return '<User %r>' % self.username
 
-    def viewable_by(self, user):
+    def is_admin(self):
+        return self.role == 'admin'
+
+    def viewable_by(self, _):
         return True
 
-    def creatable_by(self, user):
+    def creatable_by(self, _):
         return True
 
     def updatable_by(self, user):
-        return self == user or user.role == 'admin'
+        return self == user or user.is_admin()
 
     def destroyable_by(self, user):
-        return self == user or user.role == 'admin'
+        return self == user or user.is_admin()
 
 
 def update_date_modified(mapper, connection, target):

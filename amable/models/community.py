@@ -1,6 +1,6 @@
 from datetime import datetime as dt
 
-from amable import db
+from amable import db, session
 
 from .base import Base
 
@@ -9,7 +9,10 @@ from sqlalchemy.orm import relationship
 
 from .post import Post
 from .community_user import CommunityUser
+from .user import User
 
+
+s = session()
 
 class Community(Base):
     __tablename__ = 'communities'
@@ -51,6 +54,23 @@ class Community(Base):
 
     def __repr__(self):
         return '<Community %r>' % self.name
+
+    def moderators(self):
+        community_users = s.query(CommunityUser.user_id).filter_by(community_id=1,moderator=True).subquery('community_mods')
+
+        return s.query(User).filter(User.id == community_users.c.user_id)
+
+    def viewable_by(self, _):
+        return True
+
+    def creatable_by(self, _):
+        return True
+
+    def updatable_by(self, user):
+        return user in list(self.moderators()) or user.is_admin()
+
+    def destroyable_by(self, user):
+        return user.is_admin()
 
 
 def update_date_modified(mapper, connection, target):
