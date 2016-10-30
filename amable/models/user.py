@@ -1,6 +1,7 @@
 from datetime import datetime as dt
+from random import randrange
 
-from amable import db
+from amable import db, session
 
 from amable.utils.password import hash_password
 
@@ -15,6 +16,9 @@ from .comment import Comment
 
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
+
+
+s = session()
 
 
 class User(Base):
@@ -45,11 +49,11 @@ class User(Base):
                  email,
                  password,
                  name,
-                 bio,
-                 website,
-                 location,
-                 phone,
-                 dob,
+                 bio=None,
+                 website=None,
+                 location=None,
+                 phone=None,
+                 dob=None,
                  profile_image=None,
                  role=None
                  ):
@@ -79,10 +83,12 @@ class User(Base):
         self.phone = phone
         self.dob = dob
 
-        if profile_image is not None:
-            self.profile_image = profile_image
+        if profile_image is None:
+            image_num = format(randrange(1, 11), '03')
+
+            self.profile_image = '/static/img/default{0}.jpg'.format(image_num)
         else:
-            self.profile_image = ""
+            self.profile_image = profile_image
 
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
@@ -91,6 +97,24 @@ class User(Base):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def is_admin(self):
+        return self.role == 'admin'
+
+    def in_community(self, community):
+        return s.query(CommunityUser).filter_by(community_id=community.id, user_id=self.id).count() == 1
+
+    def viewable_by(self, _):
+        return True
+
+    def creatable_by(self, _):
+        return True
+
+    def updatable_by(self, user):
+        return self == user or user.is_admin()
+
+    def destroyable_by(self, user):
+        return self == user or user.is_admin()
 
 
 def update_date_modified(mapper, connection, target):
