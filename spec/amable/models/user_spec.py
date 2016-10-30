@@ -4,6 +4,7 @@ from amable import session
 from amable.models.user import User, update_date_modified
 
 from spec.factories.user_factory import UserFactory
+from spec.factories.community_user_factory import CommunityUserFactory
 
 
 s = session()
@@ -40,6 +41,22 @@ with context('amable.models'):
             with context('__repr__'):
                 with it("returns it's username"):
                     expect(self.user.__repr__()).to(contain("<User 'pablo"))
+
+            with context('is_admin'):
+                with context('for admins'):
+                    with it('returns true'):
+                        expect(self.admin.is_admin()).to(be_true)
+
+                with context('for others'):
+                    with it('returns false'):
+                        expect(self.user.is_admin()).to(be_false)
+
+            with context('in_community'):
+                with context('community member'):
+                    with _it('returns true'):
+                        community_user = CommunityUserFactory(user=self.user)
+
+                        expect(self.user.in_community(community_user.community)).to(be_true)
 
             with context('viewable_by'):
                 with context('any user'):

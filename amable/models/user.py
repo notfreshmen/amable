@@ -1,7 +1,7 @@
 from datetime import datetime as dt
 from random import randrange
 
-from amable import db
+from amable import db, session
 
 from amable.utils.password import hash_password
 
@@ -16,6 +16,9 @@ from .comment import Comment
 
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
+
+
+s = session()
 
 
 class User(Base):
@@ -97,6 +100,9 @@ class User(Base):
 
     def is_admin(self):
         return self.role == 'admin'
+
+    def in_community(self, community):
+        return s.query(CommunityUser).filter_by(community_id=community.id, user_id=self.id).count() == 1
 
     def viewable_by(self, _):
         return True

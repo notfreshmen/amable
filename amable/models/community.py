@@ -14,6 +14,7 @@ from .user import User
 
 s = session()
 
+
 class Community(Base):
     __tablename__ = 'communities'
     id = db.Column(db.Integer, primary_key=True)
@@ -56,7 +57,7 @@ class Community(Base):
         return '<Community %r>' % self.name
 
     def moderators(self):
-        community_users = s.query(CommunityUser.user_id).filter_by(community_id=1,moderator=True).subquery('community_mods')
+        community_users = s.query(CommunityUser.user_id).filter_by(community_id=1, moderator=True).subquery('community_mods')
 
         return s.query(User).filter(User.id == community_users.c.user_id)
 
