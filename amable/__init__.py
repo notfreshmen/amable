@@ -48,7 +48,6 @@ app.register_blueprint(sessions)
 
 # Assets
 from amable.utils.assets import assets_env
-from amable.utils.login import login_manager, load_user
 
 # Base
 from amable.models.base import Base
