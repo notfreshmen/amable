@@ -32,7 +32,8 @@
     <nav class="header__nav nav nav--inline nav--right mobile-hidden">
       <ul class="nav__list">
         {% if current_user.is_authenticated %}
-        <li><a href="#">Logout</a></li>
+        <li>{{ current_user.name }}</li>
+        <li><a href="/logout">Logout</a></li>
         {% else %}
         <li><a href="#">Join</a></li>
         <li><a href="/login">Login</a></li>
