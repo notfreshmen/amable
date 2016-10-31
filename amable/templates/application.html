@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta content="width=device-width,initial-scale=1" name="viewport">
@@ -10,56 +10,66 @@
     <title>Amable</title>
 
     {% assets "css" %}
-      <link href="{{ ASSET_URL }}" rel="stylesheet">
+    <link href="{{ ASSET_URL }}" rel="stylesheet">
     {% endassets %}
 
     <script src="https://use.typekit.net/rpe8rjq.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
-  </head>
-  <body>
+</head>
+<body>
     <header class="header" role="banner">
       <div class="header__container">
         <h1 class="header__logo">
           <a href="/">Amable</a>
-        </h1>
-        <a class="header__toggle desktop-hidden"><i class="ss-icon">rows</i></a>
-        <nav class="header__nav nav nav--inline mobile-hidden">
+      </h1>
+      <a class="header__toggle desktop-hidden"><i class="ss-icon">rows</i></a>
+      <nav class="header__nav nav nav--inline mobile-hidden">
           <ul class="nav__list">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Communities</a></li>
-          </ul>
-        </nav>
-        <nav class="header__nav nav nav--inline nav--right mobile-hidden">
-          <ul class="nav__list">
-            {% if current_user.is_authenticated %}
-            <li><a href="#">Logout</a></li>
-            {% else %}
-            <li><a href="#">Join</a></li>
-            <li><a href="#">Login</a></li>
-            {% endif %}
-          </ul>
-        </nav>
-      </div>
-    </header>
+        </ul>
+    </nav>
+    <nav class="header__nav nav nav--inline nav--right mobile-hidden">
+      <ul class="nav__list">
+        {% if current_user.is_authenticated %}
+        <li>{{ current_user.name }}</li>
+        <li><a href="/logout">Logout</a></li>
+        {% else %}
+        <li><a href="#">Join</a></li>
+        <li><a href="/login">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
+</div>
+</header>
 
-    <main class="main" role="main">
-      {% block content %}{% endblock %}
-    </main>
+<main class="main" role="main">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }} </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</main>
 
-    <footer class="footer" role="footer">
-      <div class="footer__container">
-        <p class="footer__copyright">&copy; 2016 <a href="/">Amable</a></p>
-        <nav class="footer__nav nav nav--inline nav--right">
-          <ul class="nav__list">
-            <li><a href="#">Support</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </footer>
+<footer class="footer" role="footer">
+  <div class="footer__container">
+    <p class="footer__copyright">&copy; 2016 <a href="/">Amable</a></p>
+    <nav class="footer__nav nav nav--inline nav--right">
+      <ul class="nav__list">
+        <li><a href="#">Support</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+</div>
+</footer>
 
-    {% assets "jsc" %}
-      <script src="{{ ASSET_URL }}"></script>
-    {% endassets %}
-  </body>
+{% assets "jsc" %}
+<script src="{{ ASSET_URL }}"></script>
+{% endassets %}
+</body>
 </html>

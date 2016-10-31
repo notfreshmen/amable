@@ -28,6 +28,11 @@ factory_boy
 # utilities
 pycodestyle
 honcho
+ipython
 
 # database migrations
 psycopg2
+
+# wtforms
+WTForms
+Flask-WTF
