@@ -53,6 +53,18 @@ class Post(Base):
     def __repr__(self):
         return '<Post %r>' % self.id
 
+    def viewable_by(self, user):
+        return True
+
+    def creatable_by(self, user):
+        return user.in_community(self) or user.is_admin()
+
+    def updatable_by(self, user):
+        return self.user == user or user in self.community.moderators() or user.is_admin()
+
+    def destroyable_by(self, user):
+        return self.user == user or user in self.community.moderators() or user.is_admin()
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
