@@ -1,22 +1,18 @@
 import sys
 import os
 
-from flask_login import LoginManager
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + '/../../')
 
 
-from amable import app, session
+from amable import app, session, login_manager
 from amable.models.user import User
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-
 
 @login_manager.user_loader
 def load_user(user_id):
     return session.query(User).filter_by(id=user_id).first()
 
-@app.route('/login', methods=['GET', 'POST'])
+
+@app.route('/login', methods=['GET'])
 def login():
     # Here we use a class of some kind to represent and validate our
     # client-side form data. For example, WTForms is a library that will

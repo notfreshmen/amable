@@ -2,18 +2,24 @@ from flask import Blueprint
 from flask import render_template, redirect, request
 from flask_login import login_user
 
-from amable import app, session
 from amable.models.user import User
+from amable import session, login_manager
 
-from amable.utils.password import hash_password, check_password
+from ..forms.login_form import LoginForm
 
 sessions = Blueprint('sessions', __name__,
                      template_folder='../templates/sessions')
 
 
-@sessions.route('/login', methods=['GET', 'POST'])
+@login_manager.user_loader
+def load_user(user_id):
+    return session.query(User).filter_by(id=user_id).first()
+
+
+@sessions.route('/login', methods=['GET'])
 def login():
-    return render_template('login.html')
+    login_form = LoginForm()
+    return render_template('login.html', form=login_form)
 
 
 @sessions.route('/sessions/create', methods=['POST'])
@@ -21,6 +27,8 @@ def create():
     # email 'variable' is the column. request.form['email'] is the post data
     user = session.query(User).filter_by(email=request.form["email"]).first()
     print(user.password)
+
+    # Does the user exist from the query done above?
     if user is None:
         return redirect('/login')
 
