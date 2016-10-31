@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 # Flask
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 # Session|Engine(SQLAlchemy)
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -31,6 +32,10 @@ app.config.from_envvar('AMABLE_%s_SETTINGS' % env.upper())
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 session = scoped_session(sessionmaker(bind=engine))
 db = SQLAlchemy(app)
+
+# Login Manager
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 # Blueprints
