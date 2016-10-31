@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask import render_template, redirect, request
+from flask_login import login_user
 
 from amable import app, session
 from amable.models.user import User
@@ -20,7 +21,13 @@ def create():
     print(user.password)
     if user is None:
         return redirect('/login')
-    if check_password(user.password, request.form["password"]):
-        return redirect("/")
+        
+    form = LoginForm()
+    if form.validate_on_submit():     
+        if check_password(user, request.form["password"]):
+            login_user(user)
+            flask.flash('Logged in successfully.')           
+            return redirect("/")
     else:
         return redirect('/login')
+        

@@ -31,8 +31,12 @@
         </nav>
         <nav class="header__nav nav nav--inline nav--right mobile-hidden">
           <ul class="nav__list">
+            {% if current_user.is_authenticated %}
+            <li><a href="#">Logout</a></li>
+            {% else %}
             <li><a href="#">Join</a></li>
             <li><a href="#">Login</a></li>
+            {% endif %}
           </ul>
         </nav>
       </div>
