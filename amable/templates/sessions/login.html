@@ -2,6 +2,7 @@
 {% block content %}
   <div class="page">
     <form class="form" method="POST" action="/sessions/create">
+      {{form.hidden_tag()}}
       <div class="form__group">
         <label class="form__label">Email</label>
         {{form.email}}

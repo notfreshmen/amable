@@ -27,6 +27,7 @@ if env is None:
 # App Setup
 app = Flask(__name__)
 app.config.from_envvar('AMABLE_%s_SETTINGS' % env.upper())
+app.secret_key = 'domislove'
 
 # DB Setup
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])

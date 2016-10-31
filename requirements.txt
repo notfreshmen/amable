@@ -35,3 +35,4 @@ psycopg2
 
 # wtforms
 WTForms
+Flask-WTF
