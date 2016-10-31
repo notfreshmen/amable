@@ -1,0 +1,506 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"_R",
+				"_RunningQueue\tvar"
+			],
+			[
+				"string",
+				"stringToPrint\tlocal var"
+			],
+			[
+				"decim",
+				"decimalValue\tlocal var"
+			],
+			[
+				"HTMLTableC",
+				"HTMLTableCellElement\tinterface"
+			],
+			[
+				"p",
+				"runningPID\tproperty"
+			],
+			[
+				"fun",
+				"func_A9\tmethod"
+			],
+			[
+				"decimal",
+				"decimalValue\tlocal var"
+			],
+			[
+				"decima",
+				"decimalValue\tlocal var"
+			],
+			[
+				"_St",
+				"_StdOut\tvar"
+			],
+			[
+				"Com",
+				"Communities\tclass"
+			],
+			[
+				"Post",
+				"PostUpvote\tclass"
+			],
+			[
+				"command",
+				"commandList\tlocal var"
+			],
+			[
+				"comma",
+				"commandList\tlocal var"
+			],
+			[
+				"cat",
+				"category\tstatement"
+			],
+			[
+				"all",
+				"allText\tproperty"
+			],
+			[
+				"curr",
+				"currentYPosition\tproperty"
+			],
+			[
+				"curre",
+				"currentRecallIndex\tproperty"
+			],
+			[
+				"cur",
+				"currentRecallIndex\tproperty"
+			],
+			[
+				"prom",
+				"promptWidth\tparameter"
+			],
+			[
+				"delete",
+				"deleteStart\tlocal var"
+			],
+			[
+				"_DEFAULT",
+				"_DefaultFontSize\tvar"
+			],
+			[
+				"Canvas",
+				"CanvasTextFunctions\tclass"
+			],
+			[
+				"get",
+				"getElementById\tmethod"
+			],
+			[
+				"date_",
+				"date_modified\tstatement"
+			],
+			[
+				"date",
+				"date_modified"
+			],
+			[
+				"iso",
+				"isoformat\tfunction"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"__",
+				"__file__\tinstance"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "err",
+		"selected_items":
+		[
+			[
+				"err",
+				"TypeScript: Show Error List"
+			],
+			[
+				"error",
+				"TypeScript: Show Error List"
+			],
+			[
+				"eror",
+				"Set Syntax: Ruby on Rails"
+			],
+			[
+				"errir",
+				"Package Control: Remove Repository"
+			],
+			[
+				"linting",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"packages",
+				"Package Control: Disable Package"
+			],
+			[
+				"disabl",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"instl",
+				"Package Control: Install Local Dependency"
+			],
+			[
+				"isntall",
+				"Package Control: Install Package"
+			],
+			[
+				"disable",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"lint",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"show er",
+				"Anaconda: Show error list"
+			],
+			[
+				"anaconda lin",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"linter",
+				"Anaconda: Next lint error"
+			]
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/benderm/Github/amable"
+	],
+	"file_history":
+	[
+		"/home/benderm/Github/gekkOS/node_modules/gulp-tsc/node_modules/lodash/internal/cachePush.js",
+		"/home/benderm/Github/gekkOS/source/host/cpu.ts",
+		"/home/benderm/Github/gekkOS/source/globals.ts",
+		"/home/benderm/Github/gekkOS/source/os/shell.ts",
+		"/home/benderm/Github/gekkOS/source/os/console.ts",
+		"/home/benderm/Github/gekkOS/source/utils.ts",
+		"/home/benderm/Github/gekkOS/source/host/control.ts",
+		"/home/benderm/Github/gekkOS/css/app.css",
+		"/home/benderm/Github/gekkOS/source/os/kernel.ts",
+		"/home/benderm/Github/gekkOS/source/os/memory.ts",
+		"/home/benderm/Github/gekkOS/distrib/os/pcb.js",
+		"/home/benderm/Github/gekkOS/distrib/utils.js",
+		"/home/benderm/Github/gekkOS/distrib/os/memory.js",
+		"/home/benderm/Github/amable/amable/models/user.py",
+		"/home/benderm/Github/amable/amable/models/comment.py",
+		"/home/benderm/Github/amable/amable/models/communities.py",
+		"/home/benderm/Github/amable/amable/models/community_user.py",
+		"/home/benderm/Github/amable/amable/models/example.py",
+		"/home/benderm/Github/amable/amable/models/hashtag.py",
+		"/home/benderm/Github/amable/amable/models/post.py",
+		"/home/benderm/Github/amable/amable/models/post_report.py",
+		"/home/benderm/Github/amable/amable/models/post_upvote.py",
+		"/home/benderm/Github/amable/amable/models/report.py",
+		"/home/benderm/Github/amable/spec/models/user_spec.py",
+		"/home/benderm/Github/amable/test.py",
+		"/home/benderm/Github/amable/spec/models/reports_spec.py",
+		"/home/benderm/Github/amable/db/versions/006_add_communities_table.py",
+		"/home/benderm/Github/amable/db/versions/003_add_user_attributes.py",
+		"/home/benderm/Github/amable/db/versions/012_community_users_FK.py",
+		"/home/benderm/Github/amable/db/versions/013_reports_FK.py",
+		"/home/benderm/Github/amable/db/versions/014_posts_FK.py",
+		"/home/benderm/Github/amable/db/versions/015_post_reports_FK.py",
+		"/home/benderm/Github/amable/db/versions/016_comments_FK.py",
+		"/home/benderm/Github/amable/db/versions/017_post_upvote_FK.py",
+		"/home/benderm/Github/amable/db/versions/009_create_comment_table.py",
+		"/home/benderm/Github/amable/node_modules/gauge/error.js",
+		"/home/benderm/Github/amable/db/examples/fk_table_version.py",
+		"/home/benderm/Github/amable/db/versions/012_change_users_date_created|modified_types.py",
+		"/home/benderm/Github/amable/db/examples/new_table_version.py",
+		"/home/benderm/Github/amable/db/versions/010_create_hashtag_table.py",
+		"/home/benderm/Github/amable/db/versions/011_create_community_user_table.py",
+		"/home/benderm/Github/amable/db/versions/005_add_post_report_table.py",
+		"/home/benderm/Github/amable/settings.development.cfg",
+		"/home/benderm/Github/amable/db/versions/007_add_post_table.py",
+		"/home/benderm/Github/amable/db/versions/008_create_post_upvote_table.py",
+		"/home/benderm/Github/amable/db/versions/008_create_post_report_table.py",
+		"/home/benderm/Github/amable/db/versions/008_change_unique_for_communitites.py",
+		"/home/benderm/Github/amable/db/versions/008_add_post_table.py",
+		"/home/benderm/Github/amable/amable/models/base.py",
+		"/home/benderm/Github/gekkOS/distrib/css/app.css",
+		"/home/benderm/Github/gekkOS/index2.html",
+		"/home/benderm/Github/gekkOS/tsos.css",
+		"/home/benderm/Github/amable/db/versions/004_add_users_table.py",
+		"/home/benderm/Github/gekkOS/.gitignore",
+		"/home/benderm/Github/gekkOS/package.json",
+		"/home/benderm/Github/amable/db/__init__.py",
+		"/home/benderm/Github/amable/models/report",
+		"/home/benderm/Github/amable/db/versions/002_update_user_model.py",
+		"/home/benderm/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/benderm/.config/sublime-text-3/Packages/User/Python.sublime-settings",
+		"/home/benderm/Github/psn/models/user.py",
+		"/home/benderm/Github/psn/requirements.txt",
+		"/home/benderm/Github/psn/settings.development.cfg",
+		"/home/benderm/Github/psn/Makefile",
+		"/home/benderm/Github/gekkOS/bsod.html",
+		"/home/benderm/Github/gekkOS/source/os/canvastext.ts",
+		"/home/benderm/Github/gekkOS/gulpfile.js",
+		"/home/benderm/Github/psn/psn/blueprints/base.py",
+		"/home/benderm/Github/psn/psn/config.py",
+		"/home/benderm/Github/psn/psn/__init__.py",
+		"/home/benderm/Github/psn/psn/alchemy/models.py"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"/home/benderm/Github/gekkOS",
+			"/home/benderm/Github/amable/amable/models/",
+			"~/Github/amable",
+			"<open files>",
+			"/home/benderm/Github/amable/db/examples"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"updateCPUTable",
+			"setHexAtIndex",
+			"getHexAtIndex",
+			"STdOut",
+			"resident_pcb",
+			"running_pcb",
+			"run",
+			"updateReadyQueueTable",
+			"ready_pcb",
+			"cycle",
+			"after_update",
+			"after_update_listener",
+			"after_update",
+			"after_insert_listener",
+			"new_table",
+			"alert",
+			"putText",
+			"push",
+			"alert",
+			"(\"",
+			"db.",
+			"text",
+			"irq"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"setHexAtRelativeIndex",
+			"getHexAtRelativeIndex",
+			"finished_pcb",
+			"resident_pcb",
+			"running_pcb",
+			"before_update",
+			"before_update_listener",
+			"before_update",
+			"after_update_listener",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.doc":
+	{
+		"height": 0.0
+	},
+	"output.errorlist":
+	{
+		"height": 135.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "amable.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"cpu",
+				"source/host/cpu.ts"
+			],
+			[
+				"uti",
+				"source/utils.ts"
+			],
+			[
+				"she",
+				"source/os/shell.ts"
+			],
+			[
+				"cp",
+				"node_modules/gulp-tsc/node_modules/lodash/internal/cachePush.js"
+			],
+			[
+				"consol.t",
+				"source/os/console.ts"
+			],
+			[
+				"memory.ts",
+				"source/os/memory.ts"
+			],
+			[
+				"memo",
+				"distrib/os/memory.js"
+			],
+			[
+				"comm",
+				"amable/models/communities.py"
+			],
+			[
+				"exa",
+				"amable/models/example.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "irq",
+		"selected_items":
+		[
+			[
+				"irq",
+				"isRightSideOfQualifiedName"
+			],
+			[
+				"onDoc",
+				"onDocumentLoad"
+			]
+		],
+		"width": 566.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 284.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
