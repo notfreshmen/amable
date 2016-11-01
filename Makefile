@@ -37,12 +37,16 @@ db_user_setup:
 	createuser -U postgres -h localhost -p 5432 -d -w amable
 	sudo -u postgres psql -U postgres -c "alter user amable with password 'domislove';"
 
-db_setup:
-	createdb -U amable -h localhost -p 5432 amable_development
+dbsync:
+	dropdb -U amable amable_development --if-exists
+	createdb -U amable -O amable -h localhost -p 5432 amable_development
 	python db/manage.py version_control
+	python db/manage.py upgrade
 
-	createdb -U amable -h localhost -p 5432 amable_test
+	dropdb -U amable amable_test --if-exists
+	createdb -U amable -O amable -h localhost -p 5432 amable_test
 	AMABLE_ENV=test python db/manage.py version_control
+	AMABLE_ENV=test python db/manage.py upgrade
 
 version_control:
 	python db/manage.py version_control

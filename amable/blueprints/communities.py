@@ -15,7 +15,8 @@ communities = Blueprint('communities', __name__,
 @communities.route('/communities')
 def community():
     searchForm = CommunitySearchForm()
-    return render_template('search_communities.html', title="Search Communities", form=searchForm)
+    return render_template('search_communities.html',
+                           title="Search Communities", form=searchForm)
 
 
 @communities.route('/communities/search', methods=['GET'])
@@ -31,9 +32,10 @@ def search_communities():
 
             return jsonify(communities=[i.serialize for i in communityList])
         else:
-            return jsonify(communities = {})
+            return jsonify(communities={})
     else:
         flash("Arguments missing")
+
 
 @communities.route('/communities/view/<community_id>')
 def view_community(community_id):

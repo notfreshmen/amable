@@ -1,0 +1,14 @@
+{% extends "application.html" %}
+{% block content %}
+<h1>{{ community.name }}</h1>
+<img src="{{ community.banner_url }}">
+<img src="{{ community.thumbnail_url }}">
+<br><br>
+<h4>Description:</h4>
+<p style="padding-left=40px"> {{ community.description }} </p>
+
+<bold>Other things</bold>
+<ul>
+	<li></li>
+</ul>
+{% endblock %}
