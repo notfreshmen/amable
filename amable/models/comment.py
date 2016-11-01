@@ -13,13 +13,14 @@ class Comment(Base):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
-    parent = db.Column(db.Integer)
+    parent = db.Column(db.Integer, db.ForeignKey('comments.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     upvote_count = db.Column(db.String(128))
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
     hashtags = relationship(CommentHashtag, backref="post")
+    children = relationship("Comment", lazy='joined', join_depth=10)
 
     def __init__(
             self,
@@ -31,7 +32,10 @@ class Comment(Base):
     ):
 
         self.content = content
+        self.user = user
+        self.post = post
         self.parent = parent
+        self.upvote_count = 0
 
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels

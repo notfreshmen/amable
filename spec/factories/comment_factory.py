@@ -17,3 +17,4 @@ class CommentFactory(factory.alchemy.SQLAlchemyModelFactory):
     user = factory.SubFactory(UserFactory)
     post = factory.SubFactory(PostFactory)
     parent = None
+    upvote_count = 0

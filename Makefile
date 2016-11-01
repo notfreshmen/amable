@@ -46,7 +46,7 @@ dbsync:
 	AMABLE_ENV=test python db/manage.py upgrade
 
 reinit:
-	psql -U amable -d amable_development -c "delete from comments; delete from posts; delete from communities; delete from users;"
+	psql -U amable -d amable_development -c 'delete from comments; delete from posts; delete from communities; delete from users;'
 	python data_init.py
 
 erd:

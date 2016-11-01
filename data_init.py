@@ -5,11 +5,17 @@ s = session()
 
 topComment = CommentFactory()
 
-subComment1 = CommentFactory(post=topComment.post, parent=topComment)
-subComment2 = CommentFactory(post=topComment.post, parent=topComment)
-subComment3 = CommentFactory(post=topComment.post, parent=topComment)
+s.commit()
 
-subsubComment1 = CommentFactory(post=topComment.post, parent=subComment3)
+subComment1 = CommentFactory(post=topComment.post, parent=topComment.id)
+subComment2 = CommentFactory(post=topComment.post, parent=topComment.id)
+subComment3 = CommentFactory(post=topComment.post, parent=topComment.id)
+
+s.commit()
+
+subsubComment1 = CommentFactory(post=topComment.post, parent=subComment3.id)
 
 
 s.commit()
+
+print("Community ID: " + str(topComment.post.community.id))
