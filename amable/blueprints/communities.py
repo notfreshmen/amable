@@ -15,13 +15,11 @@ communities = Blueprint('communities', __name__,
 @communities.route('/communities')
 def community():
     searchForm = CommunitySearchForm()
-    return render_template('communities.html', title="Search Communities", form=searchForm)
+    return render_template('search_communities.html', title="Search Communities", form=searchForm)
 
 
 @communities.route('/communities/search', methods=['GET'])
 def search_communities():
-    print("got here")
-
     if 'community' in request.args:
 
         if len(request.args['community']) > 0:
@@ -31,14 +29,17 @@ def search_communities():
             communityList = session.query(Community).filter(
                 func.lower(Community.name).like(func.lower(queryToSearch + "%"))).all()
 
-            # jsonReturn = {}
-            # jsonReturn.communities = []
-
-            # for tempCommunity in communityList:
-            #     jsonReturn.communities.push(tempCommunity)
-
             return jsonify(communities=[i.serialize for i in communityList])
         else:
             return jsonify(communities = {})
     else:
         flash("Arguments missing")
+
+@communities.route('/communities/view/<community_id>')
+def view_community(community_id):
+    # First lets make sure the community exists
+    tempCommunity = session.query(Community).filter_by(id=community_id).first()
+    if tempCommunity is None:
+        print("no")
+    else:
+        print("yay")
