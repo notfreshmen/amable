@@ -43,7 +43,7 @@ class Community(Base):
         self.name = name
         self.description = description
         self.banner_url = banner_url
-        self.thumbnail_url = banner_url
+        self.thumbnail_url = thumbnail_url
         self.nsfw = nsfw
         self.active = active
         self.num_upvotes = num_upvotes

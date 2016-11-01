@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from sqlalchemy import func
+from sqlalchemy.orm import joinedload
 
 from amable import session
 
@@ -40,8 +41,10 @@ def search_communities():
 @communities.route('/communities/view/<community_id>')
 def view_community(community_id):
     # First lets make sure the community exists
-    tempCommunity = session.query(Community).filter_by(id=community_id).first()
+    tempCommunity = session.query(Community).options(joinedload('posts')).filter_by(id=community_id).first()
+    print("temp com posts" + tempCommunity.posts[0].user.name)
     if tempCommunity is None:
         print("no")
+        return "no"
     else:
-        print("yay")
+        return render_template('view_communities.html', title="Amable - " + tempCommunity.name, community=tempCommunity.serialize, posts = tempCommunity.posts)

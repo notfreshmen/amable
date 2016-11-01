@@ -12,7 +12,7 @@ class CommunityFactory(factory.alchemy.SQLAlchemyModelFactory):
 
     name = 'The Love'
     description = 'for all the love'
-    banner_url = 'love.png'
-    thumbnail_url = 'love.png'
+    banner_url = 'http://dsedutech.org/images/demo/placement_banner1.jpg'
+    thumbnail_url = 'http://i.imgur.com/7mo7QHW.gif'
     nsfw = False
     active = True
