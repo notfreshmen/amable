@@ -21,7 +21,9 @@ def load_user(user_id):
 @sessions.route('/login', methods=['GET'])
 def login():
     login_form = LoginForm()
-    return render_template('login.html', form=login_form)
+    return render_template('login.html',
+                           form=login_form,
+                           title="Amable - Login")
 
 
 @sessions.route('/logout', methods=['GET'])

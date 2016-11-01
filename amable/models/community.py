@@ -53,11 +53,26 @@ class Community(Base):
         self.date_created = now
         self.date_modified = now
 
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'banner_url': self.banner_url,
+            'thumbnail_url': self.thumbnail_url,
+            'nsfw': self.nsfw,
+            'active': self.active,
+            'num_upvotes': self.num_upvotes,
+            'date_created': self.date_created,
+        }
+
     def __repr__(self):
         return '<Community %r>' % self.name
 
     def moderators(self):
-        community_users = s.query(CommunityUser.user_id).filter_by(community_id=1, moderator=True).subquery('community_mods')
+        community_users = s.query(CommunityUser.user_id).filter_by(
+            community_id=1, moderator=True).subquery('community_mods')
 
         return s.query(User).filter(User.id == community_users.c.user_id)
 
@@ -76,5 +91,6 @@ class Community(Base):
 
 def update_date_modified(mapper, connection, target):
     target.date_modified = dt.now().isoformat()  # Update Date Modified
+
 
 event.listen(Community, 'before_update', update_date_modified)
