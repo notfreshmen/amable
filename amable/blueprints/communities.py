@@ -1,8 +1,11 @@
 from flask import Blueprint, render_template, request, flash, jsonify
+from sqlalchemy import func
 
 from amable import session
 
 from amable.models.community import Community
+
+from ..forms.community_search_form import CommunitySearchForm
 
 
 communities = Blueprint('communities', __name__,
@@ -11,33 +14,31 @@ communities = Blueprint('communities', __name__,
 
 @communities.route('/communities')
 def community():
-    return render_template('communities.html', title="View Communities")
+    searchForm = CommunitySearchForm()
+    return render_template('communities.html', title="Search Communities", form=searchForm)
+
 
 @communities.route('/communities/search', methods=['GET'])
 def search_communities():
     print("got here")
 
     if 'community' in request.args:
-        print("request form " + request.args['community'])
 
-        queryToSearch = request.args['community']
+        if len(request.args['community']) > 0:
 
-        print("query to serach " + queryToSearch)
+            queryToSearch = request.args['community']
 
-        communityList = session.query(Community).filter(Community.name.like(queryToSearch + "%")).all()
+            communityList = session.query(Community).filter(
+                func.lower(Community.name).like(func.lower(queryToSearch + "%"))).all()
 
-        # jsonReturn = {}
-        # jsonReturn.communities = []
+            # jsonReturn = {}
+            # jsonReturn.communities = []
 
-        # for tempCommunity in communityList:
-        #     jsonReturn.communities.push(tempCommunity)
+            # for tempCommunity in communityList:
+            #     jsonReturn.communities.push(tempCommunity)
 
-        return jsonify(communities = [i.serialize for i in communityList])
+            return jsonify(communities=[i.serialize for i in communityList])
+        else:
+            return jsonify(communities = {})
     else:
-        flash("Arguments missting")
-    
-   
-
-
-
-
+        flash("Arguments missing")
