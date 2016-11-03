@@ -13,6 +13,9 @@ jsmin
 
 # miscellaneous
 python-dotenv
+CommonMark
+Flask-WTF
+Flask-Login
 
 # documentation
 eralchemy

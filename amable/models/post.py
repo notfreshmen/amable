@@ -12,6 +12,8 @@ from .comment import Comment
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
 
+from CommonMark import commonmark
+
 
 class Post(Base):
     __tablename__ = 'posts'
@@ -64,6 +66,9 @@ class Post(Base):
 
     def destroyable_by(self, user):
         return self.user == user or user in self.community.moderators() or user.is_admin()
+
+    def text_brief_markdown(self):
+        return commonmark(self.text_brief)
 
 
 def update_date_modified(mapper, connection, target):

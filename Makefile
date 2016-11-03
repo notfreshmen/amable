@@ -49,6 +49,6 @@ version_control:
 
 db_upgrade:
 	python db/manage.py upgrade
-
+	AMABLE_ENV=test python db/manage.py upgrade
 erd:
 	eralchemy -i postgres://amable:domislove@localhost:5432/amable_development -o docs/erd.pdf

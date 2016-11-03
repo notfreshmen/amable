@@ -27,6 +27,16 @@
     }
   }
 
+  &--red {
+    background: $color-red;
+    color: $color-white;
+
+    &:hover {
+      background: $color-red-dark;
+      color: $color-white;
+    }
+  }
+
   &--small {
     font-size: $font-size-n1;
     line-height: rhythm(0.5);

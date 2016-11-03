@@ -98,6 +98,9 @@ class User(Base):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def __eq__(self, other):
+        return self.email == other.email
+
     def is_admin(self):
         return self.role == 'admin'
 
@@ -115,6 +118,30 @@ class User(Base):
 
     def destroyable_by(self, user):
         return self == user or user.is_admin()
+
+    def avatar(self):
+        if self.profile_image:
+            return self.profile_image
+        else:
+            return url_for('static', filename='img/default-avatar.jpg')
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        try:
+            return unicode(self.id)  # python 2
+        except NameError:
+            return str(self.id)  # python 3
 
 
 def update_date_modified(mapper, connection, target):
