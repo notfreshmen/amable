@@ -14,7 +14,7 @@ jsmin
 # miscellaneous
 python-dotenv
 CommonMark
-WTForms
+Flask-WTF
 
 # documentation
 eralchemy

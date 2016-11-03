@@ -14,7 +14,7 @@
     line-height: 1rem;
     outline: none;
     padding: rhythm(0.25);
-    width: 50%;
+    width: 100%;
 
     &:focus {
       border-color: $color-grey;
@@ -23,6 +23,10 @@
     &--right {
       float: right;
     }
+  }
+
+  textarea {
+    height: 5rem;
   }
 
   &__group {

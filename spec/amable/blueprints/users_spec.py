@@ -18,7 +18,8 @@ with context('amable'):
                     self.user = UserFactory()
 
                 with after.all:
-                    s.rollback()
+                    s.query(User).delete()
+                    s.commit()
 
                 with it('returns the user page'):
                     res = client.get('/{0}'.format(self.user.username))
@@ -26,20 +27,42 @@ with context('amable'):
                     expect(res.data).to(contain(b'pablo'))
 
             with context('new'):
-                with _it('returns the join page'):
+                with it('returns the join page'):
                     res = client.get('/join')
 
                     expect(res.data).to(contain(b'Join'))
 
             with context('create'):
-                with _it('creates a new user'):
-                    pass
+                with it('creates a new user'):
+                    user = UserFactory.build()
+
+                    res = client.post('/users', data=dict(
+                        username=user.username,
+                        name='Foobar',
+                        email=user.email,
+                        password='foobar',
+                        password_confirmation='foobar'
+                    ), follow_redirects=True)
+
+                    expect(s.query(User).filter_by(username=user.username).count()).to(equal(1))
 
                 with _it('logs in the new user'):
                     pass
 
-                with _it('redirects to the dashboard'):
-                    pass
+                with it('redirects to the dashboard'):
+                    user = UserFactory.build()
+
+                    res = client.post('/users', data=dict(
+                        username=user.username,
+                        name='Foobar',
+                        email=user.email,
+                        password='foobar',
+                        password_confirmation='foobar'
+                    ), follow_redirects=True)
+
+                    print(res.headers['location'])
+
+                    expect(res.location).to(equal('/'))
 
             with context('edit'):
                 with _it('return the account page'):
@@ -53,8 +76,10 @@ with context('amable'):
                     pass
 
             with context('destroy'):
-                with _it('destroys the user'):
-                    pass
+                with it('destroys the user'):
+                    res = client.delete('/{0}'.format(self.user.id))
+
+                    expect(s.query(User).filter_by(id=self.user.id).count()).to(equal(0))
 
                 with _it('redirects back to the index'):
                     pass

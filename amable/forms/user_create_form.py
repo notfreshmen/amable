@@ -1,8 +1,9 @@
+from flask_wtf import FlaskForm
 from wtforms import Form, StringField, PasswordField, validators
 from wtforms.fields.html5 import EmailField
 
 
-class UserCreateForm(Form):
+class UserCreateForm(FlaskForm):
     username = StringField('Username', [validators.Required(), validators.Length(min=3, max=25)])
     email = EmailField('Email', [validators.Required(), validators.Email()])
     name = StringField('Name', [validators.Required()])

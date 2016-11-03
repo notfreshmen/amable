@@ -13,6 +13,9 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
 
+# CSRF
+from flask_wtf.csrf import CsrfProtect
+
 
 # DotEnv Setup
 load_dotenv(join(dirname(__file__), '..', '.env'))
@@ -23,14 +26,18 @@ env = environ.get('AMABLE_ENV')
 if env is None:
     env = 'development'
 
-# App Setup
+# App setup
 app = Flask(__name__)
 app.config.from_envvar('AMABLE_%s_SETTINGS' % env.upper())
 
-# DB Setup
+# DB setup
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 session = scoped_session(sessionmaker(bind=engine))
 db = SQLAlchemy(app)
+
+# CSRF setup
+CsrfProtect(app)
+
 
 # Blueprints
 from amable.blueprints.base import base as base_blueprint
@@ -38,6 +45,7 @@ from amable.blueprints.users import users as users_blueprint
 
 app.register_blueprint(base_blueprint)
 app.register_blueprint(users_blueprint)
+
 
 # Assets
 from amable.utils.assets import assets_env
