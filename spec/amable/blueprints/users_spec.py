@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 from expects import *
 
 from amable import app, session
@@ -58,11 +60,9 @@ with context('amable'):
                         email=user.email,
                         password='foobar',
                         password_confirmation='foobar'
-                    ), follow_redirects=True)
+                    ))
 
-                    print(res.headers['location'])
-
-                    expect(res.location).to(equal('/'))
+                    expect(urlparse(res.location).path).to(equal('/'))
 
             with context('edit'):
                 with _it('return the account page'):
