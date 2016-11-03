@@ -1,7 +1,8 @@
 .flash {
   background: $color-grey;
+  border-bottom: 1px solid $color-white;
   color: $color-white;
-  padding: rhythm(0.5);
+  padding: rhythm(0.5) rhythm(0.75);
   box-sizing: border-box;
 
   p {
