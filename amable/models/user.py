@@ -98,6 +98,9 @@ class User(Base):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def __eq__(self, other):
+        return self.email == other.email
+
     def is_admin(self):
         return self.role == 'admin'
 
@@ -115,6 +118,12 @@ class User(Base):
 
     def destroyable_by(self, user):
         return self == user or user.is_admin()
+
+    def avatar(self):
+        if self.profile_image:
+            return self.profile_image
+        else:
+            return url_for('static', filename='img/default-avatar.jpg')
 
     @property
     def is_authenticated(self):

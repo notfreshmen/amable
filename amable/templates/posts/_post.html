@@ -1,0 +1,20 @@
+<article class="post">
+  <aside class="post__left">
+    <a href="{{ url_for('users.show', username=post.user.username) }}"><img src="{{ post.user.profile_image }}" class="avatar"></a>
+  </aside>
+  <div class="post__content">
+    <h3 class="post__author"><a href="{{ url_for('users.show', username=post.user.username) }}">{{ post.user.name }} <span>@{{ post.user.username }}</span></a></h3>
+    <div class="post__text">
+      {{ post.text_brief_markdown() | safe }}
+    </div>
+    <footer class="post__actions">
+      <span class="post__date"><i class="ss-icon">clock</i> <a href="#">{{ post.date_created | time_since }}</a></span>
+    </footer>
+  </div>
+  <aside class="post__right">
+    <div class="score">
+      <span class="score__action"><a href="#"><i class="ss-icon">up</i></a></span>
+      <span class="score__number">{{ post.post_upvotes | length }}</span>
+    </div>
+  </aside>
+</article>

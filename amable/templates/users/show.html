@@ -1,0 +1,28 @@
+{% extends "application.html" %}
+{% block content %}
+  <div class="user">
+    <aside class="user__sidebar">
+      <div class="user__sidebar__image">
+        <img class="user__avatar avatar" src="{{ user.profile_image }}">
+      </div>
+      <div class="user__sidebar__details">
+        <h1 class="user__name">{{ user.name }}</h1>
+        <h3 class="user__username">@{{ user.username }}</h3>
+        <p class="user__bio">{% if user.bio %}{{ user.bio }}{% endif %}</p>
+      </div>
+      <ul class="user__info">
+        {% if user.location %}<li><i class="ss-icon">location</i> {{ user.location }}</li>{% endif %}
+        {% if user.website %}<li><i class="ss-icon">globe</i> <a href="{{ user.website }}">{{ user.website }}</a></li>{% endif %}
+      </ul>
+    </aside>
+    <section class="user__posts posts">
+      {% if posts %}
+        {% for post in posts %}
+          {% include "posts/_post.html" %}
+        {% endfor %}
+      {% else %}
+        <p>No posts yet!</p>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}
