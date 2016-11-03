@@ -122,6 +122,24 @@ class User(Base):
         else:
             return url_for('static', filename='img/default-avatar.jpg')
 
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        try:
+            return unicode(self.id)  # python 2
+        except NameError:
+            return str(self.id)  # python 3
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object

@@ -15,6 +15,7 @@ jsmin
 python-dotenv
 CommonMark
 Flask-WTF
+Flask-Login
 
 # documentation
 eralchemy
@@ -33,3 +34,7 @@ ipython
 
 # database migrations
 psycopg2
+
+# wtforms
+WTForms
+Flask-WTF
