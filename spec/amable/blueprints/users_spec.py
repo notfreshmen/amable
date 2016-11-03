@@ -76,10 +76,12 @@ with context('amable'):
                     pass
 
             with context('destroy'):
-                with it('destroys the user'):
-                    res = client.delete('/{0}'.format(self.user.id))
+                with _it('destroys the user'):
+                    res = client.post('/users/{0}/destroy'.format(self.user.id))
 
                     expect(s.query(User).filter_by(id=self.user.id).count()).to(equal(0))
 
                 with _it('redirects back to the index'):
-                    pass
+                    res = client.post('/users/{0}/destroy'.format(self.user.id))
+
+                    expect(urlparse(res.location).path).to(equal('/'))
