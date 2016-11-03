@@ -1,6 +1,8 @@
 *.pyc
 .coverage
 .DS_Store
+amable.sublime-*
+yarn-error.log
 .vagrant/
 __pycache__/
 venv/

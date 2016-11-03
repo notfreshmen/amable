@@ -98,6 +98,9 @@ class User(Base):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def __eq__(self, other):
+        return self.email == other.email
+
     def is_admin(self):
         return self.role == 'admin'
 

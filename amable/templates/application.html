@@ -32,10 +32,11 @@
     <nav class="header__nav nav nav--inline nav--right mobile-hidden">
       <ul class="nav__list">
         {% if current_user.is_authenticated %}
-        <li>{{ current_user.name }}</li>
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="{{ url_for('users.show', username=current_user.username) }}">{{ current_user.name }}</a></li>
+        <li><a href="{{ url_for('users.edit') }}">Account</a></li>
+        <li><a href="{{ url_for('sessions.logout') }}">Logout</a></li>
         {% else %}
-        <li><a href="#">Join</a></li>
+        <li><a href="{{ url_for('users.new') }}">Join</a></li>
         <li><a href="/login">Login</a></li>
         {% endif %}
     </ul>

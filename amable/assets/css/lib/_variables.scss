@@ -9,7 +9,10 @@ $color-grey-darkest: darken($color-grey, 15%);
 $color-grey-light: #f2f2ee;
 
 $color-blue: #0074D9;
-$color-blue-dark: darken(#0074D9, 10%);
+$color-blue-dark: darken($color-blue, 10%);
+
+$color-red: #FF4136;
+$color-red-dark: darken($color-red, 10%);
 
 $font-family-sans-serif: "aktiv-grotesk", Helvetica Neue, Helvetica, Arial, sans-serif;
 

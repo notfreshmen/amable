@@ -5,7 +5,7 @@
       <h2 class="page__title">Edit Profile</h2>
     </header>
     <section class="page__block">
-      <form class="form user" action="{{ url_for('users.update', id=1) }}" method="post" enctype="multipart/form-data">
+      <form class="form user" action="{{ url_for('users.update', id=current_user.id) }}" method="post" enctype="multipart/form-data">
         <input name="_method" type="hidden" value="PATCH">
         <aside class="user__sidebar">
           <div class="user__sidebar__image">
@@ -52,6 +52,12 @@
             <button type="submit" class="btn btn--small">Save</button>
           </div>
         </section>
+      </form>
+      <form action="{{ url_for('users.destroy', id=current_user.id) }}" method="post">
+        {{ form.csrf_token }}
+        <div class="form__group">
+          <button type="submit" class="btn btn--small btn--red">Delete my account</button>
+        </div>
       </form>
     </section>
   </div>

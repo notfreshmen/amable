@@ -1,5 +1,9 @@
+from pprint import pprint
+
 from flask import Blueprint
 from flask import render_template, abort, request, redirect, url_for, flash
+
+from flask_login import login_user, login_required, current_user, logout_user
 
 from amable import session
 
@@ -45,10 +49,9 @@ def create():
         )
 
         s.add(user)
-
         s.commit()
 
-        # log in here at some point
+        login_user(user)
 
         return redirect(url_for('base.index'))
 
@@ -56,25 +59,26 @@ def create():
 
 
 @users.route('/account')
+@login_required
 def edit():
-    user = s.query(User).filter_by(username='ethan').first()
+    form = UserUpdateForm(obj=current_user)
 
-    form = UserUpdateForm(obj=user)
-
-    return render_template('edit.html', current_user=user, form=form)
+    return render_template('edit.html', form=form)
 
 
 @users.route('/users/<id>/update', methods=['POST'])
+@login_required
 def update(id):
-    print('update hit')
     user = s.query(User).filter_by(id=id).first()
+
+    if user.updatable_by(current_user) is not True:
+        return redirect(url_for('sessions.login'))
 
     form = UserUpdateForm(request.form)
 
     if form.validate():
         data = form.data
 
-        # Don't set the profile_image to None if there's no input
         if data["profile_image"] == "":
             del(data["profile_image"])
 
@@ -84,18 +88,23 @@ def update(id):
 
         return redirect(url_for('users.edit'))
 
-    print('not validated')
-
     flash(form.errors)
 
     return redirect(url_for('users.edit'))
 
 
 @users.route('/users/<id>/destroy', methods=['POST'])
+@login_required
 def destroy(id):
     user = s.query(User).filter_by(id=id).first()
 
+    if user.destroyable_by(current_user) is not True:
+        return redirect(url_for('sessions.login'))
+
     s.delete(user)
     s.commit()
+
+    if user == current_user:
+        logout_user()
 
     return redirect(url_for('base.index'))
