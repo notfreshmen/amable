@@ -70,6 +70,38 @@ class Post(Base):
     def text_brief_markdown(self):
         return commonmark(self.text_brief)
 
+    def get_comment_tree(self):
+        # First lets get all the comments for this post
+        comments = self.comments
+        newComments = []
+        parentComments = []
+        currComment = None
+        currParent = None
+        i = 0
+        print(comments)
+        # Ok so first lets find our parent comments
+        # Parent comments will have comments[index].parent = None
+        # We will do one pass through all of them
+        for idx, comment in enumerate(comments):
+            if comment.parent is None:
+                parentComments.append(comment)
+                comments.remove(comment)
+
+        while (comments.length > 0):
+            if currParent is None:
+                currParent = parentComments.pop()
+            
+            newComments.append(currParent)
+
+
+        print(comments)
+
+        return parentComments
+
+        
+            
+
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object

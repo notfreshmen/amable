@@ -42,7 +42,9 @@ def search_communities():
 def view_community(community_id):
     # First lets make sure the community exists
     tempCommunity = session.query(Community).options(joinedload('posts')).filter_by(id=community_id).first()
-    print("temp com posts" + tempCommunity.posts[0].user.name)
+    # print("temp com posts" + tempCommunity.posts[0].user.name)
+    print ("")
+
     if tempCommunity is None:
         print("no")
         return "no"
