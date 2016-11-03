@@ -35,8 +35,8 @@ gulp.task('jsc', function () {
 })
 
 gulp.task('watch', function () {
-  gulp.watch(css_src, ['css'])
-  gulp.watch(jsc_src, ['jsc'])
+  gulp.watch(css_src, ['build'])
+  gulp.watch(jsc_src, ['build'])
 })
 
 gulp.task('build', ['css', 'jsc'])

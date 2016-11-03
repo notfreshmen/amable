@@ -1,0 +1,22 @@
+.flash {
+  background: $color-grey;
+  color: $color-white;
+  padding: rhythm(0.5);
+  box-sizing: border-box;
+
+  p {
+    margin-bottom: 0 !important;
+  }
+
+  &--success {
+    background: $color-green;
+  }
+
+  &--warning {
+    background: $color-yellow;
+  }
+
+  &--error {
+    background: $color-red;
+  }
+}
