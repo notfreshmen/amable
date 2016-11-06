@@ -2,7 +2,7 @@
 {% block content %}
   <div class="page">
     <header class="page__header">
-      <h2 class="page__title">Edit Profile</h2>
+      <h2 class="page__title">Your Account</h2>
     </header>
     <section class="page__block">
       <form class="form user" action="{{ url_for('users.update', id=current_user.id) }}" method="post" enctype="multipart/form-data">
@@ -53,9 +53,11 @@
           </div>
         </section>
       </form>
+    </section>
+    <section class="page__block container">
       <form action="{{ url_for('users.destroy', id=current_user.id) }}" method="post">
         {{ form.csrf_token }}
-        <div class="form__group">
+        <div class="form__group prefix-5 col-19 last">
           <button type="submit" class="btn btn--small btn--red">Delete my account</button>
         </div>
       </form>

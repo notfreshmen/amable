@@ -86,6 +86,8 @@ def update(id):
 
         s.commit()
 
+        flash(u"Your account has been updated.", "success")
+
         return redirect(url_for('users.edit'))
 
     flash(form.errors)
