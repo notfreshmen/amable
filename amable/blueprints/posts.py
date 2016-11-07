@@ -29,19 +29,19 @@ def create():
             text_brief=form.text_brief.data,
             text_long=None,
             image_url=None,
-            user=current_user,
+            user_id=current_user.id,
             community_id=form.community_id.data
         )
-        
+
         s.add(post)
-        s.commit() 
-        
+        s.commit()
+
         flash(u"Post Successfully Created", "success")
     else:
         flash(u"Post failed", "error")
-        
+
     return redirect(url_for('base.index'))
-        
+
 #    if form.validate():
  #       user = User(
   #          username=form.username.data,

@@ -36,7 +36,7 @@ class Post(Base):
             text_brief,
             text_long,
             image_url,
-            user,
+            user_id,
             community_id,
             answered=False
     ):
@@ -44,7 +44,7 @@ class Post(Base):
         self.text_long = text_long
         self.answered = answered
         self.image_url = image_url
-        self.user = user
+        self.user_id = user_id
         self.community_id = community_id
 
         # Default Values
@@ -54,7 +54,7 @@ class Post(Base):
 
     def __repr__(self):
         return '<Post %r>' % self.id
-  
+
     def viewable_by(self, user):
         return True
 
