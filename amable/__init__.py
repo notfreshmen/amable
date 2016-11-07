@@ -38,7 +38,7 @@ session = scoped_session(sessionmaker(bind=engine))
 db = SQLAlchemy(app)
 
 # CSRF setup
-CsrfProtect(app)
+csrf = CsrfProtect(app)
 
 # Blueprints
 from amable.blueprints.base import base as base_blueprint

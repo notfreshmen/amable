@@ -5,12 +5,13 @@ from flask import render_template, abort, request, redirect, url_for, flash
 
 from flask_login import login_user, login_required, current_user, logout_user
 
-from amable import session
+from amable import session, csrf
 
 from amable.models.user import User
 from amable.models.post import Post
 from amable.models.community import Community
 from amable.forms.post_create_form import PostCreateForm
+
 
 posts = Blueprint('posts', __name__, template_folder='../templates/posts')
 
@@ -57,3 +58,15 @@ def create():
         #return redirect(url_for('base.index'))
 
    # return render_template('new.html', form=form)
+   
+@csrf.exempt
+@posts.route('/posts/<id>/destroy', methods=['POST'])
+@login_required
+def destroy(id):
+    post = s.query(Post).filter_by(id=id).first()
+    
+    s.delete(post)
+    s.commit()
+
+    return redirect(url_for('base.index'))
+
