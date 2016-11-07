@@ -71,52 +71,53 @@ class Post(Base):
         return commonmark(self.text_brief)
 
     def get_comment_tree(self):
+        pass
         # First lets get all the comments for this post
-        comments = self.comments
-        newComments = []
-        parentComments = []
-        currComment = None
-        currParent = None
-        i = 0
-        print(comments)
-        # Ok so first lets find our parent comments
-        # Parent comments will have comments[index].parent = None
-        # We will do one pass through all of them
-        for idx, comment in enumerate(comments):
-            if comment.parent is None:
-                parentComments.append(comment)
-                comments.remove(comment)
+        # comments = self.comments
+        # newComments = []
+        # parentComments = []
+        # currComment = None
+        # currParent = None
+        # i = 0
+        # print(comments)
+        # # Ok so first lets find our parent comments
+        # # Parent comments will have comments[index].parent = None
+        # # We will do one pass through all of them
+        # for idx, comment in enumerate(comments):
+        #     if comment.parent is None:
+        #         parentComments.append(comment)
+        #         comments.remove(comment)
+        #
+        # # Lets assign the first comment we are looking at
+        # currParent = parentComments.pop()
+        # currComment = currParent
+        #
+        # newComments.append(currComment)
+        #
+        # while (comments.length > 0):
+        #     # Does the currPost have children?
+        #     if currComment.has_children():
+        #         commentList = [x for x in comments if x.parent=currComment.id]
+        #
+        #         for subComment in commentList:
+        #             newComments.insert(newComments.index(currComment) + 1, subComment)
+        #             comments.remove(subComment)
+        #     else:
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        # print(comments)
+        #
+        # return parentComments
 
-        # Lets assign the first comment we are looking at
-        currParent = parentComments.pop()
-        currComment = currParent
-
-        newComments.append(currComment)
-
-        while (comments.length > 0):
-            # Does the currPost have children?
-            if currComment.has_children():
-                commentList = [x for x in comments if x.parent=currComment.id]
-
-                for subComment in commentList:
-                    newComments.insert(newComments.index(currComment) + 1, subComment)
-                    comments.remove(subComment)
-            else:
 
 
-
-            
-
-            
-            
-
-
-        print(comments)
-
-        return parentComments
-
-        
-            
 
 
 
