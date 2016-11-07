@@ -1,0 +1,66 @@
+{% extends "application.html" %}
+{% block content %}
+  <div class="page">
+    <header class="page__header">
+      <h2 class="page__title">Your Account</h2>
+    </header>
+    <section class="page__block">
+      <form class="form user" action="{{ url_for('users.update', id=current_user.id) }}" method="post" enctype="multipart/form-data">
+        <input name="_method" type="hidden" value="PATCH">
+        <aside class="user__sidebar">
+          <div class="user__sidebar__image">
+            <img class="user__avatar avatar" src="{{ current_user.profile_image }}">
+            {# {{ form.profile_image(class_="form__control") }} #}
+          </div>
+        </aside>
+        <section class="user__posts posts">
+          {{ form.csrf_token }}
+          {% if form.errors %}
+            <ul class="errors">
+              {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                  <li>{{ form[field_name].label.text }}: {{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+          <div class="form__group">
+            {{ form.username.label }}
+            {{ form.username(class_="form__control") }}
+          </div>
+          <div class="form__group">
+            {{ form.email.label }}
+            {{ form.email(class_="form__control") }}
+          </div>
+          <div class="form__group">
+            {{ form.name.label }}
+            {{ form.name(class_="form__control") }}
+          </div>
+          <div class="form__group">
+            {{ form.bio.label }}
+            {{ form.bio(class_="form__control") }}
+          </div>
+          <div class="form__group">
+            {{ form.location.label }}
+            {{ form.location(class_="form__control") }}
+          </div>
+          <div class="form__group">
+            {{ form.website.label }}
+            {{ form.website(class_="form__control") }}
+          </div>
+          <div class="form__group">
+            <button type="submit" class="btn btn--small">Save</button>
+          </div>
+        </section>
+      </form>
+    </section>
+    <section class="page__block container">
+      <form action="{{ url_for('users.destroy', id=current_user.id) }}" method="post">
+        {{ form.csrf_token }}
+        <div class="form__group prefix-5 col-19 last">
+          <button type="submit" class="btn btn--small btn--red">Delete my account</button>
+        </div>
+      </form>
+    </section>
+  </div>
+{% endblock %}

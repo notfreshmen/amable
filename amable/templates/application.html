@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta content="width=device-width,initial-scale=1" name="viewport">
@@ -31,31 +31,47 @@
         </nav>
         <nav class="header__nav nav nav--inline nav--right mobile-hidden">
           <ul class="nav__list">
-            <li><a href="#">Join</a></li>
-            <li><a href="#">Login</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <main class="main" role="main">
+            {% if current_user.is_authenticated %}
+              <li><a href="{{ url_for('users.show', username=current_user.username) }}">Profile</a></li>
+              <li><a href="{{ url_for('users.edit') }}">Account</a></li>
+              <li><a href="{{ url_for('sessions.logout') }}">Logout</a></li>
+            {% else %}
+              <li><a href="{{ url_for('users.new') }}">Join</a></li>
+              <li><a href="/login">Login</a></li>
+            {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="main" role="main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {% if category %}flash--{{ category }}{% endif %}">
+            <p>{{ message }}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <div class="content">
       {% block content %}{% endblock %}
-    </main>
+    </div>
+  </main>
 
-    <footer class="footer" role="footer">
-      <div class="footer__container">
-        <p class="footer__copyright">&copy; 2016 <a href="/">Amable</a></p>
-        <nav class="footer__nav nav nav--inline nav--right">
-          <ul class="nav__list">
-            <li><a href="#">Support</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </footer>
+  <footer class="footer" role="footer">
+    <div class="footer__container">
+      <p class="footer__copyright">&copy; 2016 <a href="/">Amable</a></p>
+      <nav class="footer__nav nav nav--inline nav--right">
+        <ul class="nav__list">
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
 
-    {% assets "jsc" %}
-      <script src="{{ ASSET_URL }}"></script>
-    {% endassets %}
-  </body>
+  {% assets "jsc" %}
+    <script src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+</body>
 </html>
