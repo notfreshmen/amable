@@ -68,5 +68,5 @@ def destroy(id):
     s.delete(post)
     s.commit()
 
-    return redirect(url_for('base.index'))
+    return redirect(request.form["redirect_to"])
 
