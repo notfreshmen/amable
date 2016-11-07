@@ -55,9 +55,11 @@ login_manager.init_app(app)
 # Blueprints
 from amable.blueprints.base import base
 from amable.blueprints.sessions import sessions
+from amable.blueprints.posts import posts 
 
 app.register_blueprint(base)
 app.register_blueprint(sessions)
+app.register_blueprint(posts)
 
 # Assets
 from amable.utils.assets import assets_env

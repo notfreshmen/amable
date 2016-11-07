@@ -2,13 +2,16 @@
 {% block content %}
   <div class="dashboard">
     <header class="dashboard__header">
-      <form class="dashboard__form form">
+      <form class="dashboard__form form" action="{{url_for('posts.create')}}" method="Post">
+        {{ form.community_id(value="1") }}
+        {{ form.csrf_token }}
         <aside>
           <img src="https://pbs.twimg.com/profile_images/606232291438829568/8liw3txV.jpg" class="avatar">
         </aside>
         <section>
           <div class="form__group">
-            <textarea class="form__control" placeholder="What kindness did you experience today?"></textarea>
+            <!--<textarea class="form__control" placeholder="What kindness did you experience today?"></textarea>-->
+            {{ form.text_brief(class_="form__control")}}
           </div>
           <div class="form__group--footer">
             <button type="submit" class="btn btn--blue btn--small">Post</button>

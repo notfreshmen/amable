@@ -12,7 +12,7 @@ from .comment import Comment
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
 
-from CommonMark import commonmark
+#from CommonMark import commonmark
 
 
 class Post(Base):
@@ -37,7 +37,7 @@ class Post(Base):
             text_long,
             image_url,
             user,
-            community,
+            community_id,
             answered=False
     ):
         self.text_brief = text_brief
@@ -45,7 +45,7 @@ class Post(Base):
         self.answered = answered
         self.image_url = image_url
         self.user = user
-        self.community = community
+        self.community_id = community_id
 
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
@@ -54,7 +54,7 @@ class Post(Base):
 
     def __repr__(self):
         return '<Post %r>' % self.id
-
+  
     def viewable_by(self, user):
         return True
 
@@ -67,8 +67,8 @@ class Post(Base):
     def destroyable_by(self, user):
         return self.user == user or user in self.community.moderators() or user.is_admin()
 
-    def text_brief_markdown(self):
-        return commonmark(self.text_brief)
+    #def text_brief_markdown(self):
+    #    return commonmark(self.text_brief)
 
 
 def update_date_modified(mapper, connection, target):
