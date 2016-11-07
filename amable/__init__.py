@@ -24,6 +24,7 @@ if env is None:
     env = 'development'
 
 # App Setup
+#app = Flask(__main__)
 app = Flask(__name__)
 app.config.from_envvar('AMABLE_%s_SETTINGS' % env.upper())
 
