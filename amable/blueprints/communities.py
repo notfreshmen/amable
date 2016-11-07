@@ -49,4 +49,14 @@ def view_community(community_id):
         print("no")
         return "no"
     else:
+
+        # Here we have to build the comment tree. This way
+        # when we pass through the comments it is just an 
+        # array w/ levels.
+        # Here we go...
+        commentList = []
+        commentRaw = tempCommunity.posts[0]
+        print(commentRaw)
+
+
         return render_template('view_communities.html', title="Amable - " + tempCommunity.name, community=tempCommunity.serialize, posts = tempCommunity.posts)
