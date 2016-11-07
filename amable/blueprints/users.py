@@ -13,6 +13,8 @@ from amable.models.post import Post
 from amable.forms.user_create_form import UserCreateForm
 from amable.forms.user_update_form import UserUpdateForm
 
+from sqlalchemy import desc
+from sqlalchemy import asc
 
 users = Blueprint('users', __name__, template_folder='../templates/users')
 
@@ -22,11 +24,12 @@ s = session()
 @users.route('/<username>')
 def show(username):
     user = s.query(User).filter_by(username=username).first()
-
+   
+    
     if not user:
         return abort(404)
 
-    posts = s.query(Post).filter_by(user_id=user.id).all()
+    posts = s.query(Post).filter_by(user_id=user.id).order_by(desc(Post.date_created)).all()
 
     return render_template('show.html', user=user, posts=posts)
 
