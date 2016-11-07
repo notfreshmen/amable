@@ -14,3 +14,21 @@ $susy: (
   box-sizing: border-box;
   padding: 0 rhythm(1)
 }
+
+@for $i from 1 through 24 {
+  .col-#{$i} {
+    @include span($i of 24);
+  }
+
+  .prefix-#{i} {
+    @include prefix($i of 24);
+  }
+}
+
+.container {
+  @include container;
+}
+
+.last {
+  @include omega;
+}
