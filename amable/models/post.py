@@ -1,6 +1,7 @@
 from datetime import datetime as dt
+from collections import OrderedDict
 
-from amable import db
+from amable import db, session
 
 from .base import Base
 
@@ -14,6 +15,8 @@ from sqlalchemy.orm import relationship
 
 from CommonMark import commonmark
 
+
+s = session()
 
 class Post(Base):
     __tablename__ = 'posts'
@@ -70,55 +73,21 @@ class Post(Base):
     def text_brief_markdown(self):
         return commonmark(self.text_brief)
 
-    def get_comment_tree(self):
-        pass
-        # First lets get all the comments for this post
-        # comments = self.comments
-        # newComments = []
-        # parentComments = []
-        # currComment = None
-        # currParent = None
-        # i = 0
-        # print(comments)
-        # # Ok so first lets find our parent comments
-        # # Parent comments will have comments[index].parent = None
-        # # We will do one pass through all of them
-        # for idx, comment in enumerate(comments):
-        #     if comment.parent is None:
-        #         parentComments.append(comment)
-        #         comments.remove(comment)
-        #
-        # # Lets assign the first comment we are looking at
-        # currParent = parentComments.pop()
-        # currComment = currParent
-        #
-        # newComments.append(currComment)
-        #
-        # while (comments.length > 0):
-        #     # Does the currPost have children?
-        #     if currComment.has_children():
-        #         commentList = [x for x in comments if x.parent=currComment.id]
-        #
-        #         for subComment in commentList:
-        #             newComments.insert(newComments.index(currComment) + 1, subComment)
-        #             comments.remove(subComment)
-        #     else:
-        #
-        #
-        #
-        #
-        #
-        #
-        #
-        #
-        #
-        # print(comments)
-        #
-        # return parentComments
+    def comment_tree(self):
+        root_tree = OrderedDict()
 
+        root_level = s.query(Comment).filter_by(post_id=self.id, parent=None).all()
 
+        def get_children(comment, child_tree):
+            for child in comment.children:
+                child_tree[child] = get_children(child, OrderedDict())
 
+            return child_tree
 
+        for comment in root_level:
+            root_tree[comment] = get_children(comment, OrderedDict())
+
+        return root_tree
 
 
 def update_date_modified(mapper, connection, target):
