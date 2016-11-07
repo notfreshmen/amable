@@ -1,6 +1,6 @@
 from datetime import datetime as dt
 
-from amable import db
+from amable import db, session
 
 from .base import Base
 from .comment_hashtag import CommentHashtag
@@ -44,6 +44,9 @@ class Comment(Base):
 
     def __repr__(self):
         return '<Comment %r>' % self.id
+
+    def has_children(self):
+        return session.query(Comment).filter_by(parent=self.id).count() > 0
 
 
 def update_date_modified(mapper, connection, target):

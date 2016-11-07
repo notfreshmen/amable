@@ -87,11 +87,28 @@ class Post(Base):
                 parentComments.append(comment)
                 comments.remove(comment)
 
+        # Lets assign the first comment we are looking at
+        currParent = parentComments.pop()
+        currComment = currParent
+
+        newComments.append(currComment)
+
         while (comments.length > 0):
-            if currParent is None:
-                currParent = parentComments.pop()
+            # Does the currPost have children?
+            if currComment.has_children():
+                commentList = [x for x in comments if x.parent=currComment.id]
+
+                for subComment in commentList:
+                    newComments.insert(newComments.index(currComment) + 1, subComment)
+                    comments.remove(subComment)
+            else:
+
+
+
             
-            newComments.append(currParent)
+
+            
+            
 
 
         print(comments)
