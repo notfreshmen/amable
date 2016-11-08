@@ -16,6 +16,7 @@ python-dotenv
 CommonMark
 Flask-WTF
 Flask-Login
+python-slugify
 
 # documentation
 eralchemy
