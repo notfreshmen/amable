@@ -19,7 +19,7 @@ with context('amable.models'):
     with context('community'):
         with context('Community'):
             with context('__init__'):
-                with it('create'):
+                with it('creates a community'):
                     c = Community(
                         name='The Love',
                         description='for all the love',
@@ -34,6 +34,46 @@ with context('amable.models'):
                     expect(c.banner_url).to(equal('love.png'))
                     expect(c.thumbnail_url).to(equal('love.png'))
                     expect(c.num_upvotes).to(equal(0))
+
+                with context('permalink'):
+                    with context('passed'):
+                        with it('sets it'):
+                            c = Community(
+                                name='The Love',
+                                description='for all the love',
+                                banner_url='love.png',
+                                thumbnail_url='love.png',
+                                nsfw=False,
+                                active=True,
+                                permalink='foobar'
+                            )
+
+                            expect(c.permalink).to(equal('foobar'))
+
+                    with context('not passed'):
+                        with it('sluggifies it'):
+                            c = Community(
+                                name='Blah blah',
+                                description='for all the love',
+                                banner_url='love.png',
+                                thumbnail_url='love.png',
+                                nsfw=False,
+                                active=True
+                            )
+
+                            expect(c.permalink).to(equal('blah-blah'))
+
+                        with it('sluggifies it and adds a number if not unique'):
+                            c = Community(
+                                name='The Love',
+                                description='for all the love',
+                                banner_url='love.png',
+                                thumbnail_url='love.png',
+                                nsfw=False,
+                                active=True
+                            )
+
+                            expect(c.permalink).to(contain('the-love-'))
 
             with context('__repr__'):
                 with it("returns it's name"):
