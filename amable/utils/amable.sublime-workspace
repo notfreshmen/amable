@@ -1,0 +1,511 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"_S",
+				"_StdOut.putText"
+			],
+			[
+				"advan",
+				"advanceLine	(console.ts)"
+			],
+			[
+				"_RE",
+				"_ReadyQueue	(globals.ts)"
+			],
+			[
+				"sta",
+				"startMemIndex"
+			],
+			[
+				"cons",
+				"constructor"
+			],
+			[
+				"mem",
+				"memoryArray"
+			],
+			[
+				"insert",
+				"insertCell"
+			],
+			[
+				"over",
+				"overflow-y"
+			],
+			[
+				"padding",
+				"padding-top"
+			],
+			[
+				"ti",
+				"title	Tag"
+			],
+			[
+				"up",
+				"upArrow"
+			],
+			[
+				"deviceDriver",
+				"DeviceDriverKeyboard"
+			],
+			[
+				"all",
+				"allText"
+			],
+			[
+				"curr",
+				"currentYPosition"
+			],
+			[
+				"currentFon",
+				"currentFontSize"
+			],
+			[
+				"curre",
+				"currentFont"
+			],
+			[
+				"ad",
+				"advanceLine"
+			],
+			[
+				"date",
+				"date_created"
+			],
+			[
+				"sp",
+				"splitPassword"
+			],
+			[
+				"file",
+				"filePath"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				]
+			],
+			[
+				"Packages/Makefile/Make.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 107.0,
+		"last_filter": "list pack",
+		"selected_items":
+		[
+			[
+				"list pack",
+				"Package Control: List Packages"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			]
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/maxbender/Documents/GitHub/amable"
+	],
+	"file_history":
+	[
+		"/Users/maxbender/Documents/GitHub/gekkOS/distrib/os/shell.js",
+		"/Users/maxbender/Documents/GitHub/gekkOS/index.html",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/pcb.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/shell.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/distrib/globals.js",
+		"/Users/maxbender/Documents/GitHub/gekkOS/distrib/os/kernel.js",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/host/cpu.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/utils.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/globals.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/host/control.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/js/app.js",
+		"/Users/maxbender/Documents/GitHub/gekkOS/css/app.css",
+		"/Users/maxbender/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/interrupt.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/kernel.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/console.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/memory.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/deviceDriverKeyboard.ts",
+		"/Users/maxbender/Documents/GitHub/amable/spec/factories/post_hashtag_factory.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/factories/comment_factory.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/amable/models/post_upvote_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/amable/models/post_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/amable/models/post_report_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/amable/models/hashtag_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/factories/comment_hashtag_factory.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/amable/models/community_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/amable/models/community_user_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/factories/hashtag_factory.py",
+		"/Users/maxbender/Documents/GitHub/amable/amable/models/post.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/amable/models/report_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/amable/models/user_spec.py",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/animal.ts",
+		"/Users/maxbender/Documents/GitHub/amable/amable/__init__.py",
+		"/Users/maxbender/Documents/GitHub/amable/amable/models/user.py",
+		"/Users/maxbender/Documents/GitHub/amable/userTest.py",
+		"/Users/maxbender/Documents/GitHub/amable/amable/models/report.py",
+		"/Users/maxbender/Documents/GitHub/amable/amable/models/__init__.py",
+		"/Users/maxbender/Documents/GitHub/amable/amable/models/postReport.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/models/user_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/db/versions/005_add_post_report_table.py",
+		"/Users/maxbender/Documents/GitHub/amable/amable/models/postUpvote.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/models/reports_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/amable/models/base.py",
+		"/Users/maxbender/Documents/GitHub/amable/settings.development.cfg",
+		"/Users/maxbender/Documents/GitHub/amable/models/__init__.py",
+		"/Users/maxbender/Documents/GitHub/amable/amable/models/listen.py",
+		"/Users/maxbender/Documents/GitHub/amable/spec/models/models_spec.py",
+		"/Users/maxbender/Documents/GitHub/amable/models/report.py",
+		"/Users/maxbender/Documents/GitHub/amable/models/postReport.py",
+		"/Users/maxbender/Documents/GitHub/amable/models/postUpvote.py",
+		"/Users/maxbender/Documents/GitHub/amable/models/user.py",
+		"/Users/maxbender/Documents/GitHub/amable/models/communities.py",
+		"/Users/maxbender/Documents/GitHub/amable/models/example.py",
+		"/Users/maxbender/Documents/GitHub/amable/models/post.py",
+		"/Users/maxbender/Documents/GitHub/amable/models/base.py",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/canvastext.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/os/deviceDriver.ts",
+		"/Users/maxbender/Documents/GitHub/gekkOS/source/host/devices.ts",
+		"/Users/maxbender/Library/Application Support/Sublime Text 3/Packages/User/Python.sublime-settings",
+		"/Users/maxbender/Documents/GitHub/psn/run.py",
+		"/Users/maxbender/Documents/GitHub/gekkOS/distrib/utils.js",
+		"/Users/maxbender/Documents/gulp.ts",
+		"/Users/maxbender/Documents/Hello Kristen,",
+		"/Users/maxbender/Documents/input.txt",
+		"/Users/maxbender/Documents/fizzbuzz.py",
+		"/usr/include/mach/i386/asm.h"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/maxbender/Documents/GitHub/gekkOS",
+			"Project files",
+			"memory.ts",
+			"pcb.ts",
+			"<open files>",
+			"/Users/maxbender/Documents/GitHub/gekkOS",
+			"."
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"savePCB",
+			"_ResidentQueue",
+			"_RunningQueue",
+			"_ReadyQueue",
+			"movePCBResidentToRunning",
+			"_ResidentQueue",
+			"id",
+			"Memory",
+			"memory",
+			"Location",
+			"models",
+			"models.base",
+			"base",
+			"this.deleteText();",
+			"_DrawingContext.deleteText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, this.buffer);",
+			"_KernelInputQueue.enqueue(chr);",
+			"ALERT",
+			"_KernelInterruptQueue",
+			"krnInterruptHandler",
+			"krnInterrupHandler",
+			"KrnTrace",
+			"krnTrace",
+			"Handling",
+			"msg=Handling",
+			"msg=Handleing",
+			"msg=Handeling",
+			"dom",
+			"alert",
+			"            \n",
+			"username",
+			"kernel",
+			"Shell",
+			":\n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"_ReadyQueue",
+			"innerHTML",
+			"memoryArray",
+			"Index",
+			"amable.models",
+			"models",
+			"models.base",
+			"this.deleteText(this.currentYPosition);",
+			"this.deleteText();",
+			"this.consoleDraw();",
+			"return chr;",
+			"bio"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 30.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 94.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "amable.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"shet",
+				"source/os/shell.ts"
+			],
+			[
+				"shell",
+				"distrib/os/shell.js"
+			],
+			[
+				"uti",
+				"source/utils.ts"
+			],
+			[
+				"shel",
+				"source/os/shell.ts"
+			],
+			[
+				"mem",
+				"source/os/memory.ts"
+			],
+			[
+				"pcb",
+				"source/os/pcb.ts"
+			],
+			[
+				"ut",
+				"source/utils.ts"
+			],
+			[
+				"she",
+				"source/os/shell.ts"
+			],
+			[
+				"kern",
+				"distrib/os/kernel.js"
+			],
+			[
+				"globa",
+				"distrib/globals.js"
+			],
+			[
+				"ind",
+				"index.html"
+			],
+			[
+				"sh",
+				"source/os/shell.ts"
+			],
+			[
+				"glo",
+				"source/globals.ts"
+			],
+			[
+				"in",
+				"index.html"
+			],
+			[
+				"inde",
+				"index2.html"
+			],
+			[
+				"pc",
+				"source/os/pcb.ts"
+			],
+			[
+				"ap",
+				"css/app.css"
+			],
+			[
+				"in2",
+				"index2.html"
+			],
+			[
+				"inde2",
+				"index2.html"
+			],
+			[
+				"index2",
+				"index2.html"
+			],
+			[
+				"eme",
+				"source/os/memory.ts"
+			],
+			[
+				"util",
+				"source/utils.ts"
+			],
+			[
+				"ker",
+				"source/os/kernel.ts"
+			],
+			[
+				"comment_ac",
+				"spec/factories/comment_factory.py"
+			],
+			[
+				"report_spe",
+				"spec/amable/models/report_spec.py"
+			],
+			[
+				"post_hah",
+				"spec/factories/post_hashtag_factory.py"
+			],
+			[
+				"post",
+				"amable/models/post.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 232.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -40,13 +40,6 @@ db = SQLAlchemy(app)
 # CSRF setup
 CsrfProtect(app)
 
-# Blueprints
-from amable.blueprints.base import base as base_blueprint
-from amable.blueprints.users import users as users_blueprint
-
-app.register_blueprint(base_blueprint)
-app.register_blueprint(users_blueprint)
-
 # Login Manager
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -55,9 +48,14 @@ login_manager.init_app(app)
 # Blueprints
 from amable.blueprints.base import base
 from amable.blueprints.sessions import sessions
+from amable.blueprints.communities import communities
+from amable.blueprints.users import users
 
 app.register_blueprint(base)
 app.register_blueprint(sessions)
+app.register_blueprint(communities)
+app.register_blueprint(users)
+
 
 # Assets
 from amable.utils.assets import assets_env

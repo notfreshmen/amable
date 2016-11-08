@@ -7,12 +7,14 @@
 
     <meta name="description" content="The kindness social network">
 
-    <title>Amable</title>
+    <title>{{title}}</title>
 
     {% assets "css" %}
       <link href="{{ ASSET_URL }}" rel="stylesheet">
     {% endassets %}
-
+    
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://use.typekit.net/rpe8rjq.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
   </head>
@@ -26,7 +28,7 @@
         <nav class="header__nav nav nav--inline mobile-hidden">
           <ul class="nav__list">
             <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Communities</a></li>
+            <li><a href="/communities">Communities</a></li>
           </ul>
         </nav>
         <nav class="header__nav nav nav--inline nav--right mobile-hidden">
@@ -70,8 +72,10 @@
     </div>
   </footer>
 
-  {% assets "jsc" %}
-    <script src="{{ ASSET_URL }}"></script>
-  {% endassets %}
+{% assets "jsc" %}
+<script src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
+{% block javascript %}{% endblock %}
 </body>
 </html>
