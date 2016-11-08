@@ -4,6 +4,7 @@ from migrate import *
 
 permalink_column = Column('permalink', String(128))
 
+
 def upgrade(migrate_engine):
     meta = MetaData(bind=migrate_engine)
 
