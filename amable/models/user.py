@@ -125,6 +125,17 @@ class User(Base):
         else:
             return url_for('static', filename='img/default-avatar.jpg')
 
+    def get_id(self):
+        try:
+            return unicode(self.id)  # python 2
+        except NameError:
+            return str(self.id)  # python 3
+
+    def get_praying_hands(self):
+        num_rows = session.query(Comment).filter(
+            Comment.user_id == self.id).group_by(Comment.post_id).count()
+        print(num_rows)
+
     @property
     def is_authenticated(self):
         return True
@@ -136,12 +147,6 @@ class User(Base):
     @property
     def is_anonymous(self):
         return False
-
-    def get_id(self):
-        try:
-            return unicode(self.id)  # python 2
-        except NameError:
-            return str(self.id)  # python 3
 
 
 def update_date_modified(mapper, connection, target):
