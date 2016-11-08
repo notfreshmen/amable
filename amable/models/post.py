@@ -1,6 +1,7 @@
 from datetime import datetime as dt
+from collections import OrderedDict
 
-from amable import db
+from amable import db, session
 
 from .base import Base
 
@@ -14,6 +15,8 @@ from sqlalchemy.orm import relationship
 
 from CommonMark import commonmark
 
+
+s = session()
 
 class Post(Base):
     __tablename__ = 'posts'
@@ -69,6 +72,23 @@ class Post(Base):
 
     def text_brief_markdown(self):
         return commonmark(self.text_brief)
+
+    @property
+    def comment_tree(self):
+        root_tree = OrderedDict()
+
+        root_level = s.query(Comment).filter_by(post_id=self.id, parent=None).all()
+
+        def get_children(comment, child_tree):
+            for child in comment.children:
+                child_tree[child] = get_children(child, OrderedDict())
+
+            return child_tree
+
+        for comment in root_level:
+            root_tree[comment] = get_children(comment, OrderedDict())
+
+        return root_tree
 
 
 def update_date_modified(mapper, connection, target):

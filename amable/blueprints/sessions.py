@@ -10,7 +10,7 @@ from amable.utils.password import check_password
 from amable.utils.misc import flash_errors
 
 sessions = Blueprint('sessions', __name__,
-                     template_folder='../templates/sessions')
+                     template_folder='../templates')
 
 
 @login_manager.user_loader
@@ -21,7 +21,9 @@ def load_user(user_id):
 @sessions.route('/login', methods=['GET'])
 def login():
     login_form = LoginForm()
-    return render_template('login.html', form=login_form)
+    return render_template('sessions/login.html',
+                           form=login_form,
+                           title="Amable - Login")
 
 
 @sessions.route('/logout', methods=['GET'])
