@@ -18,6 +18,7 @@ from CommonMark import commonmark
 
 s = session()
 
+
 class Post(Base):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
@@ -65,10 +66,14 @@ class Post(Base):
         return user.in_community(self) or user.is_admin()
 
     def updatable_by(self, user):
-        return self.user == user or user in self.community.moderators() or user.is_admin()
+        return self.user == user or \
+            user in self.community.moderators() or \
+            user.is_admin()
 
     def destroyable_by(self, user):
-        return self.user == user or user in self.community.moderators() or user.is_admin()
+        return self.user == user or \
+            user in self.community.moderators() or \
+            user.is_admin()
 
     def text_brief_markdown(self):
         return commonmark(self.text_brief)
@@ -77,7 +82,8 @@ class Post(Base):
     def comment_tree(self):
         root_tree = OrderedDict()
 
-        root_level = s.query(Comment).filter_by(post_id=self.id, parent=None).all()
+        root_level = s.query(Comment).filter_by(
+            post_id=self.id, parent=None).all()
 
         def get_children(comment, child_tree):
             for child in comment.children:

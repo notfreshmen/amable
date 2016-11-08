@@ -9,5 +9,5 @@ comment = session.query(Comment).filter_by(id=5).first()
 # print(comment)
 print(comment.has_children())
 
-print ("Children List") 
+print("Children List")
 # print([x ])

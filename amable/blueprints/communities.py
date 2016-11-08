@@ -9,9 +9,11 @@ from amable.models.community import Community
 from amable.forms.community_search_form import CommunitySearchForm
 
 
-communities = Blueprint('communities', __name__, template_folder='../templates')
+communities = Blueprint('communities', __name__,
+                        template_folder='../templates')
 
 s = session()
+
 
 @communities.route('/communities')
 def index():
