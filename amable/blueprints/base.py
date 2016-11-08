@@ -7,9 +7,9 @@ base = Blueprint('base', __name__, template_folder='../templates/base')
 
 @base.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', title="Amable Home")
 
 
 @base.route('/ui')
 def ui():
-    return render_template('ui.html')
+    return render_template('ui.html', title="UI Guide")
