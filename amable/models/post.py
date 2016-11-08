@@ -73,6 +73,7 @@ class Post(Base):
     def text_brief_markdown(self):
         return commonmark(self.text_brief)
 
+    @property
     def comment_tree(self):
         root_tree = OrderedDict()
 

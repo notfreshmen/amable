@@ -14,17 +14,5 @@ Thumb<img id="thumb" src="{{ community.thumbnail_url }}">
 </ul><br>
 <h3>Posts:</h3>
 <br>
-{% for post in posts %}
-    <ul>
-        <li>
-            Post Content (Brief|Long) {{ post.text_brief }} | {{ post.text_long }}
-            Posted By : {{ post.user.name }} ~ User ID : {{ post.user.id }}
-            Comments: 
-            {% for comment in post.comments %}
-                <span style="color:'red'">CommentContent: {{ comment.content }}</span>
-            {% endfor %}
-        </li>
-    </ul>
-{% endfor %}
 
 {% endblock %}

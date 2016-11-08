@@ -9,12 +9,13 @@ from amable.models.community import Community
 from amable.forms.community_search_form import CommunitySearchForm
 
 
-communities = Blueprint('communities', __name__, template_folder='../templates/communities')
+communities = Blueprint('communities', __name__, template_folder='../templates')
 
+s = session()
 
 @communities.route('/communities')
 def index():
-    return render_template('search.html', title="Search Communities", form=CommunitySearchForm())
+    return render_template('communities/search.html', title="Search Communities", form=CommunitySearchForm())
 
 
 @communities.route('/communities/search', methods=['GET'])
@@ -37,23 +38,6 @@ def search():
 
 @communities.route('/communities/<id>')
 def show(id):
-    # First lets make sure the community exists
-    tempCommunity = session.query(Community).options(joinedload('posts')).filter_by(id=id).first()
-    # print("temp com posts" + tempCommunity.posts[0].user.name)
-    print ("")
+    community = s.query(Community).filter_by(id=id).first()
 
-    if tempCommunity is None:
-        print("no")
-        return "no"
-    else:
-
-        # Here we have to build the comment tree. This way
-        # when we pass through the comments it is just an
-        # array w/ levels.
-        # Here we go...
-        commentList = []
-        commentRaw = tempCommunity.posts[0]
-        print(commentRaw)
-
-
-        return render_template('show.html', title="Amable - " + tempCommunity.name, community=tempCommunity.serialize, posts = tempCommunity.posts)
+    return render_template('communities/show.html', community=community)

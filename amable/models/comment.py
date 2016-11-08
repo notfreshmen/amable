@@ -48,6 +48,10 @@ class Comment(Base):
     def has_children(self):
         return session.query(Comment).filter_by(parent=self.id).count() > 0
 
+    @property
+    def comments(self):
+        return self.children
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
