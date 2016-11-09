@@ -21,7 +21,11 @@ s = session()
 @communities.route('/communities')
 @login_required
 def index():
-    return render_template('communities/search.html', title="Search Communities", form=CommunitySearchForm())
+    communities = s.query(Community).all()
+
+    print(communities)
+
+    return render_template('communities/index.html', title="Communities", communities=communities, form=CommunitySearchForm())
 
 
 @communities.route('/communities/search', methods=['GET'])
