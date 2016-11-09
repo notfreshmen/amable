@@ -1,0 +1,20 @@
+{% extends "application.html" %}
+{% block content %}
+  <div class="communities">
+    <header class="communities__header">
+      <form class="communities__search">
+        {{ form.csrf_token }}
+        <input class="form__control form__control--large" placeholder="Search...">
+      </form>
+    </header>
+    <div class="communities__communities">
+      {% for community in communities %}
+        <article class="communities__community visible" {% if community.banner_url %} style="background-image: url({{ community.banner_url }})" {% endif %}>
+          <a href="{{ url_for('communities.show', permalink=community.permalink) }}">
+            <h3>{{ community.name }}</h3>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
