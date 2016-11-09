@@ -1,5 +1,4 @@
 $(function () {
-
   // Nav toggle
   $('.header__toggle').on('click', function () {
     var nav = $(this).siblings('.header__nav')
@@ -9,7 +8,7 @@ $(function () {
   })
 
   // Communities search
-  $('.communities__search input').on('keyup', function() {
+  $('.communities__search input').on('keyup', function () {
     var search = $(this).val().toLowerCase()
 
     var results = $('.communities__community').filter(function () {
