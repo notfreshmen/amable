@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, flash, jsonify
+from flask_login import login_required
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
@@ -16,11 +17,13 @@ s = session()
 
 
 @communities.route('/communities')
+@login_required
 def index():
     return render_template('communities/search.html', title="Search Communities", form=CommunitySearchForm())
 
 
 @communities.route('/communities/search', methods=['GET'])
+@login_required
 def search():
     if 'community' in request.args:
 
@@ -38,6 +41,7 @@ def search():
         flash("Arguments missing")
 
 
+@login_required
 @communities.route('/communities/<id>')
 def show(id):
     community = s.query(Community).filter_by(id=id).first()
