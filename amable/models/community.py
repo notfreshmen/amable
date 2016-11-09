@@ -2,9 +2,11 @@ from datetime import datetime as dt
 
 from amable import db, session
 
+from slugify import slugify
+
 from .base import Base
 
-from sqlalchemy import event
+from sqlalchemy import event, func
 from sqlalchemy.orm import relationship
 
 from .post import Post
@@ -20,6 +22,7 @@ class Community(Base):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
     description = db.Column(db.Text)
+    permalink = db.Column(db.String(128))
     banner_url = db.Column(db.String(128))
     thumbnail_url = db.Column(db.String(128))
     nsfw = db.Column(db.Boolean)
@@ -38,6 +41,7 @@ class Community(Base):
             thumbnail_url,
             nsfw,
             active,
+            permalink=None,
             num_upvotes=0
     ):
         self.name = name
@@ -47,6 +51,18 @@ class Community(Base):
         self.nsfw = nsfw
         self.active = active
         self.num_upvotes = num_upvotes
+
+        if permalink:
+            self.permalink = permalink
+        else:
+            candidate = slugify(self.name)
+
+            count = s.query(Community).filter(Community.permalink.like(candidate)).count()
+
+            if count == 0:
+                self.permalink = candidate
+            else:
+                self.permalink = candidate + "-" + str(count)
 
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
@@ -71,8 +87,7 @@ class Community(Base):
         return '<Community %r>' % self.name
 
     def moderators(self):
-        community_users = s.query(CommunityUser.user_id).filter_by(
-            community_id=1, moderator=True).subquery('community_mods')
+        community_users = s.query(CommunityUser.user_id).filter_by(community_id=self.id, moderator=True).subquery('community_mods')
 
         return s.query(User).filter(User.id == community_users.c.user_id)
 
