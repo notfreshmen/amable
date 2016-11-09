@@ -1,10 +1,13 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, abort
+from flask_login import login_required
+
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
 from amable import session
 
 from amable.models.community import Community
+from amable.models.post import Post
 
 from amable.forms.community_search_form import CommunitySearchForm
 
@@ -16,11 +19,17 @@ s = session()
 
 
 @communities.route('/communities')
+@login_required
 def index():
-    return render_template('communities/search.html', title="Search Communities", form=CommunitySearchForm())
+    communities = s.query(Community).all()
+
+    print(communities)
+
+    return render_template('communities/index.html', title="Communities", communities=communities, form=CommunitySearchForm())
 
 
 @communities.route('/communities/search', methods=['GET'])
+@login_required
 def search():
     if 'community' in request.args:
 
@@ -38,8 +47,14 @@ def search():
         flash("Arguments missing")
 
 
-@communities.route('/communities/<id>')
-def show(id):
-    community = s.query(Community).filter_by(id=id).first()
+@login_required
+@communities.route('/communities/<permalink>')
+def show(permalink):
+    community = s.query(Community).filter_by(permalink=permalink).first()
 
-    return render_template('communities/show.html', community=community)
+    if not community:
+        return abort(404)
+
+    posts = s.query(Post).filter_by(community_id=community.id).all()
+
+    return render_template('communities/show.html', community=community, posts=posts)

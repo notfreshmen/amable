@@ -1,0 +1,35 @@
+.communities {
+  @include container;
+
+  margin: rhythm(1);
+
+  &__header {
+    border-bottom: 1px solid $color-grey-darkest;
+    padding-bottom: rhythm(0.5);
+    margin-bottom: rhythm(0.5);
+  }
+
+  &__community {
+    @include span(11 of 24);
+
+    background: $color-grey;
+    background-size: cover;
+    background-blend-mode: screen;
+    margin-bottom: rhythm(1);
+    text-align: center;
+
+    &:nth-child(2n + 2) {
+      @include omega;
+    }
+
+    a {
+      color: $color-text;
+      display: block;
+      padding: rhythm(1) 0;
+    }
+
+    h3 {
+      font-weight: $font-weight-medium;
+    }
+  }
+}
