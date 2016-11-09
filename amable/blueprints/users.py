@@ -20,6 +20,7 @@ s = session()
 
 
 @users.route('/<username>')
+@login_required
 def show(username):
     user = s.query(User).filter_by(username=username).first()
 
