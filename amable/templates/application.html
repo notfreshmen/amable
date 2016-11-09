@@ -7,12 +7,12 @@
 
     <meta name="description" content="The kindness social network">
 
-    <title>{{title}}</title>
+    <title>{% if title %}{{ title }} - {% endif %}Amable</title>
 
     {% assets "css" %}
       <link href="{{ ASSET_URL }}" rel="stylesheet">
     {% endassets %}
-    
+
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://use.typekit.net/rpe8rjq.js"></script>
@@ -59,9 +59,9 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
-    <div class="content">
-      {% block content %}{% endblock %}
-    </div>
+    <!-- <div class="content"> -->
+    {% block content %}{% endblock %}
+    <!-- </div> -->
   </main>
 
   <footer class="footer" role="footer">
