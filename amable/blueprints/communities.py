@@ -40,6 +40,7 @@ def search():
     else:
         flash("Arguments missing")
 
+
 @login_required
 @communities.route('/communities/<id>')
 def show(id):
