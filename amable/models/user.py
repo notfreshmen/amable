@@ -17,6 +17,8 @@ from .community_upvote import CommunityUpvote
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
 
+from flask import flash
+
 
 s = session()
 
@@ -143,6 +145,19 @@ class User(Base):
             return unicode(self.id)  # python 2
         except NameError:
             return str(self.id)  # python 3
+
+    def vote_for_community(self, community):
+        # First we want to make sure that this user
+        # hasn't yet voted for this community
+        upvoteCount = s.query(CommunityUpvote).filter_by(
+            user_id=self.id,
+            community_id=community.id).count()
+        if upvoteCount == 0:  # Has not voted
+            newUpvote = CommunityUpvote(self, community)
+            s.add(newUpvote)
+            s.commit()
+        else:
+            flash("You have already voted for this community")
 
 
 def update_date_modified(mapper, connection, target):
