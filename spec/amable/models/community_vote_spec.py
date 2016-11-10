@@ -1,7 +1,7 @@
 from expects import *
 
 from amable import session
-from amable.models.community_upvote import CommunityUpvote, date_modified
+from amable.models.community_upvote import CommunityUpvote, update_date_modified
 # from amable.models.community import Community
 # from amable.models.user import User
 
@@ -36,7 +36,7 @@ with context('amable.models'):
 
             with context('__repr__()'):
                 with it('returns the id of the post'):
-                    expect(self.post.__repr__()).to(contain("<User"))
+                    expect(self.community_upvote.__repr__()).to(contain("<User"))
 
             # with context('viewable_by'):
             #     with context('random user'):
@@ -89,9 +89,9 @@ with context('amable.models'):
             #             expect(self.post.updatable_by(self.admin)).to(be_true)
 
         with context('update_date_modified'):
-            with it('updates the date for the post'):
+            with it('updates the date for the community upvote'):
                 date_modified = self.community_upvote.date_modified
 
-                update_date_modified(CommunityUpvote, session, self.post)
+                update_date_modified(CommunityUpvote, session, self.community_upvote)
 
                 expect(self.community_upvote.date_modified).not_to(equal(date_modified))
