@@ -8,7 +8,7 @@ from spec.factories.community_factory import CommunityFactory
 from spec.factories.user_factory import UserFactory
 
 
-class CommentFactory(factory.alchemy.SQLAlchemyModelFactory):
+class CommunityUpvoteFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = CommunityUpvote
         sqlalchemy_session = session

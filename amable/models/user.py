@@ -9,7 +9,6 @@ from .base import Base
 
 from .report import Report
 from .post import Post
-from .post_report import PostReport
 from .post_upvote import PostUpvote
 from .community_user import CommunityUser
 from .comment import Comment
@@ -45,7 +44,6 @@ class User(Base):
     community_user = relationship(CommunityUser, backref="user")
     comments = relationship(Comment, backref="user")
     community_upvotes = relationship(CommunityUpvote, backref="user")
-    post_reports = relationship(PostReport, backref='user')
 
     def __init__(self,
                  username,

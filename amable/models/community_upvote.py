@@ -35,8 +35,7 @@ class CommunityUpvote(Base):
         self.date_modified = now
 
     def __repr__(self):
-        return '<Community : %i | Post : %i>' % \
-            (self.user_id, self.community_id)
+        return '<User : %r | Community : %r>' % (self.user_id, self.community_id)
 
 
 def update_date_modified(mapper, connection, target):
