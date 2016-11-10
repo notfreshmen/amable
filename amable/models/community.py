@@ -11,6 +11,7 @@ from sqlalchemy.orm import relationship
 
 from .post import Post
 from .community_user import CommunityUser
+from .community_upvote import CommunityUpvote
 from .user import User
 
 
@@ -32,6 +33,7 @@ class Community(Base):
     date_modified = db.Column(db.DateTime)
     posts = relationship(Post, backref="community")
     users = relationship(CommunityUser, backref="community")
+    upvotes = relationship(CommunityUpvote, backref="community")
 
     def __init__(
             self,

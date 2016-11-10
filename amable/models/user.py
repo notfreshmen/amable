@@ -13,6 +13,7 @@ from .post_report import PostReport
 from .post_upvote import PostUpvote
 from .community_user import CommunityUser
 from .comment import Comment
+from .community_upvote import CommunityUpvote
 
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
@@ -43,6 +44,8 @@ class User(Base):
     post_upvotes = relationship(PostUpvote, backref="user")
     community_user = relationship(CommunityUser, backref="user")
     comments = relationship(Comment, backref="user")
+    community_upvotes = relationship(CommunityUpvote, backref="user")
+    post_reports = relationship(PostReport, backref='user')
 
     def __init__(self,
                  username,
