@@ -24,13 +24,9 @@
         </h1>
         <a class="header__toggle desktop-hidden"><i class="ss-icon">rows</i></a>
         <nav class="header__nav nav nav--inline mobile-hidden">
-
           <ul class="nav__list">
-            {% if current_user.is_authenticated %}
-              <li><a href="{{ url_for('communities.index') }}">Communities</a></li>
-            {% endif %}
+            <li><a href="{{ url_for('communities.index') }}">Communities</a></li>
           </ul>
-
         </nav>
         <nav class="header__nav nav nav--inline nav--right mobile-hidden">
           <ul class="nav__list">
