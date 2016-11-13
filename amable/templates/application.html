@@ -13,8 +13,6 @@
       <link href="{{ ASSET_URL }}" rel="stylesheet">
     {% endassets %}
 
-    <!-- JQUERY -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://use.typekit.net/rpe8rjq.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
   </head>
@@ -29,7 +27,6 @@
 
           <ul class="nav__list">
             {% if current_user.is_authenticated %}
-              <li><a href="{{ url_for('base.index') }}">Dashboard</a></li>
               <li><a href="{{ url_for('communities.index') }}">Communities</a></li>
             {% endif %}
           </ul>
