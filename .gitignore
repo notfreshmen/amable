@@ -12,3 +12,4 @@ htmlcov/
 amable/static/.webassets-cache
 amable/static/*.css
 amable/static/*.js
+amable/uploads/avatars/**/*
