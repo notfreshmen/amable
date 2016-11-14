@@ -33,7 +33,6 @@ with context('amable.models'):
                     expect(c.description).to(equal('for all the love'))
                     expect(c.banner_url).to(equal('love.png'))
                     expect(c.thumbnail_url).to(equal('love.png'))
-                    expect(c.num_upvotes).to(equal(0))
 
                 with context('permalink'):
                     with context('passed'):
