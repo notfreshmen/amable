@@ -2,9 +2,11 @@ from expects import *
 
 from amable import session
 from amable.models.user import User, update_date_modified
+from amable.models.comment import Comment
 
 from spec.factories.user_factory import UserFactory
 from spec.factories.community_user_factory import CommunityUserFactory
+from spec.factories.comment_factory import CommentFactory
 
 
 s = session()
@@ -13,9 +15,14 @@ with context('amable.models'):
     with before.each:
         self.user = UserFactory()
         self.admin = UserFactory(role='admin')
+        s.add(self.user)
+        s.add(self.admin)
+        s.commit()
 
     with after.all:
         s.rollback()
+        s.query(User).delete()
+        s.commit()
 
     with context('user'):
         with context('User'):
@@ -56,7 +63,8 @@ with context('amable.models'):
                     with _it('returns true'):
                         community_user = CommunityUserFactory(user=self.user)
 
-                        expect(self.user.in_community(community_user.community)).to(be_true)
+                        expect(self.user.in_community(
+                            community_user.community)).to(be_true)
 
             with context('viewable_by'):
                 with context('any user'):
@@ -75,7 +83,8 @@ with context('amable.models'):
 
                 with context('other'):
                     with it('returns false'):
-                        expect(self.user.updatable_by(UserFactory.build())).to(be_false)
+                        expect(self.user.updatable_by(
+                            UserFactory.build())).to(be_false)
 
                 with context('admin'):
                     with it('returns true'):
@@ -88,11 +97,24 @@ with context('amable.models'):
 
                 with context('other'):
                     with it('returns false'):
-                        expect(self.user.destroyable_by(UserFactory.build())).to(be_false)
+                        expect(self.user.destroyable_by(
+                            UserFactory.build())).to(be_false)
 
                 with context('admin'):
                     with it('returns true'):
-                        expect(self.user.destroyable_by(self.admin)).to(be_true)
+                        expect(self.user.destroyable_by(
+                            self.admin)).to(be_true)
+
+            with context('get_praying_hands'):
+                with it('returns 3'):
+                    # Create a couple of comments for the user
+                    com0 = CommentFactory(user=self.user)
+                    com1 = CommentFactory(user=self.user)
+                    com2 = CommentFactory(user=self.user)
+
+                    s.commit()
+
+                    expect(self.user.get_praying_hands()).to(equal(3))
 
         with context('update_date_modified'):
             with it('updates the date for the user'):

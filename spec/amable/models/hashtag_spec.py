@@ -11,8 +11,11 @@ s = session()
 with context('amable.models'):
     with before.each:
         self.hashtag = HashtagFactory.create()
+        s.add(self.hashtag)
+        s.commit()
 
     with after.all:
+        s.rollback()
         s.query(Hashtag).delete()
         s.commit()
 

@@ -56,6 +56,12 @@ class Post(Base):
         self.date_created = now
         self.date_modified = now
 
+        # Each post starts with 1 upvote (whomever created the post)
+        # We have to insert a record into the post_upvote table
+        p_upvote = PostUpvote(self, self.user)
+        session.add(p_upvote)
+        session.commit()
+
     def __repr__(self):
         return '<Post %r>' % self.id
 

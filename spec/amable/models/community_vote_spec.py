@@ -2,8 +2,8 @@ from expects import *
 
 from amable import session
 from amable.models.community_upvote import CommunityUpvote, update_date_modified
-# from amable.models.community import Community
-# from amable.models.user import User
+from amable.models.community import Community
+from amable.models.user import User
 
 from spec.factories.community_upvote_factory import CommunityUpvoteFactory
 from spec.factories.post_factory import PostFactory
@@ -18,9 +18,15 @@ with context('amable.models'):
     with before.each:
         self.community_upvote = CommunityUpvoteFactory()
         # self.post = PostFactory()
+        s.add(self.community_upvote)
+        s.commit()
 
     with after.all:
         s.rollback()
+        s.query(CommunityUpvote).delete()
+        s.query(Community).delete()
+        s.query(User).delete()
+        s.commit()
 
     with context('community_upvote'):
         with context('CommunityUpvote'):
@@ -31,12 +37,14 @@ with context('amable.models'):
 
                     community_upvote = CommunityUpvote(user, community)
 
-                    expect(community_upvote.community_id).to(equal(community.id))
+                    expect(community_upvote.community_id).to(
+                        equal(community.id))
                     expect(community_upvote.user_id).to(equal(user.id))
 
             with context('__repr__()'):
                 with it('returns the id of the post'):
-                    expect(self.community_upvote.__repr__()).to(contain("<User"))
+                    expect(self.community_upvote.__repr__()).to(
+                        contain("<User"))
 
             # with context('viewable_by'):
             #     with context('random user'):
@@ -92,6 +100,8 @@ with context('amable.models'):
             with it('updates the date for the community upvote'):
                 date_modified = self.community_upvote.date_modified
 
-                update_date_modified(CommunityUpvote, session, self.community_upvote)
+                update_date_modified(
+                    CommunityUpvote, session, self.community_upvote)
 
-                expect(self.community_upvote.date_modified).not_to(equal(date_modified))
+                expect(self.community_upvote.date_modified).not_to(
+                    equal(date_modified))
