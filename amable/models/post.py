@@ -1,7 +1,7 @@
 from datetime import datetime as dt
 from collections import OrderedDict
 
-from amable import db, session
+from amable import db, session, cache
 
 from .base import Base
 
@@ -96,6 +96,15 @@ class Post(Base):
 
         return root_tree
 
+    @property
+    def total_upvotes(self):
+        cacheTotal = cache.get(str(self.id) + "_post_upvotes")
+
+        if cacheTotal is None:
+            cacheTotal = session.query(PostUpvote).filter_by(post_id = self.id).count()
+            cache.set(str(self.id) + "_post_upvotes", cacheTotal, timeout=5*60)
+        return cacheTotal
+        
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object

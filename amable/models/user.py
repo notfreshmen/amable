@@ -13,6 +13,7 @@ from .post_upvote import PostUpvote
 from .community_user import CommunityUser
 from .comment import Comment
 from .community_upvote import CommunityUpvote
+from .post_report import PostReport
 
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
@@ -136,26 +137,53 @@ class User(Base):
 
     # Praying Hands - Count on Comments
     def get_praying_hands(self):
-        phCount = cache.get(self.id + "_praying_hands")
+        phCount = cache.get(str(self.id) + "_praying_hands")
         if phCount is None:
             phCount = session.query(Comment).filter_by(
                 user_id=self.id).group_by(Comment.post_id).count()
-            cache.set(self.id + "_praying_hands", phCount, timeout=10 * 60)
+            cache.set(str(self.id) + "_praying_hands", phCount, timeout=10 * 60)
         return phCount
 
     # Halo - Count on Comments where post is answered (prayed for)
     def get_halo(self):
-        haloCount = cache.get(self.id + "_halo")
+        haloCount = cache.get(str(self.id) + "_halo")
         if haloCount is None:
             haloCount = session.query(Comment).filter_by(user_id=self.id).group_by(Comment.post_id).filter(Comment.post.has(answered=True)).count()
-            cache.set(self.id + "_halo", haloCount, timeout = 10 * 60)
+            cache.set(str(self.id) + "_halo", haloCount, timeout = 10 * 60)
         return haloCount
 
     # Hammer - Count of posts that user reported where other people also reported
     def get_hammer(self):
-        hammerCount = cache.get(self.id + "_hammer")
+        hammerCount = cache.get(str(self.id) + "_hammer")
         if hammerCount is None:
-            hammerCount = session.query()
+            hammerCount = 0
+            allReports = session.query(PostReport).filter_by(user_id=self.id)
+
+            for report in allReports:
+                # Has someone else reported this post?
+                reportCheckCount = session.query(PostReport).filter(PostReport.parent_id == report.parent_id, PostReport.user_id != self.id).count()
+
+                if reportCheckCount > 0:
+                    hammerCount += 1
+                else:
+                    continue
+
+            cache.set(str(self.id) + "_hammer", hammerCount, timeout=10*60)
+        return hammerCount
+
+    def get_knee(self):
+        kneeCount = cache.get(str(self.id) + "_knee")
+
+        if kneeCount is None:
+            kneeCount = 0
+            allPosts = session.query(Post).filter_by(user_id = self.id).all()
+            for post in self.posts:
+                if (post.total_upvotes -1) > 0:
+                    kneeCount += 1
+
+            cache.set(str(self.id) + "_knee", kneeCount, timeout=10*60)
+        return kneeCount
+
     @property
     def is_authenticated(self):
         return True
