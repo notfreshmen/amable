@@ -10,6 +10,7 @@ def update(self, data):
 
     return self
 
+
 Base = declarative_base()
 
 Base.update = update
