@@ -1,7 +1,7 @@
 from datetime import datetime as dt
 from random import randrange
 
-from amable import db, session
+from amable import db, session, cache
 
 from amable.utils.password import hash_password
 
@@ -131,10 +131,18 @@ class User(Base):
         except NameError:
             return str(self.id)  # python 3
 
-    def get_praying_hands(self):
-        num_rows = session.query(Comment).filter(
-            Comment.user_id == self.id).group_by(Comment.post_id).count()
-        print(num_rows)
+    # def get_praying_hands(self):
+    #     phCount = cache.get(self.id + "_praying_hands")
+    #     if phCount is None:
+    #         phCount = session.query(Comment).filter_by(
+    #             user_id=self.id).group_by(Comment.post_id).count()
+    #         cache.set(self.id + "_praying_hands", phCount, timeout=10 * 60)
+    #     return phCount
+
+    # def get_halo(self):
+    #     haloCount = cache.get(self.id + "_halo")
+    #     if haloCount is None:
+    #         haloCount = session.query(Comment).filter_by(user_id=self.id).
 
     @property
     def is_authenticated(self):
