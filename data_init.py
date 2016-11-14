@@ -19,3 +19,5 @@ subsubComment1 = CommentFactory(post=topComment.post, parent=subComment3.id)
 s.commit()
 
 print("Community ID: " + str(topComment.post.community.id))
+
+# Lets create some reports

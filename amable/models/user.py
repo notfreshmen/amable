@@ -134,19 +134,28 @@ class User(Base):
         except NameError:
             return str(self.id)  # python 3
 
-    # def get_praying_hands(self):
-    #     phCount = cache.get(self.id + "_praying_hands")
-    #     if phCount is None:
-    #         phCount = session.query(Comment).filter_by(
-    #             user_id=self.id).group_by(Comment.post_id).count()
-    #         cache.set(self.id + "_praying_hands", phCount, timeout=10 * 60)
-    #     return phCount
+    # Praying Hands - Count on Comments
+    def get_praying_hands(self):
+        phCount = cache.get(self.id + "_praying_hands")
+        if phCount is None:
+            phCount = session.query(Comment).filter_by(
+                user_id=self.id).group_by(Comment.post_id).count()
+            cache.set(self.id + "_praying_hands", phCount, timeout=10 * 60)
+        return phCount
 
-    # def get_halo(self):
-    #     haloCount = cache.get(self.id + "_halo")
-    #     if haloCount is None:
-    #         haloCount = session.query(Comment).filter_by(user_id=self.id).
+    # Halo - Count on Comments where post is answered (prayed for)
+    def get_halo(self):
+        haloCount = cache.get(self.id + "_halo")
+        if haloCount is None:
+            haloCount = session.query(Comment).filter_by(user_id=self.id).group_by(Comment.post_id).filter(Comment.post.has(answered=True)).count()
+            cache.set(self.id + "_halo", haloCount, timeout = 10 * 60)
+        return haloCount
 
+    # Hammer - Count of posts that user reported where other people also reported
+    def get_hammer(self):
+        hammerCount = cache.get(self.id + "_hammer")
+        if hammerCount is None:
+            hammerCount =    
     @property
     def is_authenticated(self):
         return True
