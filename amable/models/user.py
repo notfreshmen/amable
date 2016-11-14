@@ -140,7 +140,7 @@ class User(Base):
         phCount = cache.get(str(self.id) + "_praying_hands")
         if phCount is None:
             phCount = session.query(Comment).filter_by(
-                user_id=self.id).group_by(Comment.post_id).count()
+                user_id=self.id).group_by(Comment.post_id, Comment.id).count()
             cache.set(str(self.id) + "_praying_hands", phCount, timeout=10 * 60)
         return phCount
 
@@ -148,7 +148,7 @@ class User(Base):
     def get_halo(self):
         haloCount = cache.get(str(self.id) + "_halo")
         if haloCount is None:
-            haloCount = session.query(Comment).filter_by(user_id=self.id).group_by(Comment.post_id).filter(Comment.post.has(answered=True)).count()
+            haloCount = session.query(Comment).filter_by(user_id=self.id).group_by(Comment.post_id, Comment.id).filter(Comment.post.has(answered=True)).count()
             cache.set(str(self.id) + "_halo", haloCount, timeout = 10 * 60)
         return haloCount
 

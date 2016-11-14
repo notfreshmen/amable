@@ -3,6 +3,10 @@ from expects import *
 from amable import session
 from amable.models.user import User, update_date_modified
 from amable.models.comment import Comment
+from amable.models.post_upvote import PostUpvote
+from amable.models.post import Post
+from amable.models.community import Community
+
 
 from spec.factories.user_factory import UserFactory
 from spec.factories.community_user_factory import CommunityUserFactory
@@ -115,6 +119,45 @@ with context('amable.models'):
                     s.commit()
 
                     expect(self.user.get_praying_hands()).to(equal(3))
+
+                    # Now we are going to check the cache
+                    # Delete a comment and the praying hands should still = 3
+                    s.query(Comment).filter_by(id=com0.id).delete()
+                    s.commit()
+
+                    expect(self.user.get_praying_hands()).to(equal(3))
+
+                    # Cleanup
+                    s.query(Comment).delete()
+                    s.query(PostUpvote).delete()
+                    s.query(Post).delete()
+                    s.query(Community).delete()
+                    s.commit()
+
+            with context('get_halo'):
+                with it('returns 1'):
+                    com0 = CommentFactory(user=self.user)
+                    com1 = CommentFactory(user=self.user)
+
+                    com0.post.answered = True
+
+                    s.commit()
+
+                    expect(self.user.get_halo()).to(equal(1))
+
+                    # Lets make the other comment answered too!
+                    # We should still get 1 because of cache
+                    com1.post.answered = True
+                    s.commit()
+
+                    expect(self.user.get_halo()).to(equal(1))
+
+                    # Cleanup
+                    s.query(Comment).delete()
+                    s.query(PostUpvote).delete()
+                    s.query(Post).delete()
+                    s.query(Community).delete()
+                    s.commit()
 
         with context('update_date_modified'):
             with it('updates the date for the user'):
