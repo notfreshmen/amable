@@ -1,4 +1,5 @@
 from spec.factories.comment_factory import CommentFactory
+from spec.factories.post_report_factory import PostReportFactory
 from amable import session
 
 s = session()
@@ -21,3 +22,8 @@ s.commit()
 print("Community ID: " + str(topComment.post.community.id))
 
 # Lets create some reports
+postReport = PostReportFactory(post=topComment.post, user=topComment.user)
+
+postReport2 = PostReportFactory(post=topComment.post, user=subComment1.user)
+
+s.commit()

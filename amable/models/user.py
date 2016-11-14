@@ -155,7 +155,7 @@ class User(Base):
     def get_hammer(self):
         hammerCount = cache.get(self.id + "_hammer")
         if hammerCount is None:
-            hammerCount =    
+            hammerCount = session.query()
     @property
     def is_authenticated(self):
         return True
