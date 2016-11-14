@@ -1,9 +1,13 @@
 from pprint import pprint
 
+import os
+
 from flask import Blueprint
 from flask import render_template, abort, request, redirect, url_for, flash
 
 from flask_login import login_user, login_required, current_user, logout_user
+
+from werkzeug.utils import secure_filename
 
 from amable import session
 
@@ -20,6 +24,7 @@ s = session()
 
 
 @users.route('/<username>')
+@login_required
 def show(username):
     user = s.query(User).filter_by(username=username).first()
 
@@ -79,10 +84,15 @@ def update(id):
     if form.validate():
         data = form.data
 
-        if data["profile_image"] == "":
-            del(data["profile_image"])
+        if request.files['profile_image']:
+            filename = secure_filename(request.files['profile_image'].filename)
 
-        user.update(data)
+            if not os.path.exists('./amable/uploads/avatars/' + str(user.id)):
+                os.makedirs('./amable/uploads/avatars/' + str(user.id))
+
+            request.files['profile_image'].save('./amable/uploads/avatars/' + str(user.id) + '/' + filename)
+
+            user.profile_image = '/uploads/avatars/' + str(user.id) + '/' + filename
 
         s.commit()
 

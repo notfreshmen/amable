@@ -12,6 +12,10 @@
     }
   }
 
+  li {
+    padding: 0;
+  }
+
   &__container {
     @include clearfix;
 
