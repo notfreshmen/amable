@@ -17,7 +17,7 @@ gulp.task('css', function () {
     includePaths: [
       './amable/assets/css/lib'
     ],
-    outputStyle: 'compressed'
+    outputStyle: 'nested'
   }
 
   gulp.src(css_src)
@@ -40,5 +40,6 @@ gulp.task('watch', function () {
 })
 
 gulp.task('build', ['css', 'jsc'])
+
 
 gulp.task('default', ['build'])
