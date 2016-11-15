@@ -14,6 +14,7 @@ from spec.factories.community_user_factory import CommunityUserFactory
 from spec.factories.comment_factory import CommentFactory
 from spec.factories.post_factory import PostFactory
 from spec.factories.post_report_factory import PostReportFactory
+from spec.factories.post_upvote_factory import PostUpvoteFactory
 
 
 s = session()
@@ -200,6 +201,36 @@ with context('amable.models'):
 
                     # Cleanup
                     s.query(PostReport).delete()
+                    s.query(PostUpvote).delete()
+                    s.query(Post).delete()
+                    s.query(Community).delete()
+                    s.commit()
+
+            with context('get_knee'):
+                with it('cache and counts'):
+                    post0 = PostFactory(user=self.user)
+
+                    user0 = UserFactory()
+
+                    pu0 = PostUpvoteFactory(post=post0, user=user0)
+
+                    s.commit()
+
+                    expect(self.user.get_knee()).to(equal(1))
+
+                    # Lets add another upvote
+                    user1 = UserFactory()
+                    pu1 = PostUpvoteFactory(post=post0, user=user1)
+
+                    s.commit()
+
+                    # Should stay the same
+                    expect(self.user.get_knee()).to(equal(1))
+
+                    # Should change on force of invalidation
+                    expect(self.user.get_knee(True)).to(equal(1))
+
+                    # Cleanup
                     s.query(PostUpvote).delete()
                     s.query(Post).delete()
                     s.query(Community).delete()

@@ -207,7 +207,7 @@ class User(Base):
 
     # Knee - Count of user posts that have at least 1 upvote ( or is it a knee
     # for each upvote? )
-    def get_knee(self, invalidate):
+    def get_knee(self, invalidate=False):
         def updateKneeCount():
             kneeCount = 0
             allPosts = session.query(Post).filter_by(user_id=self.id).all()
