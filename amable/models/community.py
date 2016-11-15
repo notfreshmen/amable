@@ -38,9 +38,9 @@ class Community(Base):
             self,
             name,
             description,
-            banner_url,
-            thumbnail_url,
             nsfw,
+            banner_url="",
+            thumbnail_url="",
             permalink=None,
     ):
         self.name = name
@@ -132,6 +132,12 @@ class Community(Base):
             self.active = True
 
         s.commit()
+
+    def set_default_banner(self):
+        self.banner_url = "http://dsedutech.org/images/demo/placement_banner1.jpg"
+
+    def set_default_thumbnail(self):
+        self.thumbnail_url = 'http://i.imgur.com/7mo7QHW.gif'
 
 
 def update_date_modified(mapper, connection, target):
