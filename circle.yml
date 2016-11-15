@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   pre:
-    - sudo apt-get install memcache libmemcached-dev zlib1g-dev
+    - sudo apt-get install memcached libmemcached-dev zlib1g-dev
 
 database:
   override:
