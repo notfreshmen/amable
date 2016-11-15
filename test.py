@@ -1,13 +1,16 @@
 from amable import session
-# from amable.models.post import Post
+from amable.models.post_upvote import PostUpvote
+from amable.models.post import Post
 from amable.models.comment import Comment
-# p = session.query(Post).first()
-# print(p.get_comment_tree())
+from amable.models.user import User
+from amable.models.post_report import PostReport
 
-comment = session.query(Comment).filter_by(id=5).first()
+# a = session.query(Post).filter_by(user_id = 19).all()
+# upvoteCount = 0
+# for b in a:
+#     upvoteCount += b.total_upvotes
 
-# print(comment)
-print(comment.has_children())
+# print(upvoteCount)
 
-print("Children List")
-# print([x ])
+u = session.query(User).filter_by(id=19).first()
+print(u.get_knee())

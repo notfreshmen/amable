@@ -1,7 +1,7 @@
 from datetime import datetime as dt
 from collections import OrderedDict
 
-from amable import db, session
+from amable import db, session, cache
 
 from .base import Base
 
@@ -56,6 +56,12 @@ class Post(Base):
         self.date_created = now
         self.date_modified = now
 
+        # Each post starts with 1 upvote (whomever created the post)
+        # We have to insert a record into the post_upvote table
+        p_upvote = PostUpvote(self, self.user)
+        session.add(p_upvote)
+        session.commit()
+
     def __repr__(self):
         return '<Post %r>' % self.id
 
@@ -95,6 +101,17 @@ class Post(Base):
             root_tree[comment] = get_children(comment, OrderedDict())
 
         return root_tree
+
+    @property
+    def total_upvotes(self):
+        cacheTotal = cache.get(str(self.id) + "_post_upvotes")
+
+        if cacheTotal is None:
+            cacheTotal = session.query(PostUpvote).filter_by(
+                post_id=self.id).count()
+            cache.set(str(self.id) + "_post_upvotes",
+                      cacheTotal, timeout=5 * 60)
+        return cacheTotal
 
 
 def update_date_modified(mapper, connection, target):
