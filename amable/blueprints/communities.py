@@ -124,8 +124,6 @@ def create_community():
                     banner_url = fullPath
                 else:
                     flash('Banner filetype is not allowed, could not upload')
-            else:
-                flash('Banner file name cannot be empty')
 
         # Now lets do checks for Thumbnail
         if 'thumbnail' in request.files:
@@ -145,8 +143,6 @@ def create_community():
                     thumbnail_url = fullPath
                 else:
                     flash('Thumbnail filetype is not allowed, could not upload')
-            else:
-                flash('Banner file name cannot be empty')
 
         newCommunity.banner_url = banner_url
         newCommunity.thumbnail_url = thumbnail_url
