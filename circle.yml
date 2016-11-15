@@ -4,6 +4,10 @@ machine:
   node:
     version: 6.5.0
 
+dependencies:
+  pre:
+    - sudo apt-get install memcache libmemcached-dev zlib1g-dev
+
 database:
   override:
     - make db_user_setup
