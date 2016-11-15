@@ -136,52 +136,98 @@ class User(Base):
             return str(self.id)  # python 3
 
     # Praying Hands - Count on Comments
-    def get_praying_hands(self):
-        phCount = cache.get(str(self.id) + "_praying_hands")
-        if phCount is None:
+    def get_praying_hands(self, invalidate=False):
+        def updatePHCount():
             phCount = session.query(Comment).filter_by(
                 user_id=self.id).group_by(Comment.post_id, Comment.id).count()
-            cache.set(str(self.id) + "_praying_hands", phCount, timeout=10 * 60)
+            cache.set(str(self.id) + "_praying_hands",
+                          phCount, timeout=10 * 60)
+            return phCount
+
+        phCount = 0
+        if invalidate:
+            phCount = updatePHCount()
+        else:
+            phCount = cache.get(str(self.id) + "_praying_hands")
+            if phCount is None:
+                phCount = updatePHCount()
+        
         return phCount
 
     # Halo - Count on Comments where post is answered (prayed for)
-    def get_halo(self):
-        haloCount = cache.get(str(self.id) + "_halo")
-        if haloCount is None:
-            haloCount = session.query(Comment).filter_by(user_id=self.id).group_by(Comment.post_id, Comment.id).filter(Comment.post.has(answered=True)).count()
-            cache.set(str(self.id) + "_halo", haloCount, timeout = 10 * 60)
+    def get_halo(self, invalidate=False):
+        def updateHaloCount():
+            haloCount = session.query(Comment).filter_by(user_id=self.id).group_by(
+                Comment.post_id, Comment.id).filter(Comment.post.has(answered=True)).count()
+            cache.set(str(self.id) + "_halo", haloCount, timeout=10 * 60)
+            return haloCount
+
+        haloCount = 0
+        if invalidate:
+            haloCount = updateHaloCount()
+        else:
+            haloCount = cache.get(str(self.id) + "_halo")
+            if haloCount is None:
+                haloCount = updateHaloCount()
+
         return haloCount
 
-    # Hammer - Count of posts that user reported where other people also reported
-    def get_hammer(self):
-        hammerCount = cache.get(str(self.id) + "_hammer")
-        if hammerCount is None:
+
+    # Hammer - Count of posts that user reported where other people also
+    # reported
+    def get_hammer(self, invalidate=False):
+        def updateHammerCount():
             hammerCount = 0
             allReports = session.query(PostReport).filter_by(user_id=self.id)
 
             for report in allReports:
                 # Has someone else reported this post?
-                reportCheckCount = session.query(PostReport).filter(PostReport.parent_id == report.parent_id, PostReport.user_id != self.id).count()
+                reportCheckCount = session.query(PostReport).filter(
+                    PostReport.parent_id == report.parent_id, PostReport.user_id != self.id).count()
 
                 if reportCheckCount > 0:
                     hammerCount += 1
                 else:
                     continue
 
-            cache.set(str(self.id) + "_hammer", hammerCount, timeout=10*60)
+            cache.set(str(self.id) + "_hammer", hammerCount, timeout=10 * 60)
+
+            return hammerCount
+
+        hammerCount = 0
+
+        if invalidate:
+            hammerCount = updateHammerCount()
+        else:
+            hammerCount = cache.get(str(self.id) + "_hammer")
+            if hammerCount is None:
+                hammerCount = updateHammerCount()
+
         return hammerCount
 
-    def get_knee(self):
-        kneeCount = cache.get(str(self.id) + "_knee")
-
-        if kneeCount is None:
+    # Knee - Count of user posts that have at least 1 upvote ( or is it a knee
+    # for each upvote? )
+    def get_knee(self, invalidate):
+        def updateKneeCount():
             kneeCount = 0
-            allPosts = session.query(Post).filter_by(user_id = self.id).all()
+            allPosts = session.query(Post).filter_by(user_id=self.id).all()
             for post in self.posts:
-                if (post.total_upvotes -1) > 0:
+                if (post.total_upvotes - 1) > 0:
                     kneeCount += 1
 
-            cache.set(str(self.id) + "_knee", kneeCount, timeout=10*60)
+            cache.set(str(self.id) + "_knee", kneeCount, timeout=10 * 60)
+
+            return kneeCount
+
+        kneeCount = 0
+        if invalidate:
+            kneeCount = updateKneeCount()
+        else:
+            kneeCount = cache.get(str(self.id) + "_knee")
+
+            if kneeCount is None:
+                kneeCount = updateKneeCount()
+            
         return kneeCount
 
     @property

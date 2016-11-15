@@ -6,11 +6,14 @@ from amable.models.comment import Comment
 from amable.models.post_upvote import PostUpvote
 from amable.models.post import Post
 from amable.models.community import Community
+from amable.models.post_report import PostReport
 
 
 from spec.factories.user_factory import UserFactory
 from spec.factories.community_user_factory import CommunityUserFactory
 from spec.factories.comment_factory import CommentFactory
+from spec.factories.post_factory import PostFactory
+from spec.factories.post_report_factory import PostReportFactory
 
 
 s = session()
@@ -110,7 +113,7 @@ with context('amable.models'):
                             self.admin)).to(be_true)
 
             with context('get_praying_hands'):
-                with it('returns 3'):
+                with it('cache and counts'):
                     # Create a couple of comments for the user
                     com0 = CommentFactory(user=self.user)
                     com1 = CommentFactory(user=self.user)
@@ -127,6 +130,9 @@ with context('amable.models'):
 
                     expect(self.user.get_praying_hands()).to(equal(3))
 
+                    # Now lets force invalidation and see if it changes
+                    expect(self.user.get_praying_hands(True)).to(equal(2))
+
                     # Cleanup
                     s.query(Comment).delete()
                     s.query(PostUpvote).delete()
@@ -135,7 +141,7 @@ with context('amable.models'):
                     s.commit()
 
             with context('get_halo'):
-                with it('returns 1'):
+                with it('cache and counts'):
                     com0 = CommentFactory(user=self.user)
                     com1 = CommentFactory(user=self.user)
 
@@ -152,8 +158,48 @@ with context('amable.models'):
 
                     expect(self.user.get_halo()).to(equal(1))
 
+                    # Now lets force invalidation, should get 2
+                    expect(self.user.get_halo(True)).to(equal(2))
+
                     # Cleanup
                     s.query(Comment).delete()
+                    s.query(PostUpvote).delete()
+                    s.query(Post).delete()
+                    s.query(Community).delete()
+                    s.commit()
+
+            with context('get_hammer'):
+                with it('cache and counts'):
+                    # Our user needs to report a post!
+                    post0 = PostFactory()
+
+                    postR0 = PostReportFactory(post=post0, user=self.user)
+
+                    # And another user to report the post
+                    user0 = UserFactory()
+
+                    postR1 = PostReportFactory(post=post0, user=user0)
+
+                    s.commit()
+
+                    # Now we can expect get_knee to return 1
+                    expect(self.user.get_hammer()).to(equal(1))
+
+                    # Test the cache
+                    post1 = PostFactory()
+
+                    postR2 = PostReportFactory(post=post1, user=self.user)
+                    postR3 = PostReportFactory(post=post1, user=user0)
+
+                    # if NO cache this should now = 2,
+                    # but we expect to still = 1
+                    expect(self.user.get_hammer()).to(equal(1))
+
+                    # Now lets invalidate the cache and we should expect 2
+                    expect(self.user.get_hammer(True)).to(equal(2))
+
+                    # Cleanup
+                    s.query(PostReport).delete()
                     s.query(PostUpvote).delete()
                     s.query(Post).delete()
                     s.query(Community).delete()
