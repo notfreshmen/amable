@@ -30,7 +30,6 @@ with context('amable.models'):
                         banner_url='love.png',
                         thumbnail_url='love.png',
                         nsfw=False,
-                        active=True
                     )
 
                     expect(c.name).to(equal('The Love'))
@@ -47,7 +46,6 @@ with context('amable.models'):
                                 banner_url='love.png',
                                 thumbnail_url='love.png',
                                 nsfw=False,
-                                active=True,
                                 permalink='foobar'
                             )
 
@@ -61,7 +59,6 @@ with context('amable.models'):
                                 banner_url='love.png',
                                 thumbnail_url='love.png',
                                 nsfw=False,
-                                active=True
                             )
 
                             expect(c.permalink).to(equal('blah-blah'))
@@ -73,7 +70,6 @@ with context('amable.models'):
                                 banner_url='love.png',
                                 thumbnail_url='love.png',
                                 nsfw=False,
-                                active=True
                             )
 
                             expect(c.permalink).to(contain('the-love-'))

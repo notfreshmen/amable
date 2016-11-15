@@ -38,10 +38,9 @@ class Community(Base):
             self,
             name,
             description,
-            banner_url,
-            thumbnail_url,
             nsfw,
-            active,
+            banner_url="",
+            thumbnail_url="",
             permalink=None,
     ):
         self.name = name
@@ -49,7 +48,7 @@ class Community(Base):
         self.banner_url = banner_url
         self.thumbnail_url = thumbnail_url
         self.nsfw = nsfw
-        self.active = active
+        self.active = False
 
         if permalink:
             self.permalink = permalink
@@ -89,8 +88,7 @@ class Community(Base):
             return True
         else:
             # Let's see if the community has enough upvotes
-            upvote_count = s.query(CommunityUpvote).filter_by(
-                community_id=self.id).count()
+            upvote_count = self.queryNumUpvotes()
 
             if upvote_count >= 10:
                 self.active = True
@@ -120,6 +118,26 @@ class Community(Base):
 
     def destroyable_by(self, user):
         return user.is_admin()
+
+    def queryNumUpvotes(self):
+        return s.query(CommunityUpvote).filter_by(
+            community_id=self.id).count()
+
+    def vote(self, user):
+        newUpvote = CommunityUpvote(user, self)
+        s.add(newUpvote)
+        s.commit()
+
+        if self.queryNumUpvotes() >= 10:
+            self.active = True
+
+        s.commit()
+
+    def set_default_banner(self):
+        self.banner_url = "http://dsedutech.org/images/demo/placement_banner1.jpg"
+
+    def set_default_thumbnail(self):
+        self.thumbnail_url = 'http://i.imgur.com/7mo7QHW.gif'
 
 
 def update_date_modified(mapper, connection, target):

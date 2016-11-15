@@ -17,6 +17,11 @@ from sqlalchemy import create_engine
 # CSRF
 from flask_wtf.csrf import CsrfProtect
 
+# File Uploads
+dire = dirname(__file__)
+UPLOAD_FOLDER = dire + '/uploads'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
 # Cache
 from werkzeug.contrib.cache import MemcachedCache
 cache = MemcachedCache(['127.0.0.1:11211'])
@@ -34,6 +39,7 @@ if env is None:
 app = Flask(__name__)
 app.config.from_envvar('AMABLE_%s_SETTINGS' % env.upper())
 app.secret_key = 'domislove'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # DB setup
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
