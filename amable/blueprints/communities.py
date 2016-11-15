@@ -79,36 +79,6 @@ def create():
                            form=CommunityCreateForm())
 
 
-# @communities.route('/communities/test', methods=['GET'])
-# @login_required
-# def test():
-#     return render_template('communities/test.html',
-#                            form=FileTestForm())
-
-
-# @communities.route('/communities/test/upload', methods=['POST'])
-# @login_required
-# def testupload():
-#     form = FileTestForm(request.form)
-
-#     if form.validate():
-
-#         if 'file_field' in request.files:
-#             file = request.files['file_field']
-
-#             if file.filename == '':
-#                 return 'no filename'
-#             if file and allowed_file(file.filename):
-#                 filename = secure_filename(file.filename)
-#                 print(app.config['UPLOAD_FOLDER'])
-#                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#                 return filename
-#             else:
-#                 return 'nah'
-#         else:
-#             return 'na'
-
-
 @communities.route('/communities/create/process', methods=['POST'])
 @login_required
 def create_community():
@@ -147,7 +117,8 @@ def create_community():
                         secure_filename(banner_file.filename)
 
                     # Save | Upload Banner file
-                    fullPath = os.path.join(community_upload_url, banner_filename)
+                    fullPath = os.path.join(
+                        community_upload_url, banner_filename)
 
                     banner_file.save(fullPath)
 
@@ -167,7 +138,8 @@ def create_community():
                         secure_filename(thumbnail_file.filename)
 
                     # Save | Upload Thumbnail File
-                    fullPath = os.path.join(community_upload_url, thumbnail_filename)
+                    fullPath = os.path.join(
+                        community_upload_url, thumbnail_filename)
 
                     thumbnail_file.save(fullPath)
 
