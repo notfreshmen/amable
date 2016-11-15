@@ -98,8 +98,8 @@ def create_community():
 
         # Now we have a community with an ID. Lets create
         # a directory to upload image files to.
-        community_upload_relative = '/communities/' + str(newCommunity.id)
-        community_upload_url = './amable/uploads' + community_upload_relative
+        community_upload_relative = 'communities/' + str(newCommunity.id)
+        community_upload_url = './amable/uploads/' + community_upload_relative
 
         if not os.path.exists(community_upload_url):
             os.makedirs(community_upload_url)
