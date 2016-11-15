@@ -25,7 +25,6 @@ s = session()
 
 
 @communities.route('/communities')
-@login_required
 def index():
     communities = s.query(Community).all()
 
@@ -38,7 +37,6 @@ def index():
 
 
 @communities.route('/communities/search', methods=['GET'])
-@login_required
 def search():
     if 'community' in request.args:
 
