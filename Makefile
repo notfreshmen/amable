@@ -14,6 +14,7 @@ server:
 	python ./server.py
 
 test:
+	psql -U amable -d amable_test -c 'delete from community_users; delete from post_upvotes; delete from reports; delete from comments; delete from posts; delete from communities; delete from users;'
 	AMABLE_ENV=test mamba --enable-coverage --format=documentation
 
 lint:
@@ -26,7 +27,7 @@ coverage:
 	coverage report
 
 dbsetup:
-	createuser -U postgres -h localhost -p 5432 -d -w amable
+	createuser -U postgres -h localhost -p 5432 -d -W amable
 	sudo -u postgres psql -U postgres -c "alter user amable with password 'domislove';"
 
 db_user_setup:
@@ -67,7 +68,7 @@ dbsync:
 	AMABLE_ENV=test python db/manage.py upgrade
 
 reinit:
-	psql -U amable -d amable_development -c 'delete from comments; delete from posts; delete from communities; delete from users;'
+	psql -U amable -d amable_development -c 'delete from community_users; delete from post_upvotes; delete from reports; delete from comments; delete from posts; delete from communities; delete from users;'
 	python data_init.py
 
 erd:

@@ -17,6 +17,9 @@ from sqlalchemy import create_engine
 # CSRF
 from flask_wtf.csrf import CsrfProtect
 
+# Cache
+from werkzeug.contrib.cache import MemcachedCache
+cache = MemcachedCache(['127.0.0.1:11211'])
 
 # DotEnv Setup
 load_dotenv(join(dirname(__file__), '..', '.env'))

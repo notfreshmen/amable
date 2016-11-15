@@ -1,5 +1,7 @@
 *.pyc
 *.swp
+*.sublime-workspace
+*.sublime*
 .coverage
 .DS_Store
 amable.sublime-*
@@ -12,3 +14,4 @@ htmlcov/
 amable/static/.webassets-cache
 amable/static/*.css
 amable/static/*.js
+amable/uploads/avatars/**/*

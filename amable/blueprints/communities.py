@@ -19,17 +19,18 @@ s = session()
 
 
 @communities.route('/communities')
-@login_required
 def index():
     communities = s.query(Community).all()
 
     print(communities)
 
-    return render_template('communities/index.html', title="Communities", communities=communities, form=CommunitySearchForm())
+    return render_template('communities/index.html',
+                           title="Communities",
+                           communities=communities,
+                           form=CommunitySearchForm())
 
 
 @communities.route('/communities/search', methods=['GET'])
-@login_required
 def search():
     if 'community' in request.args:
 
@@ -47,8 +48,8 @@ def search():
         flash("Arguments missing")
 
 
-@login_required
 @communities.route('/communities/<permalink>')
+@login_required
 def show(permalink):
     community = s.query(Community).filter_by(permalink=permalink).first()
 
@@ -57,4 +58,6 @@ def show(permalink):
 
     posts = s.query(Post).filter_by(community_id=community.id).all()
 
-    return render_template('communities/show.html', community=community, posts=posts)
+    return render_template('communities/show.html',
+                           community=community,
+                           posts=posts)

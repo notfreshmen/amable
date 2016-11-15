@@ -2,6 +2,27 @@
 
 [![CircleCI](https://img.shields.io/circleci/project/notfreshmen/amable.svg?maxAge=2592000?style=flat-square)](https://circleci.com/gh/notfreshmen/amable) [![Code Climate](https://img.shields.io/codeclimate/github/notfreshmen/amable.svg?maxAge=2592000?style=flat-square)](https://codeclimate.com/github/notfreshmen/amable) [![Code Climate](https://img.shields.io/codeclimate/coverage/github/notfreshmen/amable.svg?maxAge=2592000?style=flat-square)](https://codeclimate.com/github/notfreshmen/amable/coverage)
 
+## Memcache Setup
+This was done on an Ubuntu machine. If you are on Windows/Macosx there is a brew setup for memcache. Here are some troubleshooting I went through for Ubuntu.
+
+### Ubuntu/Centos
+
+1. Install Memcache
+  * https://www.digitalocean.com/community/tutorials/how-to-install-and-use-memcache-on-ubuntu-14-04
+  * https://www.liquidweb.com/kb/how-to-install-memcached-on-centos-7/
+2. Install Libraries if needed
+  * If you get an error looking like this : 
+
+```
+Command "/home/benderm/Github/amable/venv/bin/python3.5 -u -c "import setuptools, tokenize;__file__='/tmp/pip-build-00gqva6p/pylibmc/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" install --record /tmp/pip-huj0ozjx-record/install-record.txt --single-version-externally-managed --compile --install-headers /home/benderm/Github/amable/venv/include/site/python3.5/pylibmc" failed with error code 1 in /tmp/pip-build-00gqva6p/pylibmc/
+```
+
+Try running : 
+
+```
+$ sudo apt-get install libmemcached-dev zlib1g-dev
+```
+
 ## Installation
 
 You'll need [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org/) installed on your machine. Then, with a command line (Terminal on macOS and Linux, PowerShell or Command Prompt on Windows), you'll need to install the [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) Vagrant plugin:
