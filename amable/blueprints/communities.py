@@ -12,7 +12,6 @@ from amable.models.post import Post
 
 from amable.forms.community_search_form import CommunitySearchForm
 from amable.forms.community_create_form import CommunityCreateForm
-from amable.forms.file_upload_test_form import FileTestForm
 
 from amable.utils.files import allowed_file
 
