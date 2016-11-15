@@ -119,9 +119,9 @@ def create_community():
 
                     banner_file.save(fullPath)
 
-                    banner_url = fullPath
+                    banner_url = community_upload_relative + "/" + banner_filename
                 else:
-                    flash('Banner filetype is not allowed, could not upload')
+                    flash('Banner file type is not allowed, could not upload')
 
         # Now lets do checks for Thumbnail
         if 'thumbnail' in request.files:
@@ -138,9 +138,9 @@ def create_community():
 
                     thumbnail_file.save(fullPath)
 
-                    thumbnail_url = fullPath
+                    thumbnail_url = community_upload_relative + "/" + thumbnail_filename
                 else:
-                    flash('Thumbnail filetype is not allowed, could not upload')
+                    flash('Thumbnail file type is not allowed, could not upload')
 
         newCommunity.banner_url = banner_url
         newCommunity.thumbnail_url = thumbnail_url

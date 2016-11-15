@@ -10,7 +10,7 @@
     </header>
     <div class="communities__communities">
       {% for community in communities %}
-        <article class="communities__community visible" {% if community.banner_url %} style="background-image: url({{ community.banner_url }})" {% endif %}>
+        <article class="communities__community visible" {% if community.banner_url %} style="background-image: url(/uploads{{ community.banner_url }})" {% endif %}>
           <a href="{{ url_for('communities.show', permalink=community.permalink) }}">
             <h3>{{ community.name }}</h3>
           </a>

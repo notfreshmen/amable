@@ -15,3 +15,4 @@ class CommunityFactory(factory.alchemy.SQLAlchemyModelFactory):
     banner_url = 'http://dsedutech.org/images/demo/placement_banner1.jpg'
     thumbnail_url = 'http://i.imgur.com/7mo7QHW.gif'
     nsfw = False
+    active = True

@@ -42,13 +42,14 @@ class Community(Base):
             banner_url="",
             thumbnail_url="",
             permalink=None,
+            active=False,
     ):
         self.name = name
         self.description = description
         self.banner_url = banner_url
         self.thumbnail_url = thumbnail_url
         self.nsfw = nsfw
-        self.active = False
+        self.active = active
 
         if permalink:
             self.permalink = permalink
@@ -56,7 +57,7 @@ class Community(Base):
             candidate = slugify(self.name)
 
             count = s.query(Community).filter(
-                Community.permalink.like(candidate)).count()
+                Community.permalink.like(candidate+'%')).count()
 
             if count == 0:
                 self.permalink = candidate
