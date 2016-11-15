@@ -6,6 +6,7 @@
         {{ form.csrf_token }}
         <input class="form__control form__control--large" placeholder="Search...">
       </form>
+      <span><a href="/communities/create">Create a new Community</a></span>
     </header>
     <div class="communities__communities">
       {% for community in communities %}
@@ -13,7 +14,13 @@
           <a href="{{ url_for('communities.show', permalink=community.permalink) }}">
             <h3>{{ community.name }}</h3>
           </a>
+          {% if community.active %}
+            <span >Active</span>
+          {% else %}
+            <span>Vote</span>
+          {% endif %}
         </article>
+        
       {% endfor %}
     </div>
   </div>
