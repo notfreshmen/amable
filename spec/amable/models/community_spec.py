@@ -12,9 +12,13 @@ s = session()
 with context('amable.models'):
     with before.each:
         self.community = CommunityFactory()
+        s.add(self.community)
+        s.commit()
 
     with after.all:
-        s.rollback
+        s.rollback()
+        s.query(Community).delete()
+        s.commit()
 
     with context('community'):
         with context('Community'):

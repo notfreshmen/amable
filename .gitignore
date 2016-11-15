@@ -1,5 +1,7 @@
 *.pyc
 *.swp
+*.sublime-workspace
+*.sublime*
 .coverage
 .DS_Store
 amable.sublime-*

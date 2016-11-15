@@ -4,6 +4,7 @@ from amable import session
 from amable.models.post import Post, update_date_modified
 from amable.models.community import Community
 from amable.models.user import User
+from amable.models.post_upvote import PostUpvote
 
 from spec.factories.post_factory import PostFactory
 from spec.factories.community_factory import CommunityFactory
@@ -17,9 +18,17 @@ with context('amable.models'):
     with before.each:
         self.admin = UserFactory(role='admin')
         self.post = PostFactory()
+        s.add(self.admin)
+        s.add(self.post)
+        s.commit()
 
     with after.all:
         s.rollback()
+        s.query(PostUpvote).delete()
+        s.query(Post).delete()
+        s.query(Community).delete()
+        s.query(User).delete()
+        s.commit()
 
     with context('post'):
         with context('Post'):
