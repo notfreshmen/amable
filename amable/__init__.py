@@ -62,7 +62,6 @@ app.register_blueprint(communities)
 app.register_blueprint(users)
 
 
-
 # Assets
 from amable.utils.assets import assets_env
 

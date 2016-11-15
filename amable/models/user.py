@@ -141,7 +141,7 @@ class User(Base):
             phCount = session.query(Comment).filter_by(
                 user_id=self.id).group_by(Comment.post_id, Comment.id).count()
             cache.set(str(self.id) + "_praying_hands",
-                          phCount, timeout=10 * 60)
+                      phCount, timeout=10 * 60)
             return phCount
 
         phCount = 0
@@ -151,7 +151,7 @@ class User(Base):
             phCount = cache.get(str(self.id) + "_praying_hands")
             if phCount is None:
                 phCount = updatePHCount()
-        
+
         return phCount
 
     # Halo - Count on Comments where post is answered (prayed for)
@@ -171,7 +171,6 @@ class User(Base):
                 haloCount = updateHaloCount()
 
         return haloCount
-
 
     # Hammer - Count of posts that user reported where other people also
     # reported
@@ -227,7 +226,7 @@ class User(Base):
 
             if kneeCount is None:
                 kneeCount = updateKneeCount()
-            
+
         return kneeCount
 
     @property

@@ -107,10 +107,12 @@ class Post(Base):
         cacheTotal = cache.get(str(self.id) + "_post_upvotes")
 
         if cacheTotal is None:
-            cacheTotal = session.query(PostUpvote).filter_by(post_id = self.id).count()
-            cache.set(str(self.id) + "_post_upvotes", cacheTotal, timeout=5*60)
+            cacheTotal = session.query(PostUpvote).filter_by(
+                post_id=self.id).count()
+            cache.set(str(self.id) + "_post_upvotes",
+                      cacheTotal, timeout=5 * 60)
         return cacheTotal
-        
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
