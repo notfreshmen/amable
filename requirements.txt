@@ -35,3 +35,6 @@ ipython
 
 # database migrations
 psycopg2
+
+# nginx | wsgi
+uwsgi
