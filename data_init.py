@@ -20,6 +20,8 @@ user3 = UserFactory()
 # --- COMMUNITIES --- #
 # Let's have 1 community
 community0 = CommunityFactory()
+community1 = CommunityFactory(active=False)
+community2 = CommunityFactory(active=False)
 
 s.commit()
 

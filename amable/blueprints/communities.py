@@ -1,6 +1,6 @@
 import os
 from flask import Blueprint, render_template, redirect, request, flash, jsonify, abort
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
@@ -9,6 +9,7 @@ from amable import session, app
 
 from amable.models.community import Community
 from amable.models.post import Post
+from amable.models.community_upvote import CommunityUpvote
 
 from amable.forms.community_search_form import CommunitySearchForm
 from amable.forms.community_create_form import CommunityCreateForm
@@ -26,9 +27,7 @@ s = session()
 
 @communities.route('/communities')
 def index():
-    communities = s.query(Community).all()
-
-    print(communities)
+    communities = session.query(Community).all()
 
     return render_template('communities/index.html',
                            title="Communities",
@@ -57,12 +56,12 @@ def search():
 @communities.route('/communities/<permalink>')
 @login_required
 def show(permalink):
-    community = s.query(Community).filter_by(permalink=permalink).first()
+    community = session.query(Community).filter_by(permalink=permalink).first()
 
     if not community:
         return abort(404)
 
-    posts = s.query(Post).filter_by(community_id=community.id).all()
+    posts = session.query(Post).filter_by(community_id=community.id).all()
 
     return render_template('communities/show.html',
                            community=community,
@@ -74,6 +73,22 @@ def show(permalink):
 def create():
     return render_template('communities/create.html',
                            form=CommunityCreateForm())
+
+
+@communities.route('/communities/<community_id>/vote')
+@login_required
+def vote_community(community_id):
+    returnDict = {}
+
+    # First lets get the community in question
+    tempCommunity = session.query(Community).filter_by(id=community_id).first()
+
+    if tempCommunity.vote(current_user):
+        returnDict['success'] = True
+    else:
+        returnDict['success'] = False
+
+    return jsonify(**returnDict)
 
 
 @communities.route('/communities/create/process', methods=['POST'])
@@ -93,13 +108,13 @@ def create_community():
             nsfw=form.nsfw.data
         )
 
-        s.add(newCommunity)
-        s.commit()  # we need to create a record so we have the id
+        session.add(newCommunity)
+        session.commit()  # we need to create a record so we have the id
 
         # Now we have a community with an ID. Lets create
         # a directory to upload image files to.
-        community_upload_relative = '/communities/' + str(newCommunity.id)
-        community_upload_url = './amable/uploads' + community_upload_relative
+        community_upload_relative = 'communities/' + str(newCommunity.id)
+        community_upload_url = './amable/uploads/' + community_upload_relative
 
         if not os.path.exists(community_upload_url):
             os.makedirs(community_upload_url)
@@ -119,9 +134,9 @@ def create_community():
 
                     banner_file.save(fullPath)
 
-                    banner_url = fullPath
+                    banner_url = community_upload_relative + "/" + banner_filename
                 else:
-                    flash('Banner filetype is not allowed, could not upload')
+                    flash('Banner file type is not allowed, could not upload')
 
         # Now lets do checks for Thumbnail
         if 'thumbnail' in request.files:
@@ -138,11 +153,12 @@ def create_community():
 
                     thumbnail_file.save(fullPath)
 
-                    thumbnail_url = fullPath
+                    thumbnail_url = community_upload_relative + "/" + thumbnail_filename
                 else:
-                    flash('Thumbnail filetype is not allowed, could not upload')
+                    flash('Thumbnail file type is not allowed, could not upload')
 
         newCommunity.banner_url = banner_url
         newCommunity.thumbnail_url = thumbnail_url
-        s.commit()
+        newCommunity.vote(current_user)
+        session.commit()
         return redirect('/communities/' + newCommunity.permalink)

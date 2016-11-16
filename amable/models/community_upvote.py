@@ -17,7 +17,6 @@ class CommunityUpvote(Base):
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.id'),
                         primary_key=True)
-
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 

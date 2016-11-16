@@ -25,4 +25,15 @@ $(function () {
       }
     })
   })
+
+  $('.community_vote').click(function () {
+    var communityID = this.id.split('_')[1]
+    $.getJSON('/communities/' + communityID + '/vote', function (data) {
+      if (data.success) {
+        $('#vote_span_' + communityID).html('You voted!')
+      } else {
+        $('#vote_span_' + communityID).html('oh well')
+      }
+    })
+  })
 })
