@@ -6,14 +6,24 @@
         {{ form.csrf_token }}
         <input class="form__control form__control--large" placeholder="Search...">
       </form>
+      <span><a href="/communities/create">Create a new Community</a></span>
     </header>
     <div class="communities__communities">
       {% for community in communities %}
-        <article class="communities__community visible" {% if community.banner_url %} style="background-image: url({{ community.banner_url }})" {% endif %}>
+        <article class="communities__community visible" {% if community.banner_url %} style="background-image: url(/uploads/{{ community.banner_url }})" {% endif %}>
           <a href="{{ url_for('communities.show', permalink=community.permalink) }}">
             <h3>{{ community.name }}</h3>
           </a>
+
+          {% if community.active %}
+            <span >Active</span>
+          {% elif community.curr_user_has_voted %}
+            <span>You have already voted!</span>
+          {% elif current_user.is_authenticated %}
+            <span id="vote_span_{{community.id}}"><a id="vote_{{ community.id }}" href="#" class="community_vote">Vote</a></span>
+          {% endif %}
         </article>
+        
       {% endfor %}
     </div>
   </div>

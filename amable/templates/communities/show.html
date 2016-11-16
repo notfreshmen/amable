@@ -1,7 +1,7 @@
 {% extends "application.html" %}
 {% block content %}
 	<div class="community">
-		<header class="community__header" {% if community.banner_url %} style="background-image: url({{ community.banner_url }})" {% endif %}>
+		<header class="community__header" {% if community.banner_url %} style="background-image: url(/uploads/{{ community.banner_url }})" {% endif %}>
 			<h2 class="community__name">{{ community.name }}</h2>
 			<p>{{ community.description }}</p>
 			{% if logged_in %}

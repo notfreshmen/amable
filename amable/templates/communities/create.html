@@ -1,0 +1,39 @@
+{% extends "application.html" %}
+{% block content %}
+<form method="POST" enctype = "multipart/form-data" action="{{url_for('communities.create_community')}}">
+  {{ form.csrf_token }}
+  {% if form.errors %}
+  <ul class="errors">
+    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+    {% for error in field_errors %}
+    <li>{{ form[field_name].label.text }}: {{ error }}</li>
+    {% endfor %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <div class="form__group">
+    {{ form.name.label }}
+    {{ form.name(class_="form_control") }}
+  </div>
+  <div class="form__group">
+    {{ form.description.label }}
+    {{ form.description(class_="form_control") }}
+  </div>
+  <div class="form__group">
+    {{ form.banner.label }}
+    {{ form.banner(class_="form_control") }}
+  </div>
+  <div class="form__group">
+    {{ form.thumbnail.label }}
+    {{ form.thumbnail(class_="form_control") }}
+  </div>
+  <div class="form__group">
+    {{ form.nsfw.label }}
+    {{ form.nsfw(class_="form_control") }}
+  </div>
+  <div class="form__group">
+    <button type="submit" class="btn btn--blue btn--small">Petition for Community</button>
+  </div>
+</form>
+{% endblock %}
