@@ -14,11 +14,12 @@
           <a href="{{ url_for('communities.show', permalink=community.permalink) }}">
             <h3>{{ community.name }}</h3>
           </a>
+
           {% if community.active %}
             <span >Active</span>
           {% elif community.curr_user_has_voted %}
             <span>You have already voted!</span>
-          {% else %}
+          {% elif current_user.is_authenticated %}
             <span id="vote_span_{{community.id}}"><a id="vote_{{ community.id }}" href="#" class="community_vote">Vote</a></span>
           {% endif %}
         </article>
