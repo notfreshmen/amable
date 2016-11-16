@@ -86,11 +86,10 @@ class Community(Base):
             'date_created': self.date_created,
         }
 
-    @property
-    def curr_user_has_voted(self):
-        if current_user:
+    def upvoted_by(self, user):
+        if user:
             num_upvotes = session.query(CommunityUpvote).filter_by(
-                user_id=current_user.id, community_id=self.id).count()
+                user_id=user.id, community_id=self.id).count()
             return num_upvotes >= 1
         else:
             return False

@@ -36,6 +36,21 @@ class CommunityUpvote(Base):
     def __repr__(self):
         return '<User : %r | Community : %r>' % (self.user_id, self.community_id)
 
+    def viewable_by(self, _):
+        return True
+
+    def creatable_by(self, user):
+        if self.community.upvoted_by(user):
+            return False
+
+        return True
+
+    def updatable_by(self, _):
+        return False
+
+    def destroyable_by(self, _):
+        return False
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
