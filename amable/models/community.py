@@ -6,8 +6,11 @@ from slugify import slugify
 
 from .base import Base
 
+from flask_login import current_user
+
 from sqlalchemy import event, func
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from .post import Post
 from .community_user import CommunityUser
@@ -57,7 +60,7 @@ class Community(Base):
             candidate = slugify(self.name)
 
             count = s.query(Community).filter(
-                Community.permalink.like(candidate+'%')).count()
+                Community.permalink.like(candidate + '%')).count()
 
             if count == 0:
                 self.permalink = candidate
@@ -82,6 +85,15 @@ class Community(Base):
             'num_upvotes': self.num_upvotes,
             'date_created': self.date_created,
         }
+
+    @property
+    def curr_user_has_voted(self):
+        if current_user:
+            num_upvotes = session.query(CommunityUpvote).filter_by(
+                user_id=current_user.id, community_id=self.id).count()
+            return num_upvotes >= 1
+        else:
+            return False
 
     @property
     def is_active(self):
@@ -125,14 +137,23 @@ class Community(Base):
             community_id=self.id).count()
 
     def vote(self, user):
-        newUpvote = CommunityUpvote(user, self)
-        s.add(newUpvote)
-        s.commit()
+        # First lets make sure the user hasn't voted
+        # for this community yet
+        voteCount = session.query(CommunityUpvote).filter_by(
+            user_id=user.id, community_id=self.id).count()
 
-        if self.queryNumUpvotes() >= 10:
-            self.active = True
+        if voteCount == 0:
+            newUpvote = CommunityUpvote(user, self)
+            session.add(newUpvote)
+            session.commit()
 
-        s.commit()
+            if self.queryNumUpvotes() >= 10:
+                self.active = True
+
+            session.commit()
+            return True
+        else:
+            return False
 
     def set_default_banner(self):
         self.banner_url = "http://dsedutech.org/images/demo/placement_banner1.jpg"
