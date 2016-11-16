@@ -17,6 +17,14 @@ from sqlalchemy import create_engine
 # CSRF
 from flask_wtf.csrf import CsrfProtect
 
+# File Uploads
+dire = dirname(__file__)
+UPLOAD_FOLDER = dire + '/uploads'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+# Cache
+from werkzeug.contrib.cache import MemcachedCache
+cache = MemcachedCache(['127.0.0.1:11211'])
 
 # DotEnv Setup
 load_dotenv(join(dirname(__file__), '..', '.env'))
@@ -31,6 +39,7 @@ if env is None:
 app = Flask(__name__)
 app.config.from_envvar('AMABLE_%s_SETTINGS' % env.upper())
 app.secret_key = 'domislove'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # DB setup
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
@@ -40,24 +49,24 @@ db = SQLAlchemy(app)
 # CSRF setup
 CsrfProtect(app)
 
-# Blueprints
-from amable.blueprints.base import base as base_blueprint
-from amable.blueprints.users import users as users_blueprint
-
-app.register_blueprint(base_blueprint)
-app.register_blueprint(users_blueprint)
-
 # Login Manager
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = "/login"
 
 
 # Blueprints
 from amable.blueprints.base import base
 from amable.blueprints.sessions import sessions
+from amable.blueprints.communities import communities
+from amable.blueprints.users import users
+
 
 app.register_blueprint(base)
 app.register_blueprint(sessions)
+app.register_blueprint(communities)
+app.register_blueprint(users)
+
 
 # Assets
 from amable.utils.assets import assets_env

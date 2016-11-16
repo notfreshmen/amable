@@ -2,7 +2,6 @@
   &__header {
     border-bottom: 2px solid $color-grey-light;
     margin-bottom: rhythm(1);
-    padding-bottom: rhythm(0.5);
   }
 
   &__title {
@@ -14,6 +13,13 @@
   &__description {
     margin-bottom: 0 !important;
     margin-top: rhythm(0.5);
+    padding-bottom: rhythm(0.5);
+  }
+
+  &__block {
+    & + & {
+      margin-top: rhythm(1);
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {

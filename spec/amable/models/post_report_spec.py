@@ -3,7 +3,11 @@ from expects import *
 from amable import session
 from amable.models.post_report import PostReport, update_date_modified
 from amable.models.user import User
+from amable.models.community import Community
 from amable.models.post import Post
+from amable.models.report import Report
+from amable.models.post_upvote import PostUpvote
+
 
 from spec.factories.post_report_factory import PostReportFactory
 from spec.factories.user_factory import UserFactory
@@ -14,18 +18,24 @@ s = session()
 
 with context('amable.models'):
     with before.each:
-        self.post_report = PostReportFactory.create()
+        self.post_report = PostReportFactory()
+        s.add(self.post_report)
+        s.commit()
 
     with after.all:
+        s.rollback()
+        s.query(PostUpvote).delete()
         s.query(PostReport).delete()
+        s.query(Report).delete()
         s.query(Post).delete()
+        s.query(Community).delete()
         s.query(User).delete()
         s.commit()
 
     with context('post_report'):
         with context('PostReport'):
             with context('__init__'):
-                with it('create'):
+                with _it('create'):
                     user = UserFactory.create()
                     post = PostFactory.create()
 
@@ -43,7 +53,8 @@ with context('amable.models'):
 
             with context('__repr__()'):
                 with it('returns the title of the post_report'):
-                    expect(self.post_report.__repr__()).to(equal("<PostReport 'Hey Pablo'>"))
+                    expect(self.post_report.__repr__()).to(
+                        equal("<PostReport 'Hey Pablo'>"))
 
         with context('update_date_modified'):
             with it('updates the date for the post_report'):
@@ -51,4 +62,5 @@ with context('amable.models'):
 
                 update_date_modified(PostReport, session, self.post_report)
 
-                expect(self.post_report.date_modified).not_to(equal(date_modified))
+                expect(self.post_report.date_modified).not_to(
+                    equal(date_modified))

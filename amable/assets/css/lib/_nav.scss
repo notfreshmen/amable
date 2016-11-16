@@ -2,6 +2,7 @@
   &--inline {
     li {
       display: inline-block;
+      padding: rhythm(0.5) 0;
 
       & + li {
         margin-left: rhythm(0.5);
@@ -10,6 +11,14 @@
 
     @media (max-width: $breakpoint) {
       display: block;
+
+      li {
+        padding: 0;
+
+        &:last-child {
+          margin-bottom: rhythm(0.5);
+        }
+      }
     }
   }
 
@@ -19,5 +28,9 @@
     @media (max-width: $breakpoint) {
       float: left;
     }
+  }
+
+  img {
+    max-height: $font-size-1;
   }
 }

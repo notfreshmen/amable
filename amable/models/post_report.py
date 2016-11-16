@@ -11,6 +11,8 @@ from sqlalchemy import event
 class PostReport(Report):
     parent_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
 
+    __mapper_args__ = {"polymorphic_identity": "post"}
+
     def __init__(self,
                  title,
                  content,

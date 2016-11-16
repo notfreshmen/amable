@@ -5,7 +5,7 @@
   }
 
   &__control, input {
-    border: 1px solid $color-grey-light;
+    border: 1px solid $color-grey;
     border-radius: 2px;
     box-sizing: border-box;
     display: block;
@@ -18,7 +18,7 @@
     width: 100%;
 
     &:focus {
-      border-color: $color-grey;
+      border-color: $color-grey-darkest;
     }
 
     &--right {
@@ -46,7 +46,7 @@
       }
     }
   }
-  
+
   &--center{
     .form__group{
         margin: rhythm(1) auto;

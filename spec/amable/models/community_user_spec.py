@@ -14,7 +14,9 @@ s = session()
 
 with context('amable.models'):
     with before.each:
-        self.community_user = CommunityUserFactory.create()
+        self.community_user = CommunityUserFactory()
+        s.add(self.community_user)
+        s.commit()
 
     with after.all:
         s.query(CommunityUser).delete()

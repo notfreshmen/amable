@@ -14,13 +14,14 @@
   &__container {
     @include clearfix;
 
-    padding: rhythm(0.5) rhythm(0.75);
+    padding: 0 rhythm(0.75);
   }
 
   &__logo {
     display: inline-block;
     font-weight: $font-weight-bold;
     margin-right: rhythm(1);
+    padding: rhythm(0.5) 0;
 
     a {
       opacity: 1;
@@ -35,6 +36,7 @@
   &__toggle {
     display: inline-block;
     float: right;
+    margin: rhythm(0.5) 0;
 
     &:hover {
       cursor: pointer;
