@@ -4,8 +4,8 @@ from wtforms.validators import DataRequired, Email
 
 
 class CommunityCreateForm(Form):
-    name = StringField('name', validators=[DataRequired("Name is required")])
-    description = TextAreaField('description')
-    banner = FileField('banner')
-    thumbnail = FileField('thumbnail')
-    nsfw = BooleanField('nsfw')
+    name = StringField('Name', validators=[DataRequired("Name is required")])
+    description = TextAreaField('Description')
+    banner = FileField('Banner')
+    thumbnail = FileField('Thumbnail')
+    nsfw = BooleanField('NSFW?')

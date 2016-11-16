@@ -6,7 +6,7 @@
         {{ form.csrf_token }}
         <input class="form__control form__control--large" placeholder="Search...">
       </form>
-      <span><a href="/communities/create">Create a new Community</a></span>
+      <span><a href="{{ url_for('communities.new') }}">Create a new Community</a></span>
     </header>
     <div class="communities__communities">
       {% for community in communities %}
@@ -23,7 +23,7 @@
             <span id="vote_span_{{community.id}}"><a id="vote_{{ community.id }}" href="#" class="community_vote">Vote</a></span>
           {% endif %}
         </article>
-        
+
       {% endfor %}
     </div>
   </div>

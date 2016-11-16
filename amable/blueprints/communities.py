@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, redirect, request, flash, jsonify, abort
+from flask import Blueprint, render_template, redirect, request, flash, jsonify, abort, url_for
 from flask_login import login_required, current_user
 
 from sqlalchemy import func
@@ -68,10 +68,10 @@ def show(permalink):
                            posts=posts)
 
 
-@communities.route('/communities/create', methods=['GET'])
+@communities.route('/communities/new', methods=['GET'])
 @login_required
-def create():
-    return render_template('communities/create.html',
+def new():
+    return render_template('communities/new.html',
                            form=CommunityCreateForm())
 
 
@@ -91,29 +91,29 @@ def vote_community(community_id):
     return jsonify(**returnDict)
 
 
-@communities.route('/communities/create/process', methods=['POST'])
+@communities.route('/communities/create', methods=['POST'])
 @login_required
-def create_community():
-    banner_url = "http://dsedutech.org/images/demo/placement_banner1.jpg"
-    thumbnail_url = "http://i.imgur.com/7mo7QHW.gif"
+def create():
+    # banner_url = "http://dsedutech.org/images/demo/placement_banner1.jpg"
+    # thumbnail_url = "http://i.imgur.com/7mo7QHW.gif"
     form = CommunityCreateForm(request.form)
 
     if form.validate():
 
         # First thing we are going to do is create a
         # Community object with the data from our form.
-        newCommunity = Community(
+        community = Community(
             name=form.name.data,
             description=form.description.data,
             nsfw=form.nsfw.data
         )
 
-        session.add(newCommunity)
+        session.add(community)
         session.commit()  # we need to create a record so we have the id
 
         # Now we have a community with an ID. Lets create
         # a directory to upload image files to.
-        community_upload_relative = 'communities/' + str(newCommunity.id)
+        community_upload_relative = 'communities/' + str(community.id)
         community_upload_url = './amable/uploads/' + community_upload_relative
 
         if not os.path.exists(community_upload_url):
@@ -125,8 +125,7 @@ def create_community():
 
             if banner_file.filename != '':
                 if allowed_file(banner_file.filename):
-                    banner_filename = 'banner_' + \
-                        secure_filename(banner_file.filename)
+                    banner_filename = 'banner_' + secure_filename(banner_file.filename)
 
                     # Save | Upload Banner file
                     fullPath = os.path.join(
@@ -134,9 +133,9 @@ def create_community():
 
                     banner_file.save(fullPath)
 
-                    banner_url = community_upload_relative + "/" + banner_filename
+                    community.banner_url = community_upload_relative + "/" + banner_filename
                 else:
-                    flash('Banner file type is not allowed, could not upload')
+                    flash('Banner file type is not allowed, could not upload', 'error')
 
         # Now lets do checks for Thumbnail
         if 'thumbnail' in request.files:
@@ -144,8 +143,7 @@ def create_community():
 
             if thumbnail_file.filename != '':
                 if allowed_file(thumbnail_file.filename):
-                    thumbnail_filename = 'thumbnail_' + \
-                        secure_filename(thumbnail_file.filename)
+                    thumbnail_filename = 'thumbnail_' + secure_filename(thumbnail_file.filename)
 
                     # Save | Upload Thumbnail File
                     fullPath = os.path.join(
@@ -153,12 +151,15 @@ def create_community():
 
                     thumbnail_file.save(fullPath)
 
-                    thumbnail_url = community_upload_relative + "/" + thumbnail_filename
+                    community.thumbnail_url = community_upload_relative + "/" + thumbnail_filename
                 else:
-                    flash('Thumbnail file type is not allowed, could not upload')
+                    flash('Thumbnail file type is not allowed, could not upload', 'error')
 
-        newCommunity.banner_url = banner_url
-        newCommunity.thumbnail_url = thumbnail_url
-        newCommunity.vote(current_user)
+        # community.banner_url = banner_url
+        # community.thumbnail_url = thumbnail_url
+        community.vote(current_user)
         session.commit()
-        return redirect('/communities/' + newCommunity.permalink)
+
+        return redirect(url_for('communities.show', permalink=community.permalink))
+
+    return redirect(url_for('communities.new'))
