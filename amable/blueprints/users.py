@@ -94,6 +94,13 @@ def update(id):
 
             user.profile_image = '/uploads/avatars/' + str(user.id) + '/' + filename
 
+        user.set_password(data['password'])
+
+        del(data['profile_image'])
+        del(data['password'])
+
+        user.update(data)
+
         s.commit()
 
         flash(u"Your account has been updated.", "success")

@@ -12,8 +12,8 @@ def hash_password(password):
 
 # Check Password
 # Takes in the User object and the password that the user inputed
-def check_password(User, user_input_password):
-    salt = User.salt
+def check_password(user, user_input_password):
+    salt = user.salt
 
     hashed_password_to_check = hashlib.sha256(
         salt.encode() + user_input_password.encode()).hexdigest()
@@ -21,4 +21,4 @@ def check_password(User, user_input_password):
     # print("check_password() ~ User.salt : " + str(salt))
     # print("check_password() ~ hashed_password_to_check : " + str(hashed_password_to_check))
 
-    return User.password == hashed_password_to_check
+    return user.password == hashed_password_to_check

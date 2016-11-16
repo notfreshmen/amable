@@ -1,6 +1,7 @@
 from expects import *
 
 from amable import session
+from amable.utils.password import check_password
 from amable.models.user import User, update_date_modified
 from amable.models.comment import Comment
 from amable.models.post_upvote import PostUpvote
@@ -235,6 +236,12 @@ with context('amable.models'):
                     s.query(Post).delete()
                     s.query(Community).delete()
                     s.commit()
+
+            with context('set_password'):
+                with it('changes the password'):
+                    self.user.set_password('foobar')
+
+                    expect(check_password(self.user, 'foobar')).to(be_true)
 
         with context('update_date_modified'):
             with it('updates the date for the user'):
