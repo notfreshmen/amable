@@ -26,14 +26,14 @@ $(function () {
     })
   })
 
-  $('.community_vote').click(function() {
-    var community_id = this.id.split("_")[1]
-    $.getJSON("/communities/" + community_id + "/vote", function(data) {
-        if (data.success) {
-            $("#vote_span_" + community_id).html("You voted!");
-        } else {
-            $("#vote_span_" + community_id).html("oh well");
-        }
+  $('.community_vote').click(function () {
+    var communityID = this.id.split('_')[1]
+    $.getJSON('/communities/' + communityID + '/vote', function (data) {
+      if (data.success) {
+        $('#vote_span_' + communityID).html('You voted!')
+      } else {
+        $('#vote_span_' + communityID).html('oh well')
+      }
     })
   })
 })
