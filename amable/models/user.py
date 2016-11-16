@@ -64,14 +64,7 @@ class User(Base):
         self.username = username
         self.email = email
 
-        # Hash the password. SHA256
-        hashedPassword = hash_password(password)
-
-        # Split the password and the salt
-        splitPassword = hashedPassword.split(":")
-
-        self.password = splitPassword[0]  # Password
-        self.salt = splitPassword[1]     # Salt
+        self.set_password(password)
 
         self.name = name
 
@@ -145,6 +138,21 @@ class User(Base):
             return unicode(self.id)  # python 2
         except NameError:
             return str(self.id)  # python 3
+
+    def set_password(self, __password__):
+        if __password__ == "":
+            return self
+
+        # Hash the password. SHA256
+        hashedPassword = hash_password(__password__)
+
+        # Split the password and the salt
+        splitPassword = hashedPassword.split(":")
+
+        self.password = splitPassword[0]  # Password
+        self.salt = splitPassword[1]     # Salt
+
+        return self
 
     def vote_for_community(self, community):
         # First we want to make sure that this user

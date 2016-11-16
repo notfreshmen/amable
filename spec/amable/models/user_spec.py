@@ -1,6 +1,7 @@
 from expects import *
 
 from amable import session
+from amable.utils.password import check_password
 from amable.models.user import User, update_date_modified
 
 from spec.factories.user_factory import UserFactory
@@ -93,6 +94,12 @@ with context('amable.models'):
                 with context('admin'):
                     with it('returns true'):
                         expect(self.user.destroyable_by(self.admin)).to(be_true)
+
+            with context('set_password'):
+                with it('changes the password'):
+                    self.user.set_password('foobar')
+
+                    expect(check_password(self.user, 'foobar')).to(be_true)
 
         with context('update_date_modified'):
             with it('updates the date for the user'):
