@@ -51,6 +51,7 @@ class CommunityUpvote(Base):
     def destroyable_by(self, _):
         return False
 
+
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified
