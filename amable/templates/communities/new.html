@@ -1,0 +1,35 @@
+{% extends "application.html" %}
+{% block content %}
+<div class="page content">
+  <header class="page__header">
+    <h2>Petition for a new community</h2>
+    <p>A blurb about how the petition process works</p>
+  </header>
+  <form class="form" method="POST" enctype="multipart/form-data" action="{{url_for('communities.create')}}">
+    {{ form.csrf_token }}
+    <div class="form__group">
+      {{ form.name.label }}
+      {{ form.name(class_="form__control") }}
+    </div>
+    <div class="form__group">
+      {{ form.description.label }}
+      {{ form.description(class_="form__control") }}
+    </div>
+    <div class="form__group">
+      {{ form.banner.label }}
+      {{ form.banner(class_="form__control") }}
+    </div>
+    <div class="form__group">
+      {{ form.thumbnail.label }}
+      {{ form.thumbnail(class_="form__control") }}
+    </div>
+    <div class="form__group">
+      {{ form.nsfw.label }}
+      {{ form.nsfw(class_="form__control") }}
+    </div>
+    <div class="form__group">
+      <button type="submit" class="btn btn--blue btn--small">Petition for Community</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
