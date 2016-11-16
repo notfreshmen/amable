@@ -16,8 +16,8 @@
           </a>
 
           {% if community.active %}
-            <span >Active</span>
-          {% elif community.curr_user_has_voted %}
+            <span>Active</span>
+          {% elif community.upvoted_by(current_user) %}
             <span>You have already voted!</span>
           {% elif current_user.is_authenticated %}
             <span id="vote_span_{{community.id}}"><a id="vote_{{ community.id }}" href="#" class="community_vote">Vote</a></span>
