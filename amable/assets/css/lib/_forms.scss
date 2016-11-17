@@ -48,8 +48,10 @@
   }
 
   &--center{
-    input{
-        margin: 0 auto;
+    .form__group{
+        margin: rhythm(1) auto;
+        max-width: 50%;
+
     }
   }
 }
