@@ -16,6 +16,7 @@ login_manager.init_app(app)
 def load_user(user_id):
     return session.query(User).filter_by(id=user_id).first()
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Here we use a class of some kind to represent and validate our

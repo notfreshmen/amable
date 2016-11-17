@@ -42,30 +42,12 @@ def create():
 
     return redirect(url_for('base.index'))
 
-#    if form.validate():
- #       user = User(
-  #          username=form.username.data,
-   #         email=form.email.data,
-    #        name=form.name.data,
-     ##  )
 
-       # s.add(user)
-       # s.commit()
-
-        #login_user(user)
-
-        #return redirect(url_for('base.index'))
-
-   # return render_template('new.html', form=form)
-   
 @csrf.exempt
 @posts.route('/posts/<id>/destroy', methods=['POST'])
 @login_required
 def destroy(id):
     post = s.query(Post).filter_by(id=id).first()
-    
     s.delete(post)
     s.commit()
-
     return redirect(request.form["redirect_to"])
-
