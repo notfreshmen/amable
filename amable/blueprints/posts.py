@@ -18,7 +18,6 @@ posts = Blueprint('posts', __name__, template_folder='../templates/posts')
 s = session()
 
 
-
 @login_required
 @posts.route('/posts', methods=['POST'])
 def create():
