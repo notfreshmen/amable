@@ -4,7 +4,7 @@
     <header class="communities__header">
       <form class="communities__search">
         {{ form.csrf_token }}
-        <input class="form__control form__control--large" placeholder="Search...">
+        <input class="form__control form__control--large form__search" placeholder="Search..." results="0">
       </form>
       <span><a href="{{ url_for('communities.new') }}">Create a new Community</a></span>
     </header>
