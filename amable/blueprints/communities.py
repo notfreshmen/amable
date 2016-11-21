@@ -26,6 +26,7 @@ s = session()
 
 
 @communities.route('/communities')
+@login_required
 def index():
     communities = session.query(Community).all()
 
@@ -36,6 +37,7 @@ def index():
 
 
 @communities.route('/communities/search', methods=['GET'])
+@login_required
 def search():
     if 'community' in request.args:
 
@@ -125,7 +127,8 @@ def create():
 
             if banner_file.filename != '':
                 if allowed_file(banner_file.filename):
-                    banner_filename = 'banner_' + secure_filename(banner_file.filename)
+                    banner_filename = 'banner_' + \
+                        secure_filename(banner_file.filename)
 
                     # Save | Upload Banner file
                     fullPath = os.path.join(
@@ -143,7 +146,8 @@ def create():
 
             if thumbnail_file.filename != '':
                 if allowed_file(thumbnail_file.filename):
-                    thumbnail_filename = 'thumbnail_' + secure_filename(thumbnail_file.filename)
+                    thumbnail_filename = 'thumbnail_' + \
+                        secure_filename(thumbnail_file.filename)
 
                     # Save | Upload Thumbnail File
                     fullPath = os.path.join(
@@ -153,7 +157,8 @@ def create():
 
                     community.thumbnail_url = community_upload_relative + "/" + thumbnail_filename
                 else:
-                    flash('Thumbnail file type is not allowed, could not upload', 'error')
+                    flash(
+                        'Thumbnail file type is not allowed, could not upload', 'error')
 
         # community.banner_url = banner_url
         # community.thumbnail_url = thumbnail_url
