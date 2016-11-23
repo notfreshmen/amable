@@ -1,18 +1,15 @@
 from pprint import pprint
 
 from flask import Blueprint
-from flask import render_template, abort, request, redirect, url_for, flash
+from flask import request, redirect, url_for, flash
 
-from flask_login import login_user, login_required, current_user, logout_user
+from flask_login import login_required, current_user
 
 from amable import session, csrf
 
-from amable.models.user import User
 from amable.models.post import Post
 from amable.models.community import Community
 from amable.forms.post_create_form import PostCreateForm
-from amable.forms.post_community_create_form import PostCommunityCreateForm
-from wtforms.validators import ValidationError
 
 from amable.utils.misc import flash_errors
 
@@ -77,6 +74,6 @@ def create():
 @login_required
 def destroy(id):
     post = s.query(Post).filter_by(id=id).first()
-    s.delete(post)
-    s.commit()
+    session.delete(post)
+    session.commit()
     return redirect(request.form["redirect_to"])

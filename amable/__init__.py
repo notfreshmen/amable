@@ -58,7 +58,7 @@ login_manager.login_view = "/login"
 # Blueprints
 from amable.blueprints.base import base
 from amable.blueprints.sessions import sessions
-from amable.blueprints.posts import posts 
+from amable.blueprints.posts import posts
 from amable.blueprints.communities import communities
 from amable.blueprints.users import users
 
