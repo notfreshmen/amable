@@ -11,7 +11,9 @@
       <span class="post__date"><i class="ss-icon">clock</i> <a href="#">{{ post.date_created | time_since }}</a></span>
       <form action="/posts/{{ post.id }}/destroy" method="post">
         <input type="hidden" name="redirect_to" value="{{ request.path }}"/>
-        <button type="submit">DESTROY</button>
+        {% if post.user == current_user %}
+        <button type="submit">Delete Post</button>
+        {% endif %}
       </form>
     </footer>
   </div>
