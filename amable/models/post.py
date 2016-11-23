@@ -40,16 +40,16 @@ class Post(Base):
             text_brief,
             text_long,
             image_url,
-            user_id,
-            community_id,
+            user,
+            community,
             answered=False
     ):
         self.text_brief = text_brief
         self.text_long = text_long
         self.answered = answered
         self.image_url = image_url
-        self.user_id = user_id
-        self.community_id = community_id
+        self.user = user
+        self.community = community
 
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels

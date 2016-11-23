@@ -13,6 +13,7 @@ from amable.models.community_upvote import CommunityUpvote
 
 from amable.forms.community_search_form import CommunitySearchForm
 from amable.forms.community_create_form import CommunityCreateForm
+from amable.forms.post_community_create_form import PostCommunityCreateForm
 
 from amable.utils.files import allowed_file
 
@@ -57,7 +58,7 @@ def search():
 @communities.route('/communities/<permalink>')
 def show(permalink):
     community = session.query(Community).filter_by(permalink=permalink).first()
-
+    postCreateForm = 
     if not community:
         return abort(404)
 

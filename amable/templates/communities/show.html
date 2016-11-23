@@ -7,9 +7,9 @@
 			{% if current_user.is_authenticated %}
 				<nav class="community__actions">
 					{% if current_user.in_community(community) %}
-						<button class="btn btn--small">Leave</button>
+						<button class="btn btn--small">Leave Community</button>
 					{% else %}
-						<button class="btn btn--blue btn--small">Join</button>
+						<button class="btn btn--blue btn--small">Join Community</button>
 					{% endif %}
 				</nav>
 			{% else %}
