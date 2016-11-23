@@ -1,6 +1,6 @@
 {% extends "application.html" %}
 {% block content %}
-  <div class="page">
+  <div class="page content">
     <header class="page__header">
       <h2 class="page__title">Your Account</h2>
     </header>
@@ -10,7 +10,7 @@
         <aside class="user__sidebar">
           <div class="user__sidebar__image">
             <img class="user__avatar avatar" src="{{ current_user.profile_image }}">
-            {# {{ form.profile_image(class_="form__control") }} #}
+            {{ form.profile_image(class_="form__control") }}
           </div>
         </aside>
         <section class="user__posts posts">
@@ -47,6 +47,14 @@
           <div class="form__group">
             {{ form.website.label }}
             {{ form.website(class_="form__control") }}
+          </div>
+          <div class="form__group">
+            {{ form.password.label }}
+            {{ form.password(class_="form__control") }}
+          </div>
+          <div class="form__group">
+            {{ form.password_confirmation.label }}
+            {{ form.password_confirmation(class_="form__control") }}
           </div>
           <div class="form__group">
             <button type="submit" class="btn btn--small">Save</button>

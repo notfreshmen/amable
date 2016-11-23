@@ -13,3 +13,5 @@ class UserUpdateForm(FlaskForm):
     website = StringField('Website')
     phone = StringField('Phone number')
     profile_image = FileField('Profile image')
+    password = PasswordField('Password', [validators.EqualTo('password_confirmation', message='Passwords must match.')])
+    password_confirmation = PasswordField('Password confirmation',)

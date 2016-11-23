@@ -1,0 +1,25 @@
+{% extends "application.html" %}
+{% block content %}
+	<div class="community">
+		<header class="community__header" {% if community.banner_url %} style="background-image: url(/uploads/{{ community.banner_url }})" {% endif %}>
+			<h2 class="community__name">{{ community.name }}</h2>
+			<p>{{ community.description }}</p>
+			{% if current_user.is_authenticated %}
+				<nav class="community__actions">
+					{% if current_user.in_community(community) %}
+						<button class="btn btn--small">Leave</button>
+					{% else %}
+						<button class="btn btn--blue btn--small">Join</button>
+					{% endif %}
+				</nav>
+			{% else %}
+				<a href="{{ url_for('sessions.login') }}">Login to join Community</a>
+			{% endif %}
+		</header>
+		<div class="community__posts">
+			{% for post in posts %}
+				{% include "posts/_post.html" %}
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

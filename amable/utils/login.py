@@ -36,4 +36,5 @@ def login():
             return flask.abort(400)
 
         return flask.redirect(next or flask.url_for('index'))
+
     return flask.render_template('login.html', form=form, user=login_manager.current_user)

@@ -1,9 +1,13 @@
 from pprint import pprint
 
+import os
+
 from flask import Blueprint
 from flask import render_template, abort, request, redirect, url_for, flash
 
 from flask_login import login_user, login_required, current_user, logout_user
+
+from werkzeug.utils import secure_filename
 
 from amable import session
 
@@ -16,12 +20,13 @@ from amable.forms.user_update_form import UserUpdateForm
 from sqlalchemy import desc
 from sqlalchemy import asc
 
-users = Blueprint('users', __name__, template_folder='../templates/users')
+users = Blueprint('users', __name__, template_folder='../templates')
 
 s = session()
 
 
 @users.route('/<username>')
+@login_required
 def show(username):
     user = s.query(User).filter_by(username=username).first()
    
@@ -31,12 +36,12 @@ def show(username):
 
     posts = s.query(Post).filter_by(user_id=user.id).order_by(desc(Post.date_created)).all()
 
-    return render_template('show.html', user=user, posts=posts)
+    return render_template('users/show.html', user=user, posts=posts)
 
 
 @users.route('/join')
 def new():
-    return render_template('new.html', form=UserCreateForm())
+    return render_template('users/new.html', form=UserCreateForm())
 
 
 @users.route('/users', methods=['POST'])
@@ -58,7 +63,7 @@ def create():
 
         return redirect(url_for('base.index'))
 
-    return render_template('new.html', form=form)
+    return render_template('users/new.html', form=form)
 
 
 @users.route('/account')
@@ -66,7 +71,7 @@ def create():
 def edit():
     form = UserUpdateForm(obj=current_user)
 
-    return render_template('edit.html', form=form)
+    return render_template('users/edit.html', form=form)
 
 
 @users.route('/users/<id>/update', methods=['POST'])
@@ -82,8 +87,20 @@ def update(id):
     if form.validate():
         data = form.data
 
-        if data["profile_image"] == "":
-            del(data["profile_image"])
+        if request.files['profile_image']:
+            filename = secure_filename(request.files['profile_image'].filename)
+
+            if not os.path.exists('./amable/uploads/avatars/' + str(user.id)):
+                os.makedirs('./amable/uploads/avatars/' + str(user.id))
+
+            request.files['profile_image'].save('./amable/uploads/avatars/' + str(user.id) + '/' + filename)
+
+            user.profile_image = '/uploads/avatars/' + str(user.id) + '/' + filename
+
+        user.set_password(data['password'])
+
+        del(data['profile_image'])
+        del(data['password'])
 
         user.update(data)
 

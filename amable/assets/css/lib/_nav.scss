@@ -11,6 +11,14 @@
 
     @media (max-width: $breakpoint) {
       display: block;
+
+      li {
+        padding: 0;
+
+        &:last-child {
+          margin-bottom: rhythm(0.5);
+        }
+      }
     }
   }
 
