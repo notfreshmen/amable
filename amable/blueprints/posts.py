@@ -16,8 +16,6 @@ from amable.utils.misc import flash_errors
 
 posts = Blueprint('posts', __name__, template_folder='../templates/posts')
 
-s = session()
-
 
 @posts.route('/posts', methods=['POST'])
 @login_required
@@ -73,7 +71,7 @@ def create():
 @posts.route('/posts/<id>/destroy', methods=['POST'])
 @login_required
 def destroy(id):
-    post = s.query(Post).filter_by(id=id).first()
+    post = session.query(Post).filter_by(id=id).first()
     session.delete(post)
     session.commit()
     return redirect(request.form["redirect_to"])
