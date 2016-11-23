@@ -2,7 +2,7 @@ import os
 from flask import Blueprint, render_template, redirect, request, flash, jsonify, abort, url_for
 from flask_login import login_required, current_user
 
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from sqlalchemy.orm import joinedload
 
 from amable import session, app
@@ -13,7 +13,7 @@ from amable.models.community_upvote import CommunityUpvote
 
 from amable.forms.community_search_form import CommunitySearchForm
 from amable.forms.community_create_form import CommunityCreateForm
-from amable.forms.post_community_create_form import PostCommunityCreateForm
+from amable.forms.post_create_form import PostCreateForm
 
 from amable.utils.files import allowed_file
 
@@ -58,14 +58,19 @@ def search():
 @communities.route('/communities/<permalink>')
 def show(permalink):
     community = session.query(Community).filter_by(permalink=permalink).first()
-    postCreateForm = 
+
+    postCreateForm = PostCreateForm()
+    postCreateForm.community_id.data = community.id
+
     if not community:
         return abort(404)
 
-    posts = session.query(Post).filter_by(community_id=community.id).all()
+    posts = session.query(Post).filter_by(
+        community_id=community.id).order_by(desc(Post.date_created)).all()
 
     return render_template('communities/show.html',
                            community=community,
+                           post_form=postCreateForm,
                            posts=posts)
 
 

@@ -1,16 +1,23 @@
 from flask import Blueprint
 from flask import render_template, flash, send_from_directory
+from flask_login import current_user
 from amable.forms.user_create_form import UserCreateForm
 from amable.forms.post_create_form import PostCreateForm
-
+from amable import session
 
 base = Blueprint('base', __name__, template_folder='../templates/base')
 
 
 @base.route('/')
 def index():
-    form = PostCreateForm()
-    return render_template('index.html', form=form)
+    if not current_user.is_authenticated:
+        return render_template('index.html')
+    else:
+        form = PostCreateForm()
+        user_communities = current_user.get_communities()
+        form.community_select.choices = [
+            (c.id, c.name) for c in user_communities]
+        return render_template('dashboard.html', form=form)
 
 
 @base.route('/ui')
