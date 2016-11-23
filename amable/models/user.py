@@ -276,6 +276,9 @@ class User(Base):
 
         return communities
 
+    def has_upvoted_post(self, post):
+        return session.query(PostUpvote).filter_by(post_id=post.id, user_id=self.id).count() == 1
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object

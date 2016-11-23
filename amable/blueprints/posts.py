@@ -1,13 +1,13 @@
 from pprint import pprint
 
-from flask import Blueprint
-from flask import request, redirect, url_for, flash
+from flask import Blueprint, request, redirect, url_for, flash, jsonify
 
 from flask_login import login_required, current_user
 
 from amable import session, csrf
 
 from amable.models.post import Post
+from amable.models.post_upvote import PostUpvote
 from amable.models.community import Community
 from amable.forms.post_create_form import PostCreateForm
 
@@ -72,6 +72,54 @@ def create():
 @login_required
 def destroy(id):
     post = session.query(Post).filter_by(id=id).first()
-    session.delete(post)
-    session.commit()
+
+    if post.destroyable_by(current_user):
+        session.delete(post)
+        session.commit()
+    else:
+        flash("Can't delete a post you didn't create")
+
     return redirect(request.form["redirect_to"])
+
+
+@posts.route('/posts/<id>/upvote', methods=['GET'])
+@login_required
+def upvote_post(id):
+    returnDict = {}
+    # First lets get the post were upvoting
+    post = session.query(Post).filter_by(id=id).first()
+
+    # Check to see user hasn't already upvoted
+    if not current_user.has_upvoted_post(post):
+        returnDict['success'] = True
+        pu = PostUpvote(post, current_user)
+
+        # Add the new post upvote
+        session.add(pu)
+        session.commit()
+    else:
+        returnDict['success'] = False
+        # flash("User has already upvoted post")
+
+    return jsonify(**returnDict)
+
+
+@posts.route('/posts/<id>/downvote', methods=['GET'])
+@login_required
+def downvote_post(id):
+    returnDict = {}
+    # First lets get the post were upvoting
+    pu = session.query(PostUpvote).filter_by(
+        post_id=id, user_id=current_user.id).first()
+
+    # Check to see user has actually upvoted
+    if pu is not None:
+        returnDict['success'] = True
+
+        # Delete the post upvote
+        session.delete(pu)
+        session.commit()
+    else:
+        returnDict['success'] = False
+
+    return jsonify(**returnDict)

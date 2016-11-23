@@ -19,8 +19,16 @@
   </div>
   <aside class="post__right">
     <div class="score">
-      <span class="score__action"><a href="#"><i class="ss-icon">up</i></a>p</span>
-      <span class="score__number">{{ post.post_upvotes | length }}</span>
+      <span class="score__action">
+        <a id="post_upvote_{{ post.id }}" class="post_upvote" href="#">
+          {% if current_user.has_upvoted_post(post) %}
+          <i style="color:green" id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+          {% else %}
+          <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+          {% endif %}
+        </a>
+      </span>
+      <span id="upvote_number_{{ post.id }}" class="score__number">{{ post.post_upvotes | length }}</span>
     </div>
   </aside>
 </article>
