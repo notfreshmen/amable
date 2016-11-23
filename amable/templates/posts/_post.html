@@ -11,24 +11,47 @@
       <span class="post__date"><i class="ss-icon">clock</i> <a href="#">{{ post.date_created | time_since }}</a></span>
       <form action="/posts/{{ post.id }}/destroy" method="post">
         <input type="hidden" name="redirect_to" value="{{ request.path }}"/>
-        {% if post.user == current_user %}
-        <button type="submit">Delete Post</button>
+        {% if current_user.is_authenticated %}
+          {% if post.user == current_user %}
+          <button type="submit">Delete Post</button>
+          {% endif %}
         {% endif %}
       </form>
     </footer>
+    <ul style="">
+        {%- for comment in post.comment_tree recursive %}
+            <li style="list-style-type:disc">{{comment.content}}_{{comment.id}} - 
+            <a href="#" id="reply_comment_{{comment.id}}" class='reply_comment'>Reply</a>
+            {%- if comment.children -%}
+                <ul style="margin-left:10px">{{ loop(comment.children) }}</ul>
+            {%- endif %}
+            </li>
+        {%- endfor %}
+    </ul>
   </div>
   <aside class="post__right">
     <div class="score">
       <span class="score__action">
+        {% if current_user.is_authenticated %}
         <a id="post_upvote_{{ post.id }}" class="post_upvote" href="#">
-          {% if current_user.has_upvoted_post(post) %}
-          <i style="color:green" id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+          {% if current_user.is_authenticated %}
+            {% if current_user.has_upvoted_post(post) %}
+            <i style="color:green" id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+            {% else %}
+            <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+            {% endif %}
           {% else %}
-          <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+            <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
           {% endif %}
         </a>
+        {% else %}
+          <a id="post_upvote_{{ post.id }}" class="post_upvote" href="#" disabled>
+            <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+          </a>
+        {% endif %}
       </span>
       <span id="upvote_number_{{ post.id }}" class="score__number">{{ post.post_upvotes | length }}</span>
     </div>
-  </aside>
+  </aside><br><br>
+  
 </article>

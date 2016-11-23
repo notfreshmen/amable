@@ -1,0 +1,13 @@
+{% extends "application.html" %}
+{% block content %}
+    {{ post.id }}
+    <ul style="margin-left:50px">
+        {%- for comment in post.comment_tree recursive %}
+            <li style="list-style-type:disc">{{comment.content}}
+            {%- if comment.children -%}
+                <ul style="margin-left:10px">{{ loop(comment.children) }}</ul>
+            {%- endif %}
+            </li>
+        {%- endfor %}
+    </ul>
+{% endblock %}

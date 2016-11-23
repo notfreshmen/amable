@@ -1,3 +1,4 @@
+from pprint import pprint
 from amable import session
 from amable.models.post_upvote import PostUpvote
 from amable.models.post import Post
@@ -12,5 +13,9 @@ from amable.models.post_report import PostReport
 
 # print(upvoteCount)
 
-u = session.query(User).filter_by(id=19).first()
-print(u.get_knee())
+# u = session.query(User).filter_by(id=19).first()
+# print(u.get_knee())
+
+p = session.query(Post).filter_by(id=10).first()
+pprint(p)
+pprint(p.comment_tree)

@@ -63,6 +63,34 @@ $(function () {
     }
     
   })
+
+  $('.reply_comment').click(function (r) {
+    // Don't scroll to top of screen
+    r.preventDefault()
+
+    // Get the target of the click (element)
+    var clickedElement = r.target
+
+    // Lets create our form!
+
+    if ($("#newCommentForm_" + clickedElement.id).length == 0) { // Only create form if it doesn't exist
+      $("#" + clickedElement.id).after('<form id="newCommentForm_' + clickedElement.id + '" action="/comments/new" method="POST">')
+      $("#newCommentForm_" + clickedElement.id).append('<input name="parent" type="hidden" value="' + clickedElement.id.split('_')[2] + '">')
+      $("#newCommentForm_" + clickedElement.id).append('<textarea name="content" form="newCommentForm"></textarea>')
+      $("#newCommentForm_" + clickedElement.id).append('<input type="submit" value="Reply To Comment">')
+    }
+    
+
+    // clickedElement.after('<form action="/comments/new" method="POST">')
+    // clickedElement.after('</form>')
+
+    // var commentTextArea = document.createElement("TEXTAREA")
+    
+    // alert(clickedElement.id)
+    // // commentTextArea.id = 'new_comment_' + r.id
+    // // clickedElement.closest('li').after(commentTextArea)
+    // clickedElement.after(commentTextArea)
+  })
 })
 
 

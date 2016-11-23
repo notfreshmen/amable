@@ -60,6 +60,9 @@ comment4 = CommentFactory(user=user2, post=post0, parent=comment3.id)
 
 s.commit()
 
+# user1 replies to comment0
+comment5 = CommentFactory(user=user1, post=post0, parent=comment0.id)
+
 # --- POST REPORTS --- #
 
 # user 2 and 3 reports post 0

@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from flask import Blueprint, request, redirect, url_for, flash, jsonify
+from flask import Blueprint, request, redirect, url_for, flash, jsonify, render_template
 
 from flask_login import login_required, current_user
 
@@ -123,3 +123,8 @@ def downvote_post(id):
         returnDict['success'] = False
 
     return jsonify(**returnDict)
+
+@posts.route('/posts/<id>/test')
+def test(id):
+    post = session.query(Post).filter_by(id=id).first()
+    return render_template('comment_test.html', post=post)
