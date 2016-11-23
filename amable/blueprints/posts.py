@@ -25,12 +25,15 @@ s = session()
 @posts.route('/posts', methods=['POST'])
 @login_required
 def create():
-    community = None
+    community = None  # This will be just a filler object for our community
+
+    # Get the form data
     form = PostCreateForm(request.form)
+
+    # Set the valid community choices
     form.community_select.choices = [
         (c.id, c.name) for c in current_user.get_communities()]
-    pprint(current_user)
-    pprint(request.form)
+
     if form.validate():
 
         # We need to get the community to pass through to post
@@ -38,18 +41,14 @@ def create():
 
         # First we check if there was the hidden field, or if
         # it was a select box
-        if form.community_id.data is not "":
-            print("Community_id is here")
-            print("Community id %i", int(str(form.community_id.data)))
+        if form.community_id.data is not "":  # Hidden Field
             community = session.query(Community).filter_by(
                 id=int(form.community_id.data)).first()
-        elif form.community_select is not None:
-            print("fodjdjdjdj AOD")
+        elif form.community_select is not None:  # Select Box
             community = session.query(Community).filter_by(
                 id=int(form.community_select.data)).first()
 
-        pprint("Using community %r" % community)
-
+        # Create the post object
         post = Post(
             text_brief=form.text_brief.data,
             text_long=None,
@@ -58,6 +57,7 @@ def create():
             community=community
         )
 
+        # Add to the session and commit to the database
         session.add(post)
         session.commit()
 
@@ -70,22 +70,6 @@ def create():
         flash_errors(form)
 
     return redirect(url_for('communities.show', permalink=community.permalink))
-
-#    if form.validate():
-#       user = User(
-#          username=form.username.data,
-#         email=form.email.data,
-#        name=form.name.data,
-# )
-
-# s.add(user)
-# s.commit()
-
-# login_user(user)
-
-# return redirect(url_for('base.index'))
-
-# return render_template('new.html', form=form)
 
 
 @csrf.exempt
