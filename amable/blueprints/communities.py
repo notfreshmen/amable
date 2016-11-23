@@ -26,7 +26,6 @@ s = session()
 
 
 @communities.route('/communities')
-@login_required
 def index():
     communities = session.query(Community).all()
 
@@ -56,7 +55,6 @@ def search():
 
 
 @communities.route('/communities/<permalink>')
-@login_required
 def show(permalink):
     community = session.query(Community).filter_by(permalink=permalink).first()
 
