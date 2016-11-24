@@ -29,6 +29,8 @@ comments = Blueprint('comments', __name__,
 @csrf.exempt
 @login_required
 def create():
+    pprint("Got to create()")
+    # return render_template('index.html')
     comment = None
     parent_post = None
 
@@ -44,12 +46,15 @@ def create():
             # We need to get the post that the com
             parent_comment = session.query(Comment).filter_by(
                 id=int(form.parent.data)).first()
+
             parent_post = parent_comment.post
 
-            comment = Comment(content=form.content.data, user=current_user,
-                              post=parent_post, parent=parent_comment)
+            comment = Comment(content=form.content.data,
+                              user=current_user,
+                              post=parent_post,
+                              parent=parent_comment)
 
-            pprint(comment)
+            pprint("hey" + str(comment))
         elif form.post_id.data is not None:
             print("got thereeeee")
             # Lets get the post
@@ -62,9 +67,9 @@ def create():
         else:
             print ('yollllllllll')
 
-        pprint(comment)
-        session.add(comment)
-        session.commit()
+        # pprint(comment)
+        # session.add(comment)
+        # session.commit()
 
         return redirect(url_for('communities.show',
                                 permalink=parent_post.community.permalink))
