@@ -18,7 +18,7 @@
         {% endif %}
       </form>
     </footer>
-    <ul style="">
+    <ul id="post_{{post.id}}_comments" style="">
         {%- for comment in post.comment_tree recursive %}
             <li style="list-style-type:disc">{{comment.content}}_{{comment.id}} - 
             <a href="#" id="reply_comment_{{comment.id}}" class='reply_comment'>Reply</a>

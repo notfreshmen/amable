@@ -19,7 +19,7 @@ class Comment(Base):
     upvote_count = db.Column(db.String(128))
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
-    hashtags = relationship(CommentHashtag, backref="post")
+    hashtags = relationship(CommentHashtag, backref="comment")
     children = relationship("Comment", lazy='joined', join_depth=10)
 
     def __init__(

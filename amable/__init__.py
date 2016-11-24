@@ -61,12 +61,14 @@ from amable.blueprints.sessions import sessions
 from amable.blueprints.posts import posts
 from amable.blueprints.communities import communities
 from amable.blueprints.users import users
+from amable.blueprints.comments import comments
 
 app.register_blueprint(base)
 app.register_blueprint(sessions)
 app.register_blueprint(communities)
 app.register_blueprint(posts)
 app.register_blueprint(users)
+app.register_blueprint(comments)
 
 # Assets
 from amable.utils.assets import assets_env
