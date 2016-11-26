@@ -1,4 +1,38 @@
 {% extends "application.html" %}
 {% block content %}
-    <h1> Welcome to Amable </h1>
+  {% if current_user.is_authenticated %}
+    <div class="content">
+      <div class="dashboard">
+        <header class="dashboard__header">
+          <form class="dashboard__form form">
+            <aside>
+              <img src="{{ current_user.avatar }}" class="avatar">
+            </aside>
+            <section>
+              <div class="form__group">
+                <textarea class="form__control" placeholder="What kindness did you experience today?"></textarea>
+              </div>
+              <div class="form__group--footer">
+                <button type="submit" class="btn btn--blue btn--small">Post</button>
+              </div>
+            </section>
+          </form>
+        </header>
+        <div class="dashboard__content">
+          <section class="dashboard__stream stream">
+            {% for post in posts %}
+              {% include "posts/_post.html" %}
+            {% endfor %}
+          </section>
+          <aside class="dashboard__filters">
+
+          </aside>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="content">
+      <p>Welcome to Amable!</p>
+    </div>
+  {% endif %}
 {% endblock %}

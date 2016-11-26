@@ -120,6 +120,10 @@ class Post(Base):
             return True
 
 
+    @staticmethod
+    def for_user(user):
+        return s.query(Post).filter(Post.community_id.in_(list(map(lambda c: c.community_id, user.community_users)))).all()
+
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
     target.date_modified = dt.now().isoformat()  # Update Date Modified

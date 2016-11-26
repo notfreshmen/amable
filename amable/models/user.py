@@ -16,7 +16,7 @@ from .community_upvote import CommunityUpvote
 from .post_report import PostReport
 
 from sqlalchemy import event
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, load_only
 
 from flask import flash
 
@@ -44,7 +44,7 @@ class User(Base):
     reports = relationship(Report, backref="user")
     posts = relationship(Post, backref="user")
     post_upvotes = relationship(PostUpvote, backref="user")
-    community_user = relationship(CommunityUser, backref="user")
+    community_users = relationship(CommunityUser, backref="user")
     comments = relationship(Comment, backref="user")
     community_upvotes = relationship(CommunityUpvote, backref="user")
 
@@ -116,6 +116,7 @@ class User(Base):
     def destroyable_by(self, user):
         return self == user or user.is_admin()
 
+    @property
     def avatar(self):
         if self.profile_image:
             return self.profile_image
@@ -233,6 +234,10 @@ class User(Base):
     @property
     def is_anonymous(self):
         return False
+
+    @property
+    def communities(self):
+        return list(map(lambda x: x.community, self.community_users))
 
     def get_id(self):
         try:
