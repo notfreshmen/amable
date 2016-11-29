@@ -1,3 +1,4 @@
+{% if post.can_be_shown() %}
 <article class="post">
   <aside class="post__left">
     <a href="{{ url_for('users.show', username=post.user.username) }}"><img src="{{ post.user.profile_image }}" class="avatar"></a>
@@ -11,34 +12,62 @@
       <span class="post__date"><i class="ss-icon">clock</i> <a href="#">{{ post.date_created | time_since }}</a></span>
       {% if current_user.is_authenticated %}
         {% if post.user == current_user %}
-          <form action="/posts/{{ post.id }}/destroy" method="post">
-            <input type="hidden" name="redirect_to" value="{{ request.path }}"/>
-            <button type="submit">Delete Post</button>
-          </form>
+            <form action="/posts/{{ post.id }}/destroy" method="post">
+              <input type="hidden" name="redirect_to" value="{{ request.path }}"/>
+              <button type="submit">Delete Post</button>
+            </form>
           {% if post.answered %}
-          <form action="/posts/{{ post.id }}/unanswer" method="GET">
-            <button type="submit">Mark Post as Un-Answered</button>
-          </form>
+            <form action="/posts/{{ post.id }}/unanswer" method="GET">
+              <button type="submit">Mark Post as Un-Answered</button>
+            </form>
           {% else %}
-          <form action="/posts/{{ post.id }}/answer" method="GET">
-            <button type="submit">Mark Post as Answered</button>
-          </form>
+            <form action="/posts/{{ post.id }}/answer" method="GET">
+              <button type="submit">Mark Post as Answered</button>
+            </form>
           {% endif %}
         {% endif %}
 
         {% if comment_form %}
-        <button class="reply_post" id="reply_to_post_{{post.id}}" type="submit">Reply</button>
-        <form style="display:none" id="reply_to_post_{{post.id}}_form" action="/comments/new" method="POST">
-          {{ comment_form.csrf_token }}
-          {{ comment_form.post(value=post.id) }}
-          <div class="form__group">
-                  {{ comment_form.content.label }}
-                  {{ comment_form.content(class_="form__control") }}
-          </div>
-          <div class="form__group">
-            <button type="submit" class="btn btn--blue btn--small">Reply</button>
-          </div>
-        </form>
+          <button class="reply_post" id="reply_to_post_{{post.id}}" type="submit">Reply</button>
+          <form style="display:none" id="reply_to_post_{{post.id}}_form" action="/comments/new" method="POST">
+            {{ comment_form.csrf_token }}
+            {{ comment_form.post(value=post.id) }}
+            <div class="form__group">
+              {{ comment_form.content.label }}
+              {{ comment_form.content(class_="form__control") }}
+            </div>
+            <div class="form__group">
+              <button type="submit" class="btn btn--blue btn--small">Reply</button>
+            </div>
+          </form>
+        {% endif %}
+
+        {% if report_form %}
+          {% if current_user.has_reported_post(post) %}
+          <button disabled class="report_post" id="report_post_{{post.id}}" type="submit">Already Reported</button>
+          {% else %}
+          <button class="report_post" id="report_post_{{post.id}}" type="submit">Report</button>
+          {% endif %}
+         
+          <form style="display:none" id="report_post_{{post.id}}_form" action="/posts/report" method="POST">
+            {{ report_form.csrf_token }}
+            {{ report_form.post(value=post.id) }}
+            <div class="form__group">
+              {{ report_form.title.label }}
+              {{ report_form.title(class_="form__control") }}
+            </div>
+            <div class="form__group">
+              {{ report_form.content.label }}
+              {{ report_form.content(class_="form__control") }}
+            </div>
+            <div class="form__group">
+              {{ report_form.category.label }}
+              {{ report_form.category(class_="form__control") }}
+            </div>
+            <div class="form__group">
+              <button type="submit" class="btn btn--blue btn--small">Report Post</button>
+            </div>
+          </form>
         {% endif %}
       {% endif %}
 
@@ -97,3 +126,4 @@
   </aside><br><br>
   
 </article>
+{% endif %}

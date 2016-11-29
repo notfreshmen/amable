@@ -16,16 +16,16 @@ s = session()
 with context('amable.models'):
     with before.each:
         self.post_upvote = PostUpvoteFactory.create()
-        s.add(self.post_upvote)
-        s.commit()
+        session.add(self.post_upvote)
+        session.commit()
 
     with after.all:
-        s.rollback()
-        s.query(PostUpvote).delete()
-        s.query(Post).delete()
-        s.query(Community).delete()
-        s.query(User).delete()
-        s.commit()
+        session.rollback()
+        session.query(PostUpvote).delete()
+        session.query(Post).delete()
+        session.query(Community).delete()
+        session.query(User).delete()
+        session.commit()
 
     with context('post_upvote'):
         with context('PostUpvote'):
@@ -39,7 +39,7 @@ with context('amable.models'):
                         user=user
                     )
 
-                    s.commit()
+                    session.commit()
 
                     expect(post_upvote.post_id).to(equal(post.id))
                     expect(post_upvote.user_id).to(equal(user.id))

@@ -14,6 +14,7 @@ from amable.models.community_upvote import CommunityUpvote
 from amable.forms.community_search_form import CommunitySearchForm
 from amable.forms.community_create_form import CommunityCreateForm
 from amable.forms.post_create_form import PostCreateForm
+from amable.forms.post_report_form import PostReportForm
 from amable.forms.comment_create_form import CommentCreateForm
 
 
@@ -65,6 +66,7 @@ def show(permalink):
     postCreateForm.community_id.data = community.id
 
     commentCreateForm = CommentCreateForm()
+    postReportForm = PostReportForm()
 
     if not community:
         return abort(404)
@@ -76,7 +78,8 @@ def show(permalink):
                            community=community,
                            post_form=postCreateForm,
                            posts=posts,
-                           comment_form=commentCreateForm)
+                           comment_form=commentCreateForm,
+                           report_form=postReportForm)
 
 
 @communities.route('/communities/new', methods=['GET'])

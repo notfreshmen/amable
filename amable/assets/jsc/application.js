@@ -94,5 +94,21 @@ $(function () {
       formElement.show()
     }
   })
+
+  $('.report_post').click(function (r) {
+    // Don't scroll to top of screen
+    r.preventDefault()
+
+    // Get the target of the click (element)
+    var clickedElement = r.target
+    var formElement = $('#report_post_' + clickedElement.id.split('_')[2] + '_form')
+
+    // Lets create our form!
+    if (formElement.is(':visible')) {
+      formElement.hide()
+    } else {
+      formElement.show()
+    }
+  })
 })
 

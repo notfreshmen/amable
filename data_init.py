@@ -23,14 +23,14 @@ community0 = CommunityFactory()
 community1 = CommunityFactory(active=False)
 community2 = CommunityFactory(active=False)
 
-s.commit()
+session.commit()
 
 # Add all of our users to the community
 cu0 = CommunityUserFactory(user=user0, community=community0)
 cu1 = CommunityUserFactory(user=user1, community=community0)
 cu2 = CommunityUserFactory(user=user2, community=community0)
 
-s.commit()
+session.commit()
 
 # --- POSTS --- #
 # user0 makes a post
@@ -39,7 +39,7 @@ post0 = PostFactory(user=user0, community=community0)
 # user1 makes a post
 post1 = PostFactory(user=user1, community=community0)
 
-s.commit()
+session.commit()
 
 # --- COMMENTS --- #
 # COMMENT RECURSIVENESS #
@@ -48,17 +48,17 @@ s.commit()
 comment0 = CommentFactory(user=user2, post=post0)
 comment1 = CommentFactory(user=user2, post=post1)
 
-s.commit()
+session.commit()
 
 # user0 replies to comment0
 comment3 = CommentFactory(user=user0, post=post0, parent=comment0)
 
-s.commit()
+session.commit()
 
 # user2 replies to comment3 made by user0
 comment4 = CommentFactory(user=user2, post=post0, parent=comment3)
 
-s.commit()
+session.commit()
 
 # user1 replies to comment0
 comment5 = CommentFactory(user=user1, post=post0, parent=comment0)
@@ -69,29 +69,34 @@ comment5 = CommentFactory(user=user1, post=post0, parent=comment0)
 pr0 = PostReportFactory(post=post0, user=user2)
 pr1 = PostReportFactory(post=post0, user=user3)
 
-s.commit()
+session.commit()
+
+# Lets give post1 9 reports (to test)
+for x in range(0, 9):
+    session.add(PostReportFactory(post=post1))
+    session.commit()
 
 # --- POST UPVOTES --- #
 
 # user 1 upvotes post 0
 pu0 = PostUpvoteFactory(post=post0, user=user1)
 
-s.commit()
+session.commit()
 
 # topComment = CommentFactory()
 
-# s.commit()
+# session.commit()
 
 # subComment1 = CommentFactory(post=topComment.post, parent=topComment.id)
 # subComment2 = CommentFactory(post=topComment.post, parent=topComment.id)
 # subComment3 = CommentFactory(post=topComment.post, parent=topComment.id)
 
-# s.commit()
+# session.commit()
 
 # subsubComment1 = CommentFactory(post=topComment.post, parent=subComment3.id)
 
 
-# s.commit()
+# session.commit()
 
 # print("Community ID: " + str(topComment.post.community.id))
 
@@ -104,4 +109,4 @@ s.commit()
 # postUpvote0 = PostUpvoteFactory(post = topComment.post, user = topComment.post.user)
 # postUpvote1 = PostUpvoteFactory(post = topComment.post)
 
-# s.commit()
+# session.commit()

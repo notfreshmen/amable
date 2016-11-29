@@ -18,15 +18,15 @@ with context('amable.models'):
     with before.each:
         self.community_upvote = CommunityUpvoteFactory()
         # self.community_upvote = PostFactory()
-        s.add(self.community_upvote)
-        s.commit()
+        session.add(self.community_upvote)
+        session.commit()
 
     with after.all:
-        s.rollback()
-        s.query(CommunityUpvote).delete()
-        s.query(Community).delete()
-        s.query(User).delete()
-        s.commit()
+        session.rollback()
+        session.query(CommunityUpvote).delete()
+        session.query(Community).delete()
+        session.query(User).delete()
+        session.commit()
 
     with context('community_upvote'):
         with context('CommunityUpvote'):

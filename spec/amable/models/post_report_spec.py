@@ -19,18 +19,18 @@ s = session()
 with context('amable.models'):
     with before.each:
         self.post_report = PostReportFactory()
-        s.add(self.post_report)
-        s.commit()
+        session.add(self.post_report)
+        session.commit()
 
     with after.all:
-        s.rollback()
-        s.query(PostUpvote).delete()
-        s.query(PostReport).delete()
-        s.query(Report).delete()
-        s.query(Post).delete()
-        s.query(Community).delete()
-        s.query(User).delete()
-        s.commit()
+        session.rollback()
+        session.query(PostReport).delete()
+        session.query(PostUpvote).delete()
+        session.query(Report).delete()
+        session.query(Post).delete()
+        session.query(Community).delete()
+        session.query(User).delete()
+        session.commit()
 
     with context('post_report'):
         with context('PostReport'):
