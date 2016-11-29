@@ -67,6 +67,8 @@ dbsync:
 	AMABLE_ENV=test python db/manage.py version_control
 	AMABLE_ENV=test python db/manage.py upgrade
 
+	python data_init.py
+
 reinit:
 	psql -U amable -d amable_development -c 'delete from community_upvotes; delete from community_users; delete from post_upvotes; delete from reports; delete from comments; delete from posts; delete from communities; delete from users;'
 	python data_init.py

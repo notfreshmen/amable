@@ -51,14 +51,17 @@ comment1 = CommentFactory(user=user2, post=post1)
 s.commit()
 
 # user0 replies to comment0
-comment3 = CommentFactory(user=user0, post=post0, parent=comment0.id)
+comment3 = CommentFactory(user=user0, post=post0, parent=comment0)
 
 s.commit()
 
 # user2 replies to comment3 made by user0
-comment4 = CommentFactory(user=user2, post=post0, parent=comment3.id)
+comment4 = CommentFactory(user=user2, post=post0, parent=comment3)
 
 s.commit()
+
+# user1 replies to comment0
+comment5 = CommentFactory(user=user1, post=post0, parent=comment0)
 
 # --- POST REPORTS --- #
 

@@ -17,6 +17,8 @@ from amable.models.post import Post
 from amable.forms.user_create_form import UserCreateForm
 from amable.forms.user_update_form import UserUpdateForm
 
+from sqlalchemy import desc
+from sqlalchemy import asc
 
 users = Blueprint('users', __name__, template_folder='../templates')
 
@@ -31,7 +33,8 @@ def show(username):
     if not user:
         return abort(404)
 
-    posts = s.query(Post).filter_by(user_id=user.id).all()
+    posts = s.query(Post).filter_by(user_id=user.id).order_by(
+        desc(Post.date_created)).all()
 
     return render_template('users/show.html', user=user, posts=posts)
 
@@ -90,9 +93,11 @@ def update(id):
             if not os.path.exists('./amable/uploads/avatars/' + str(user.id)):
                 os.makedirs('./amable/uploads/avatars/' + str(user.id))
 
-            request.files['profile_image'].save('./amable/uploads/avatars/' + str(user.id) + '/' + filename)
+            request.files['profile_image'].save(
+                './amable/uploads/avatars/' + str(user.id) + '/' + filename)
 
-            user.profile_image = '/uploads/avatars/' + str(user.id) + '/' + filename
+            user.profile_image = '/uploads/avatars/' + \
+                str(user.id) + '/' + filename
 
         user.set_password(data['password'])
 

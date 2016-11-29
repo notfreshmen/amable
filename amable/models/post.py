@@ -13,11 +13,6 @@ from .comment import Comment
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
 
-from CommonMark import commonmark
-
-
-s = session()
-
 
 class Post(Base):
     __tablename__ = 'posts'
@@ -81,15 +76,12 @@ class Post(Base):
             user in self.community.moderators() or \
             user.is_admin()
 
-    def text_brief_markdown(self):
-        return commonmark(self.text_brief)
-
     @property
     def comment_tree(self):
         root_tree = OrderedDict()
 
-        root_level = s.query(Comment).filter_by(
-            post_id=self.id, parent=None).all()
+        root_level = session.query(Comment).filter_by(
+            post_id=self.id, parent_id=None).all()
 
         def get_children(comment, child_tree):
             for child in comment.children:

@@ -268,6 +268,17 @@ class User(Base):
         else:
             flash("You have already voted for this community")
 
+    def get_communities(self):
+        communities = []
+
+        for cu in self.community_user:
+            communities.append(cu.community)
+
+        return communities
+
+    def has_upvoted_post(self, post):
+        return session.query(PostUpvote).filter_by(post_id=post.id, user_id=self.id).count() == 1
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
