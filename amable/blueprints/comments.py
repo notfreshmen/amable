@@ -28,7 +28,6 @@ comments = Blueprint('comments', __name__,
 
 
 @comments.route('/comments/new', methods=['POST'])
-@csrf.exempt
 @login_required
 def create():
     pprint("Got to create()")
@@ -36,52 +35,39 @@ def create():
     comment = None
     parent_post = None
 
-    form = CommentCreateForm(request.form, csrf_enabled=False)
+    form = CommentCreateForm(request.form)
 
     if form.validate():  # Valid data
 
         # We need to get the post that the com
         # session.query(Post)
 
-        if form.parent.data is not None:
-            print("got heeee")
+        if form.parent.data is not "":
 
             # We need to get the post that the com
             parent_comment = session.query(Comment).filter_by(
                 id=int(form.parent.data)).first()
 
-            pprint("Parent Comment : %r" % parent_comment)
-
             parent_post = parent_comment.post
-
-            pprint("Parent Post : %r" % parent_post)
-
-            pprint("Comment Data : %s" % form.content.data)
-            # pprint("Comment Data2 : %s" % request.form['content'])
 
             comment = Comment(content=form.content.data,
                               user=current_user,
                               post=parent_post,
                               parent=parent_comment)
 
-            pprint("hey" + str(comment))
-
-        elif form.post_id.data is not None:
-            print("got thereeeee")
+        elif form.post.data is not "":
             # Lets get the post
             parent_post = session.query(Post).filter_by(
-                id=int(form.post_id.data)).first()
+                id=int(form.post.data)).first()
 
             comment = Comment(content=form.content.data,
                               user=current_user,
                               post=parent_post)
-        else:
-            print ('yollllllllll')
 
         try:
-            pprint(comment)
-            session.add(comment)
-            session.commit()
+            if comment is not None:
+                session.add(comment)
+                session.commit()
         except:
             print("Unexpected Error : %s" % sys.exc_info()[0])
 

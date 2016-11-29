@@ -40,28 +40,27 @@ $(function () {
   $('.post_upvote').click(function () {
     var postID = this.id.split('_')[2]
     var alreadyUpvoted = $('#upvote_icon_' + postID).css('color') === 'rgb(0, 128, 0)' // Already green
-    var current_upvotes = $('#upvote_number_' + postID).html()
+    var currentUpvotes = $('#upvote_number_' + postID).html()
     // If the post is already we want to then downvote it
     if (!alreadyUpvoted) { // Upvote
-      $.getJSON('/posts/' + postID + '/upvote', function(data) {
+      $.getJSON('/posts/' + postID + '/upvote', function (data) {
         if (data.success) {
-          $('#upvote_number_' + postID).html(parseInt(current_upvotes, 10) + 1)
+          $('#upvote_number_' + postID).html(parseInt(currentUpvotes, 10) + 1)
           $('#upvote_icon_' + postID).css('color', 'green')
         } else {
           $('#upvote_icon_' + postID).css('color', 'red')
         }
       })
     } else { // Downvote
-      $.getJSON('/posts/' + postID + '/downvote', function(data) {
+      $.getJSON('/posts/' + postID + '/downvote', function (data) {
         if (data.success) {
-          $('#upvote_number_' + postID).html(parseInt(current_upvotes, 10) - 1)
+          $('#upvote_number_' + postID).html(parseInt(currentUpvotes, 10) - 1)
           $('#upvote_icon_' + postID).css('color', '')
         } else {
           $('#upvote_icon_' + postID).css('color', 'red')
         }
       })
     }
-    
   })
 
   $('.reply_comment').click(function (r) {
@@ -70,30 +69,30 @@ $(function () {
 
     // Get the target of the click (element)
     var clickedElement = r.target
+    var formElement = $('#reply_to_comment_' + clickedElement.id.split('_')[2] + '_form')
 
     // Lets create our form!
+    if (formElement.is(':visible')) {
+      formElement.hide()
+    } else {
+      formElement.show()
+    }
+  })
 
-    $('#reply_to_comment_' + clickedElement.id.split('_')[2] + '_form').show()
-    // if ($("#newCommentForm_" + clickedElement.id).length == 0) { // Only create form if it doesn't exist
-    //   $("#" + clickedElement.id).after('<form id="newCommentForm_' + clickedElement.id + '" action="/comments/new" method="POST">')
-    //   $("#newCommentForm_" + clickedElement.id).append('<input name="parent" type="hidden" value="' + clickedElement.id.split('_')[2] + '">')
-    //   $("#newCommentForm_" + clickedElement.id).append('<textarea name="content" form="newCommentForm"></textarea>')
-    //   $("#newCommentForm_" + clickedElement.id).append('<input type="submit" value="Reply To Comment">')
-    // }
-    
+  $('.reply_post').click(function (r) {
+    // Don't scroll to top of screen
+    r.preventDefault()
 
-    // clickedElement.after('<form action="/comments/new" method="POST">')
-    // clickedElement.after('</form>')
+    // Get the target of the click (element)
+    var clickedElement = r.target
+    var formElement = $('#reply_to_post_' + clickedElement.id.split('_')[3] + '_form')
 
-    // var commentTextArea = document.createElement("TEXTAREA")
-    
-    // alert(clickedElement.id)
-    // // commentTextArea.id = 'new_comment_' + r.id
-    // // clickedElement.closest('li').after(commentTextArea)
-    // clickedElement.after(commentTextArea)
+    // Lets create our form!
+    if (formElement.is(':visible')) {
+      formElement.hide()
+    } else {
+      formElement.show()
+    }
   })
 })
-
-
-
 

@@ -17,6 +17,20 @@
           {% endif %}
         {% endif %}
       </form>
+      {% if comment_form %}
+        <button class="reply_post" id="reply_to_post_{{post.id}}" type="submit">Reply</button>
+        <form style="display:none" id="reply_to_post_{{post.id}}_form" action="/comments/new" method="POST">
+          {{ comment_form.csrf_token }}
+          {{ comment_form.post(value=post.id) }}
+          <div class="form__group">
+                  {{ comment_form.content.label }}
+                  {{ comment_form.content(class_="form__control") }}
+          </div>
+          <div class="form__group">
+            <button type="submit" class="btn btn--blue btn--small">Reply</button>
+          </div>
+        </form>
+      {% endif %}
     </footer>
     <ul id="post_{{post.id}}_comments" style="">
         {%- for comment in post.comment_tree recursive %}

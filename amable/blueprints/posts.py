@@ -123,8 +123,3 @@ def downvote_post(id):
         returnDict['success'] = False
 
     return jsonify(**returnDict)
-
-@posts.route('/posts/<id>/test')
-def test(id):
-    post = session.query(Post).filter_by(id=id).first()
-    return render_template('comment_test.html', post=post)
