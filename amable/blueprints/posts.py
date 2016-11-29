@@ -123,3 +123,34 @@ def downvote_post(id):
         returnDict['success'] = False
 
     return jsonify(**returnDict)
+
+
+@posts.route('/posts/<id>/answer', methods=['GET'])
+@login_required
+def answer_post(id):
+
+    # First lets get the post were answering
+    post = session.query(Post).filter_by(id=id).first()
+
+    if post.user == current_user:
+        post.answered = True
+        session.commit()
+    else:
+        flash("Cannot answer a post you didn't create")
+
+    return redirect(url_for('communities.show', permalink=post.community.permalink))
+
+
+@posts.route('/posts/<id>/unanswer', methods=['GET'])
+@login_required
+def unanswer_post(id):
+
+    # First lets get the post were answering
+    post = session.query(Post).filter_by(id=id).first()
+    if post.user == current_user:
+        post.answered = False
+        session.commit()
+    else:
+        flash("Cannot answer a post you didn't create")
+
+    return redirect(url_for('communities.show', permalink=post.community.permalink))
