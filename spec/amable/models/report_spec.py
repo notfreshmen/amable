@@ -3,25 +3,21 @@ from expects import *
 from amable import session
 from amable.models.report import Report, update_date_modified
 from amable.models.user import User
-# from amable.models.post import Post
+from amable.models.post_report import PostReport
+from amable.models.post import Post
+from amable.models.post_upvote import PostUpvote
 
 from spec.factories.report_factory import ReportFactory
 from spec.factories.user_factory import UserFactory
 
-
-s = session()
+from sqlalchemy.exc import InternalError
 
 with context('amable.models'):
     with before.each:
-        self.report = ReportFactory.create()
-        s.add(self.report)
-        s.commit()
+        self.report = ReportFactory()
 
     with after.all:
-        s.rollback()
-        s.query(Report).delete()
-        s.query(User).delete()
-        s.commit()
+        session.rollback()
 
     with context('report'):
         with context('Report'):

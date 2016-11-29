@@ -105,6 +105,20 @@ class Post(Base):
                       cacheTotal, timeout=5 * 60)
         return cacheTotal
 
+    def can_be_shown(self, invalidate=False):
+        reportCount = cache.get(str(self.id) + "_report_count")
+
+        if reportCount is None or invalidate:
+            reportCount = session.query(
+                PostReport).filter_by(parent=self).count()
+            cache.set(str(self.id) + "_report_count",
+                      reportCount, timeout=5 * 60)
+
+        if int(reportCount) >= 10:
+            return False
+        else:
+            return True
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object

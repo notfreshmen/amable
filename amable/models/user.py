@@ -277,7 +277,14 @@ class User(Base):
         return communities
 
     def has_upvoted_post(self, post):
-        return session.query(PostUpvote).filter_by(post_id=post.id, user_id=self.id).count() == 1
+        return session.query(PostUpvote).filter_by(
+            post_id=post.id,
+            user_id=self.id).count() == 1
+
+    def has_reported_post(self, post):
+        return session.query(PostReport).filter_by(
+            parent=post,
+            user=self).count() == 1
 
 
 def update_date_modified(mapper, connection, target):

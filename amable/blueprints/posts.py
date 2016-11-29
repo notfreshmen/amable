@@ -7,9 +7,13 @@ from flask_login import login_required, current_user
 from amable import session, csrf
 
 from amable.models.post import Post
+from amable.models.post_report import PostReport
 from amable.models.post_upvote import PostUpvote
 from amable.models.community import Community
+
 from amable.forms.post_create_form import PostCreateForm
+from amable.forms.post_report_form import PostReportForm
+
 
 from amable.utils.misc import flash_errors
 
@@ -138,7 +142,8 @@ def answer_post(id):
     else:
         flash("Cannot answer a post you didn't create")
 
-    return redirect(url_for('communities.show', permalink=post.community.permalink))
+    return redirect(url_for('communities.show',
+                            permalink=post.community.permalink))
 
 
 @posts.route('/posts/<id>/unanswer', methods=['GET'])
@@ -151,6 +156,42 @@ def unanswer_post(id):
         post.answered = False
         session.commit()
     else:
-        flash("Cannot answer a post you didn't create")
+        flash("Cannot unanswer a post you didn't create")
 
-    return redirect(url_for('communities.show', permalink=post.community.permalink))
+    return redirect(url_for('communities.show',
+                            permalink=post.community.permalink))
+
+
+@posts.route('/posts/report', methods=['POST'])
+@login_required
+def report_post():
+    form = PostReportForm(request.form)
+    post = None
+
+    if form.validate():
+
+        # Lets get the post in question
+        post = session.query(Post).filter_by(id=int(form.post.data)).first()
+
+        # Has the user already reported this post?
+        postReportCount = session.query(PostReport).filter_by(
+            user=current_user, parent=post).count()
+
+        if postReportCount == 0:
+            postReport = PostReport(
+                title=form.title.data,
+                content=form.content.data,
+                user=current_user,
+                post=post,
+                category=form.category.data)
+
+            session.add(postReport)
+            session.commit()
+        else:
+            flash("You have already reported this post")
+
+    else:
+        flash_errors(form)
+
+    return redirect(url_for('communities.show',
+                            permalink=post.community.permalink))
