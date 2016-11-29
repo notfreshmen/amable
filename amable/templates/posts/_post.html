@@ -1,4 +1,4 @@
-{% if post.can_be_shown %}
+{% if post.can_be_shown() %}
 <article class="post">
   <aside class="post__left">
     <a href="{{ url_for('users.show', username=post.user.username) }}"><img src="{{ post.user.profile_image }}" class="avatar"></a>
