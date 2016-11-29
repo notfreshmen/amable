@@ -20,11 +20,27 @@
     </footer>
     <ul id="post_{{post.id}}_comments" style="">
         {%- for comment in post.comment_tree recursive %}
-            <li style="list-style-type:disc">{{comment.content}}_{{comment.id}} - 
-            <a href="#" id="reply_comment_{{comment.id}}" class='reply_comment'>Reply</a>
-            {%- if comment.children -%}
-                <ul style="margin-left:10px">{{ loop(comment.children) }}</ul>
-            {%- endif %}
+            <li style="list-style-type:disc">
+              {{comment.content}}_{{comment.id}} - 
+              <a href="#" id="reply_comment_{{comment.id}}" class='reply_comment'>Reply</a>
+              {% if comment_form %}
+              <form style="display:none;" id="reply_to_comment_{{comment.id}}_form" action="/comments/new" method="POST">
+                {{ comment_form.csrf_token }}
+                {{ comment_form.parent(value=comment.id)}}
+                {{ comment_form.post(value=post.id) }}
+                <div class="form__group">
+                  {{ comment_form.content.label }}
+                  {{ comment_form.content(class_="form__control") }}
+                </div>
+                <div class="form__group">
+                  <button type="submit" class="btn btn--blue btn--small">Reply</button>
+                </div>
+              </form>
+              {% endif %}
+
+              {%- if comment.children -%}
+                  <ul style="margin-left:10px">{{ loop(comment.children) }}</ul>
+              {%- endif %}
             </li>
         {%- endfor %}
     </ul>

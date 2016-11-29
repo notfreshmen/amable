@@ -15,6 +15,8 @@ from amable.forms.comment_create_form import CommentCreateForm
 
 from amable.utils.misc import flash_errors
 
+import sys
+
 
 comments = Blueprint('comments', __name__,
                      template_folder='../templates/comments')
@@ -35,19 +37,27 @@ def create():
     parent_post = None
 
     form = CommentCreateForm(request.form, csrf_enabled=False)
-    print('oooo')
+
     if form.validate():  # Valid data
 
         # We need to get the post that the com
-        session.query(Post)
+        # session.query(Post)
 
         if form.parent.data is not None:
             print("got heeee")
+
             # We need to get the post that the com
             parent_comment = session.query(Comment).filter_by(
                 id=int(form.parent.data)).first()
 
+            pprint("Parent Comment : %r" % parent_comment)
+
             parent_post = parent_comment.post
+
+            pprint("Parent Post : %r" % parent_post)
+
+            pprint("Comment Data : %s" % form.content.data)
+            # pprint("Comment Data2 : %s" % request.form['content'])
 
             comment = Comment(content=form.content.data,
                               user=current_user,
@@ -55,6 +65,7 @@ def create():
                               parent=parent_comment)
 
             pprint("hey" + str(comment))
+
         elif form.post_id.data is not None:
             print("got thereeeee")
             # Lets get the post
@@ -67,9 +78,12 @@ def create():
         else:
             print ('yollllllllll')
 
-        # pprint(comment)
-        # session.add(comment)
-        # session.commit()
+        try:
+            pprint(comment)
+            session.add(comment)
+            session.commit()
+        except:
+            print("Unexpected Error : %s" % sys.exc_info()[0])
 
         return redirect(url_for('communities.show',
                                 permalink=parent_post.community.permalink))

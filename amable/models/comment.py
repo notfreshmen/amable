@@ -13,7 +13,7 @@ class Comment(Base):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
-    parent = db.Column(db.Integer, db.ForeignKey('comments.id'))
+    parent_id = db.Column(db.Integer, db.ForeignKey('comments.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     upvote_count = db.Column(db.String(128))
@@ -35,6 +35,9 @@ class Comment(Base):
         self.user = user
         self.post = post
         self.parent = parent
+        if parent is not None:
+            self.parent_id = parent.id
+
         self.upvote_count = 0
 
         # Default Values
@@ -43,7 +46,7 @@ class Comment(Base):
         self.date_modified = now
 
     def __repr__(self):
-        return '<Comment %r>' % self.id
+        return '<Comment %r | Content : %r>' % (self.id, self.content)
 
     def has_children(self):
         return session.query(Comment).filter_by(parent=self.id).count() > 0

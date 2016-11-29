@@ -81,7 +81,7 @@ class Post(Base):
         root_tree = OrderedDict()
 
         root_level = session.query(Comment).filter_by(
-            post_id=self.id, parent=None).all()
+            post_id=self.id, parent_id=None).all()
 
         def get_children(comment, child_tree):
             for child in comment.children:

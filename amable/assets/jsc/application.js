@@ -73,12 +73,13 @@ $(function () {
 
     // Lets create our form!
 
-    if ($("#newCommentForm_" + clickedElement.id).length == 0) { // Only create form if it doesn't exist
-      $("#" + clickedElement.id).after('<form id="newCommentForm_' + clickedElement.id + '" action="/comments/new" method="POST">')
-      $("#newCommentForm_" + clickedElement.id).append('<input name="parent" type="hidden" value="' + clickedElement.id.split('_')[2] + '">')
-      $("#newCommentForm_" + clickedElement.id).append('<textarea name="content" form="newCommentForm"></textarea>')
-      $("#newCommentForm_" + clickedElement.id).append('<input type="submit" value="Reply To Comment">')
-    }
+    $('#reply_to_comment_' + clickedElement.id.split('_')[2] + '_form').show()
+    // if ($("#newCommentForm_" + clickedElement.id).length == 0) { // Only create form if it doesn't exist
+    //   $("#" + clickedElement.id).after('<form id="newCommentForm_' + clickedElement.id + '" action="/comments/new" method="POST">')
+    //   $("#newCommentForm_" + clickedElement.id).append('<input name="parent" type="hidden" value="' + clickedElement.id.split('_')[2] + '">')
+    //   $("#newCommentForm_" + clickedElement.id).append('<textarea name="content" form="newCommentForm"></textarea>')
+    //   $("#newCommentForm_" + clickedElement.id).append('<input type="submit" value="Reply To Comment">')
+    // }
     
 
     // clickedElement.after('<form action="/comments/new" method="POST">')
