@@ -116,12 +116,12 @@ $(function () {
   })
 
   // Dashboard filters
-  $('.filter__community').on('change', function() {
-    var selected_ids = $.map($(this).children('option:selected'), function (option) {
+  $('.filter__community').on('change', function () {
+    var selected = $.map($(this).children('option:selected'), function (option) {
       return $(option).attr('value')
     })
 
-    var ids = selected_ids.join(',')
+    var ids = selected.join(',')
 
     if (ids.length === 0) {
       window.location.href = '/'
