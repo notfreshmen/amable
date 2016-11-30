@@ -1,5 +1,7 @@
+from pprint import pprint
+
 from flask import Blueprint
-from flask import render_template, flash, send_from_directory
+from flask import render_template, flash, send_from_directory, request
 
 from flask_login import current_user
 
@@ -22,6 +24,19 @@ def index():
             (c.id, c.name) for c in user_communities]
 
         posts = Post.for_user(current_user)
+
+        communities = None
+
+        if request.args.get('communities'):
+            communities = list(map(lambda id: int(id), request.args.get('communities').split(',')))
+
+        filters = dict(
+            communities=communities
+        )
+
+        pprint(filters)
+
+        posts = Post.for_user(current_user, filters)
 
         return render_template('index.html', posts=posts, form=form)
 

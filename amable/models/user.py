@@ -239,6 +239,10 @@ class User(Base):
     def communities(self):
         return list(map(lambda x: x.community, self.community_users))
 
+    @property
+    def community_ids(self):
+        return list(map(lambda x: x.community_id, self.community_users))
+
     def get_id(self):
         try:
             return unicode(self.id)  # python 2
