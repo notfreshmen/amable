@@ -124,7 +124,7 @@ class Post(Base):
     def for_user(user, filters=dict()):
         posts = s.query(Post).filter(Post.community_id.in_(user.community_ids))
 
-        if filters.get('communities') != None:
+        if filters.get('communities') != []:
             posts = posts.filter(Post.community_id.in_(filters.get('communities')))
 
         return posts.order_by(Post.date_created).all()

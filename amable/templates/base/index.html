@@ -25,10 +25,9 @@
             {% endfor %}
           </section>
           <aside class="dashboard__filters">
-            <select name="filter_community">
-              <option value="all">All Communities</option>
+            <select class="filter__community chosen" multiple data-placeholder="Filter Communities">
               {% for community in current_user.communities %}
-                <option value="{{ community.id }}">{{ community.name }}</option>
+                <option value="{{ community.id }}" {% if community.id in filters.get('communities') %}selected{% endif %}>{{ community.name }}</option>
               {% endfor %}
             </select>
           </aside>

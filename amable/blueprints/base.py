@@ -25,7 +25,7 @@ def index():
 
         posts = Post.for_user(current_user)
 
-        communities = None
+        communities = []
 
         if request.args.get('communities'):
             communities = list(map(lambda id: int(id), request.args.get('communities').split(',')))
@@ -34,11 +34,9 @@ def index():
             communities=communities
         )
 
-        pprint(filters)
-
         posts = Post.for_user(current_user, filters)
 
-        return render_template('index.html', posts=posts, form=form)
+        return render_template('index.html', posts=posts, form=form, filters=filters)
 
     return render_template('index.html')
 
