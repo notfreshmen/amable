@@ -7,10 +7,10 @@ from flask_login import current_user
 
 from amable.forms.user_create_form import UserCreateForm
 from amable.forms.post_create_form import PostCreateForm
+
 from amable import session
 
-from amable.models.post import Post
-
+from amable.services.feed_service import FeedService
 
 base = Blueprint('base', __name__, template_folder='../templates/base')
 
@@ -26,15 +26,21 @@ def index():
         posts = Post.for_user(current_user)
 
         communities = []
+        page = 0
 
         if request.args.get('communities'):
             communities = list(map(lambda id: int(id), request.args.get('communities').split(',')))
+
+        if request.args.get('p'):
+            page = int(request.args.get('p'))
 
         filters = dict(
             communities=communities
         )
 
-        posts = Post.for_user(current_user, filters)
+        service = FeedService(user=current_user, page=page, filters=filters)
+
+        posts = service.current_posts()
 
         return render_template('index.html', posts=posts, form=form, filters=filters)
 

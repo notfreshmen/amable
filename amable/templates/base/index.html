@@ -23,6 +23,9 @@
             {% for post in posts %}
               {% include "posts/_post.html" %}
             {% endfor %}
+            <nav class="stream__pagination">
+              {% if feed.page != 0 %}<p><a href="/"{% endif %}
+            </nav>
           </section>
           <aside class="dashboard__filters">
             <select class="filter__community chosen" multiple data-placeholder="Filter Communities">
