@@ -18,10 +18,7 @@ from .post_report import PostReport
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
 
-from flask import flash
-
-
-s = session()
+from flask import flash, url_for
 
 
 class User(Base):
@@ -41,6 +38,7 @@ class User(Base):
     profile_image = db.Column(db.String(128))
     date_created = db.Column(db.String(128), nullable=False)
     date_modified = db.Column(db.String(128), nullable=False)
+    active = db.Column(db.Boolean)
     reports = relationship(Report, backref="user")
     posts = relationship(Post, backref="user")
     post_upvotes = relationship(PostUpvote, backref="user")
@@ -91,6 +89,7 @@ class User(Base):
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
         self.date_created = now
         self.date_modified = now
+        self.active = True
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -102,7 +101,7 @@ class User(Base):
         return self.role == 'admin'
 
     def in_community(self, community):
-        return s.query(CommunityUser).filter_by(community_id=community.id, user_id=self.id).count() == 1
+        return session.query(CommunityUser).filter_by(community_id=community.id, user_id=self.id).count() == 1
 
     def viewable_by(self, _):
         return True
@@ -202,7 +201,6 @@ class User(Base):
     def get_knee(self, invalidate=False):
         def updateKneeCount():
             kneeCount = 0
-            allPosts = session.query(Post).filter_by(user_id=self.id).all()
             for post in self.posts:
                 if (post.total_upvotes - 1) > 0:
                     kneeCount += 1
@@ -234,12 +232,6 @@ class User(Base):
     def is_anonymous(self):
         return False
 
-    def get_id(self):
-        try:
-            return unicode(self.id)  # python 2
-        except NameError:
-            return str(self.id)  # python 3
-
     def set_password(self, __password__):
         if __password__ == "":
             return self
@@ -258,13 +250,13 @@ class User(Base):
     def vote_for_community(self, community):
         # First we want to make sure that this user
         # hasn't yet voted for this community
-        upvoteCount = s.query(CommunityUpvote).filter_by(
+        upvoteCount = session.query(CommunityUpvote).filter_by(
             user_id=self.id,
             community_id=community.id).count()
         if upvoteCount == 0:  # Has not voted
             newUpvote = CommunityUpvote(self, community)
-            s.add(newUpvote)
-            s.commit()
+            session.add(newUpvote)
+            session.commit()
         else:
             flash("You have already voted for this community")
 

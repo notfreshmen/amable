@@ -22,18 +22,16 @@ from sqlalchemy import asc
 
 users = Blueprint('users', __name__, template_folder='../templates')
 
-s = session()
-
 
 @users.route('/<username>')
 @login_required
 def show(username):
-    user = s.query(User).filter_by(username=username).first()
+    user = session.query(User).filter_by(username=username).first()
 
     if not user:
         return abort(404)
 
-    posts = s.query(Post).filter_by(user_id=user.id).order_by(
+    posts = session.query(Post).filter_by(user_id=user.id).order_by(
         desc(Post.date_created)).all()
 
     return render_template('users/show.html', user=user, posts=posts)
@@ -56,8 +54,8 @@ def create():
             password=form.password.data
         )
 
-        s.add(user)
-        s.commit()
+        session.add(user)
+        session.commit()
 
         login_user(user)
 
@@ -77,7 +75,7 @@ def edit():
 @users.route('/users/<id>/update', methods=['POST'])
 @login_required
 def update(id):
-    user = s.query(User).filter_by(id=id).first()
+    user = session.query(User).filter_by(id=id).first()
 
     if user.updatable_by(current_user) is not True:
         return redirect(url_for('sessions.login'))
@@ -106,7 +104,7 @@ def update(id):
 
         user.update(data)
 
-        s.commit()
+        session.commit()
 
         flash(u"Your account has been updated.", "success")
 
@@ -120,13 +118,13 @@ def update(id):
 @users.route('/users/<id>/destroy', methods=['POST'])
 @login_required
 def destroy(id):
-    user = s.query(User).filter_by(id=id).first()
+    user = session.query(User).filter_by(id=id).first()
 
     if user.destroyable_by(current_user) is not True:
         return redirect(url_for('sessions.login'))
 
-    s.delete(user)
-    s.commit()
+    user.active = False
+    session.commit()
 
     if user == current_user:
         logout_user()
