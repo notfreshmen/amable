@@ -9,6 +9,7 @@ from amable import session, app
 
 from amable.models.community import Community
 from amable.models.post import Post
+from amable.models.post_report import PostReport
 from amable.models.community_upvote import CommunityUpvote
 
 from amable.forms.community_search_form import CommunitySearchForm
@@ -168,6 +169,7 @@ def create():
 @communities.route('/communities/<permalink>/reports')
 def reports(permalink):
     community = session.query(Community).filter_by(permalink=permalink).first()
-    return render_template('communities/reports.html', community=community)
+    reports = session.query(PostReport).filter_by(community_id = community.id).all()
+    return render_template('communities/reports.html', community=community, reports=reports)
 
  
