@@ -163,3 +163,11 @@ def create():
         return redirect(url_for('communities.show', permalink=community.permalink))
 
     return redirect(url_for('communities.new'))
+
+ 
+@communities.route('/communities/<permalink>/reports')
+def reports(permalink):
+    community = session.query(Community).filter_by(permalink=permalink).first()
+    return render_template('communities/reports.html', community=community)
+
+ 
