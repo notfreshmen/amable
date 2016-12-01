@@ -75,3 +75,10 @@ reinit:
 
 erd:
 	eralchemy -i postgres://amable:domislove@localhost:5432/amable_development -o docs/erd.pdf
+
+script:
+	@read -p "What is the name of the migration :" script_name; \
+	python db/manage.py script $$script_name;
+
+upgrade:
+	python db/manage.py upgrade
