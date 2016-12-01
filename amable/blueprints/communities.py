@@ -169,7 +169,7 @@ def create():
 @communities.route('/communities/<permalink>/reports')
 def reports(permalink):
     community = session.query(Community).filter_by(permalink=permalink).first()
-    reports = session.query(PostReport).filter_by(community_id = community.id).all()
+    reports = session.query(PostReport).group_by(PostReport.parent_id).count()
     return render_template('communities/reports.html', community=community, reports=reports)
 
  
