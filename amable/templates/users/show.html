@@ -3,7 +3,14 @@
   <div class="user content">
     <aside class="user__sidebar">
       <div class="user__sidebar__image">
-        <img class="user__avatar avatar" src="{{ user.profile_image }}">
+        <img class="user__avatar avatar" src="{{ user.profile_image }}"><br>
+        {% if current_user != user %}
+          {% if current_user.has_followed_user(user) %}
+          <button id="follow_{{user.id}}" class='follow_user' disabled>Followed</button>
+          {% else %}
+          <button id="follow_{{user.id}}" class='follow_user'>Follow User</button>
+          {% endif %}
+        {% endif %}
       </div>
       <div class="user__sidebar__details">
         <h1 class="user__name">{{ user.name }}</h1>

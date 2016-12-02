@@ -110,5 +110,18 @@ $(function () {
       formElement.show()
     }
   })
+
+  $('.follow_user').click(function(r) {
+    r.preventDefault()
+
+    var clickedElement = r.target
+    $.getJSON('/follow/' + clickedElement.id.split('_')[1], function(data) {
+      if (data.success) {
+        clickedElement.disabled=true
+      } else {
+        console.error('Unable to follow user')
+      }
+    }) 
+  })
 })
 

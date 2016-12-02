@@ -14,6 +14,7 @@ from .community_user import CommunityUser
 from .comment import Comment
 from .community_upvote import CommunityUpvote
 from .post_report import PostReport
+from .follower import Follower
 
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
@@ -45,6 +46,8 @@ class User(Base):
     community_user = relationship(CommunityUser, backref="user")
     comments = relationship(Comment, backref="user")
     community_upvotes = relationship(CommunityUpvote, backref="user")
+    followers = relationship(Follower, backref='follow_user', foreign_keys='[Follower.target_id]')
+    followees = relationship(Follower, backref='source_user', foreign_keys='[Follower.source_id]')
 
     def __init__(self,
                  username,
@@ -277,6 +280,11 @@ class User(Base):
         return session.query(PostReport).filter_by(
             parent=post,
             user=self).count() == 1
+
+    def has_followed_user(self, user):
+        return session.query(Follower).filter_by(
+            target_id=user.id, 
+            source_id=self.id).count() == 1
 
 
 def update_date_modified(mapper, connection, target):

@@ -13,6 +13,7 @@ from amable import session
 
 from amable.models.user import User
 from amable.models.post import Post
+from amable.models.follower import Follower
 
 from amable.forms.user_create_form import UserCreateForm
 from amable.forms.user_update_form import UserUpdateForm
@@ -130,3 +131,21 @@ def destroy(id):
         logout_user()
 
     return redirect(url_for('base.index'))
+
+@users.route('/follow/<id>', methods=['GET'])
+@login_required
+def follow(id):
+    returnDict = {}
+
+    user_to_follow = session.query(User).filter_by(id=id).first()
+
+    if user_to_follow is not None:
+        returnDict['success'] = True
+        follower = Follower(source_user=current_user, target_user=user_to_follow)
+        session.add(follower)
+        session.commit()
+    else:
+        returnDict['success'] = False
+
+    return redirect(**returnDict)
+

@@ -10,8 +10,8 @@ from sqlalchemy import event
 # class PostReport(Base):
 class Follower(Base):
     __tablename__ = 'followers'
-    source_id = db.Column(db.Integer, primary_key=True, db.ForeignKey('users.id'))
-    target_id = db.Column(db.Integer, primary_key=True, db.ForeignKey('users.id'))
+    source_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    target_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
 
