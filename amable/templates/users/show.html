@@ -6,9 +6,9 @@
         <img class="user__avatar avatar" src="{{ user.profile_image }}"><br>
         {% if current_user != user %}
           {% if current_user.has_followed_user(user) %}
-          <button id="follow_{{user.id}}" class='follow_user' disabled>Followed</button>
+          <button id="follow_{{user.id}}" class='follow_user' disabled>Unfollow</button>
           {% else %}
-          <button id="follow_{{user.id}}" class='follow_user'>Follow User</button>
+          <button id="follow_{{user.id}}" class='follow_user'>Follow</button>
           {% endif %}
         {% endif %}
       </div>
