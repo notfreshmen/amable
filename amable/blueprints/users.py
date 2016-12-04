@@ -3,7 +3,7 @@ from pprint import pprint
 import os
 
 from flask import Blueprint
-from flask import render_template, abort, request, redirect, url_for, flash
+from flask import render_template, abort, request, redirect, url_for, flash, jsonify
 
 from flask_login import login_user, login_required, current_user, logout_user
 
@@ -139,6 +139,9 @@ def follow(id):
 
     user_to_follow = session.query(User).filter_by(id=id).first()
 
+    # First make sure a Follower doesn't exist
+      
+
     if user_to_follow is not None:
         returnDict['success'] = True
         follower = Follower(source_user=current_user, target_user=user_to_follow)
@@ -147,5 +150,21 @@ def follow(id):
     else:
         returnDict['success'] = False
 
-    return redirect(**returnDict)
+    return jsonify(**returnDict)
+
+@users.route('/unfollow/<id>', methods=['GET'])
+@login_required
+def unfollow_user(id):
+    returnDict = {}
+
+    follower_to_delete = session.query(Follower).filter_by(target_id=id,source_id=current_user.id).first()
+
+    if follower_to_delete is not None:
+        returnDict['success'] = True
+        session.delete(follower_to_delete)
+        session.commit()
+    else:
+        returnDict['success'] = False
+
+    return jsonify(**returnDict)
 
