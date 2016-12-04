@@ -1,40 +1,41 @@
 {% extends "application.html" %}
 {% block content %}
   {% if current_user.is_authenticated %}
-    <div class="content">
-      <div class="dashboard">
-        <header class="dashboard__header">
-          <form class="dashboard__form form">
-            <aside>
-              <img src="{{ current_user.avatar }}" class="avatar">
-            </aside>
-            <section>
-              <div class="form__group">
-                <textarea class="form__control" placeholder="What kindness did you experience today?"></textarea>
-              </div>
-              <div class="form__group--footer">
-                <button type="submit" class="btn btn--blue btn--small">Post</button>
-              </div>
-            </section>
-          </form>
-        </header>
-        <div class="dashboard__content">
-          <section class="dashboard__stream stream">
-            {% for post in posts %}
-              {% include "posts/_post.html" %}
-            {% endfor %}
-            <nav class="stream__pagination">
-              {% if feed.page != 0 %}<p><a href="/"{% endif %}
-            </nav>
-          </section>
-          <aside class="dashboard__filters">
-            <select class="filter__community chosen" multiple data-placeholder="Filter Communities">
-              {% for community in current_user.communities %}
-                <option value="{{ community.id }}" {% if community.id in filters.get('communities') %}selected{% endif %}>{{ community.name }}</option>
-              {% endfor %}
-            </select>
+    <div class="dashboard">
+      <header class="dashboard__header">
+        <form class="dashboard__form form" action="{{url_for('posts.create')}}" method="Post">
+          {{ form.csrf_token }}
+          <aside>
+            <img src="{{ current_user.avatar }}" class="avatar">
           </aside>
-        </div>
+          <section>
+            <div class="form__group">
+              {{ form.text_brief(class_="form__control", placeholder="What kindness did you experience today?") }}
+            </div>
+            <div class="form__group--footer hidden">
+              <button type="submit" class="btn btn--blue btn--small">Post</button>
+              {{ form.community_select(class_="chosen") }}
+            </div>
+          </section>
+        </form>
+      </header>
+      <div class="dashboard__content">
+        <aside class="dashboard__content__filters">
+          <nav class="nav--side">
+            <ul>
+              <li class="{% if feed_type == 'communities' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='communities') }}">Communities</a></li>
+              <li class="{% if feed_type == 'top' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='top') }}">Top</a></li>
+            </ul>
+          </nav>
+        </aside>
+        <section class="dashboard__content__feed">
+          {% for post in posts %}
+            {% include "posts/_post.html" %}
+          {% endfor %}
+          <footer>
+            <a class="btn btn--blue btn--small">Load More</a>
+          </footer>
+        </section>
       </div>
     </div>
   {% else %}

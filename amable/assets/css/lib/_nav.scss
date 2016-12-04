@@ -33,4 +33,35 @@
   img {
     max-height: $font-size-1;
   }
+
+  &--side {
+    li {
+      border-radius: 5px;
+      display: block;
+      list-style-type: none;
+      padding-left: rhythm(0.25);
+      padding-right: rhythm(0.25);
+      margin-bottom: rhythm(0.25);
+
+      a {
+        display: block;
+      }
+
+      &.selected {
+        background: $color-blue;
+
+        a {
+          color: $color-white;
+        }
+
+        &:hover {
+          background: $color-blue-dark;
+        }
+      }
+
+      &:hover {
+        background: $color-grey-light;
+      }
+    }
+  }
 }

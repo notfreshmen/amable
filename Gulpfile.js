@@ -48,15 +48,15 @@ gulp.task('jsc_clean', function () {
   gulp.src(jsc_dest, { read: false }).pipe(clean())
 })
 
+gulp.task('css', ['css_clean', 'css_build'])
+gulp.task('jsc', ['jsc_clean', 'jsc_build'])
+
 gulp.task('watch', function () {
   livereload.listen();
 
-  gulp.watch(css_src, ['build'])
-  gulp.watch(jsc_src, ['build'])
+  gulp.watch(css_src, ['css'])
+  gulp.watch(jsc_src, ['jsc'])
 })
-
-gulp.task('css', ['css_clean', 'css_build'])
-gulp.task('jsc', ['jsc_clean', 'jsc_build'])
 
 gulp.task('build', ['css', 'jsc'])
 

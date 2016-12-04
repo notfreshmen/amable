@@ -21,6 +21,8 @@ from amable.utils.misc import flash_errors
 posts = Blueprint('posts', __name__, template_folder='../templates/posts')
 
 
+s = session()
+
 @posts.route('/posts', methods=['POST'])
 @login_required
 def create():
@@ -69,6 +71,17 @@ def create():
         flash_errors(form)
 
     return redirect(url_for('communities.show', permalink=community.permalink))
+
+
+@posts.route('/posts.json', methods=['GET'])
+def feed():
+    json = {
+        'posts': [s.query(Post).all()[0].to_dict()]
+    }
+
+    print(s.query(Post).all()[0].to_dict())
+
+    return jsonify(json)
 
 
 @csrf.exempt

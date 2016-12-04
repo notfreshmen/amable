@@ -1702,6 +1702,24 @@ a {
 .nav img {
   max-height: 1.15em; }
 
+.nav--side li {
+  border-radius: 5px;
+  display: block;
+  list-style-type: none;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-bottom: 0.5rem; }
+  .nav--side li a {
+    display: block; }
+  .nav--side li.selected {
+    background: #0074D9; }
+    .nav--side li.selected a {
+      color: #fefefe; }
+    .nav--side li.selected:hover {
+      background: #0059a6; }
+  .nav--side li:hover {
+    background: #f2f2ee; }
+
 main {
   flex: 1; }
 
@@ -1813,6 +1831,8 @@ main {
     .form__group--footer * {
       display: inline-block;
       float: right; }
+      .form__group--footer * + .form__group--footer * {
+        margin-right: 0.5rem; }
 
 .form--center .form__group {
   margin: 2rem auto;
@@ -2043,17 +2063,20 @@ main {
 .post {
   max-width: 100%;
   margin-left: auto;
-  margin-right: auto;
-  margin: 1rem 0; }
+  margin-right: auto; }
   .post:after {
     content: " ";
     display: block;
     clear: both; }
+  .post + .post {
+    border-top: 1px solid #f2f2ee;
+    padding-top: 1rem;
+    margin-top: 1rem; }
   .post__left {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    width: 8.33333%;
+    width: 4.16667%;
     float: left;
     padding-left: 0.41667%;
     padding-right: 0.41667%; }
@@ -2061,7 +2084,7 @@ main {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    width: 87.5%;
+    width: 91.66667%;
     float: left;
     padding-left: 0.41667%;
     padding-right: 0.41667%; }
@@ -2104,63 +2127,70 @@ main {
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
-  border-bottom: 1px solid #f2f2ee;
+  border-bottom: 1px solid #d1d1c3;
   padding-bottom: 1rem; }
   .dashboard__header:after {
     content: " ";
     display: block;
     clear: both; }
 
-.dashboard__form aside {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 8.33333%;
-  float: left;
-  padding-left: 0.41667%;
-  padding-right: 0.41667%;
-  margin-right: 4.16667%; }
-
-.dashboard__form section {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 87.5%;
-  float: right;
-  padding-left: 0.41667%;
-  padding-right: 0.41667%; }
-
-.dashboard__form textarea {
-  height: 6rem;
-  width: 100%; }
+.dashboard__form {
+  margin: 1rem; }
+  .dashboard__form aside {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 4.16667%;
+    float: left;
+    padding-left: 0.41667%;
+    padding-right: 0.41667%; }
+  .dashboard__form section {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 95.83333%;
+    float: right;
+    padding-left: 0.41667%;
+    padding-right: 0.41667%; }
+  .dashboard__form textarea {
+    height: 3rem;
+    width: 100%; }
+    .dashboard__form textarea.expanded {
+      height: 6rem; }
+  .dashboard__form .avatar {
+    max-width: 80%; }
 
 .dashboard__content {
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 1rem; }
+  margin: 1rem; }
   .dashboard__content:after {
     content: " ";
     display: block;
     clear: both; }
-
-.dashboard__stream {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 83.33333%;
-  float: left;
-  padding-left: 0.41667%;
-  padding-right: 0.41667%; }
-
-.dashboard__filters {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 16.66667%;
-  float: right;
-  padding-left: 0.41667%;
-  padding-right: 0.41667%; }
+  .dashboard__content__filters {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 12.5%;
+    float: left;
+    padding-left: 0.41667%;
+    padding-right: 0.41667%;
+    margin-right: 4.16667%; }
+  .dashboard__content__feed {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 83.33333%;
+    float: right;
+    padding-left: 0.41667%;
+    padding-right: 0.41667%; }
+    .dashboard__content__feed > footer {
+      margin-top: 1rem; }
+      .dashboard__content__feed > footer a {
+        display: block;
+        text-align: center; }
 
 .sg__example {
   border: 1px solid #f2f2ee;

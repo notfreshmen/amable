@@ -23,26 +23,16 @@ def index():
         form.community_select.choices = [
             (c.id, c.name) for c in user_communities]
 
-        posts = Post.for_user(current_user)
+        service = FeedService(user=current_user)
 
-        communities = []
-        page = 0
+        if request.args.get('feed') == None or request.args.get('feed') == 'communities':
+            posts = service.communities()
+            feed_type = 'communities'
+        else:
+            posts = service.top()
+            feed_type = 'top'
 
-        if request.args.get('communities'):
-            communities = list(map(lambda id: int(id), request.args.get('communities').split(',')))
-
-        if request.args.get('p'):
-            page = int(request.args.get('p'))
-
-        filters = dict(
-            communities=communities
-        )
-
-        service = FeedService(user=current_user, page=page, filters=filters)
-
-        posts = service.current_posts()
-
-        return render_template('index.html', posts=posts, form=form, filters=filters)
+        return render_template('index.html', posts=posts, form=form, feed=service, feed_type=feed_type)
 
     return render_template('index.html')
 

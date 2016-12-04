@@ -128,6 +128,15 @@ class Post(Base):
 
         return posts.order_by(Post.date_created).all()
 
+    def to_dict(self):
+        dict = {}
+
+        dict['id'] = self.id
+        dict['text_brief'] = self.text_brief
+        dict['text_long'] = self.text_long
+
+        return dict
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object

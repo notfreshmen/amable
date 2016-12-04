@@ -280,7 +280,7 @@ class User(Base):
     def get_communities(self):
         communities = []
 
-        for cu in self.community_user:
+        for cu in self.community_users:
             communities.append(cu.community)
 
         return communities
