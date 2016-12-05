@@ -53,7 +53,7 @@ def create():
         if user is None:
             flash("No User Found")
             return redirect('/login')
-        else:
+        elif user.active is True:
             # print("Form validated")
             if check_password(user, request.form["password"]):
                 # print("password checked good to go")
@@ -63,6 +63,9 @@ def create():
             else:
                 flash("Error validating login credentials, please try again")
                 return redirect('/login')
+        else:
+            flash("Account as been deactivated or deleted")
+            return redirect('/login')
     else:
         flash_errors(form)
         flash("Error validating login format, please try again")
