@@ -1,23 +1,40 @@
+from pprint import pprint
+
 from flask import Blueprint
-from flask import render_template, flash, send_from_directory
+from flask import render_template, flash, send_from_directory, request
+
 from flask_login import current_user
+
 from amable.forms.user_create_form import UserCreateForm
 from amable.forms.post_create_form import PostCreateForm
+
 from amable import session
+
+from amable.services.feed_service import FeedService
 
 base = Blueprint('base', __name__, template_folder='../templates/base')
 
 
 @base.route('/')
 def index():
-    if not current_user.is_authenticated:
-        return render_template('index.html')
-    else:
+    if current_user.is_authenticated:
         form = PostCreateForm()
         user_communities = current_user.get_communities()
         form.community_select.choices = [
             (c.id, c.name) for c in user_communities]
-        return render_template('dashboard.html', form=form)
+
+        service = FeedService(user=current_user)
+
+        if request.args.get('feed') is None or request.args.get('feed') is 'communities':
+            posts = service.communities()
+            feed_type = 'communities'
+        else:
+            posts = service.top()
+            feed_type = 'top'
+
+        return render_template('index.html', posts=posts, form=form, feed=service, feed_type=feed_type)
+
+    return render_template('index.html')
 
 
 @base.route('/ui')

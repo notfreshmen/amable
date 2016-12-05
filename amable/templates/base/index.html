@@ -1,4 +1,48 @@
 {% extends "application.html" %}
 {% block content %}
-    <h1> Welcome to Amable </h1>
+  {% if current_user.is_authenticated %}
+    <div class="dashboard">
+      <header class="dashboard__header">
+        <form class="dashboard__form form" action="{{url_for('posts.create')}}" method="Post">
+          {{ form.csrf_token }}
+          <aside>
+            <img src="{{ current_user.avatar }}" class="avatar">
+          </aside>
+          <section>
+            <div class="form__group">
+              {{ form.text_brief(class_="form__control", placeholder="What kindness did you experience today?") }}
+            </div>
+            <div class="form__group--footer hidden">
+              <button type="submit" class="btn btn--blue btn--small">Post</button>
+              {{ form.community_select(class_="chosen") }}
+            </div>
+          </section>
+        </form>
+      </header>
+      <div class="dashboard__content">
+        <aside class="dashboard__content__filters">
+          <nav class="nav--side">
+            <ul>
+              <li class="{% if feed_type == 'communities' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='communities') }}">Communities</a></li>
+              <li class="{% if feed_type == 'top' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='top') }}">Top</a></li>
+            </ul>
+          </nav>
+        </aside>
+        <section class="dashboard__content__feed" data-feed="{{ feed_type }}">
+          <section>
+            {% for post in posts %}
+              {% include "posts/_post.html" %}
+            {% endfor %}
+          </section>
+          <footer>
+            <a class="btn btn--blue btn--small js-load-more" data-next-page="1">Load More</a>
+          </footer>
+        </section>
+      </div>
+    </div>
+  {% else %}
+    <div class="content">
+      <p>Welcome to Amable!</p>
+    </div>
+  {% endif %}
 {% endblock %}

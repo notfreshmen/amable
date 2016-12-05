@@ -119,6 +119,15 @@ class Post(Base):
         else:
             return True
 
+    @staticmethod
+    def for_user(user, filters=dict()):
+        posts = s.query(Post).filter(Post.community_id.in_(user.community_ids))
+
+        if filters.get('communities') != []:
+            posts = posts.filter(Post.community_id.in_(filters.get('communities')))
+
+        return posts.order_by(Post.date_created).all()
+
 
 def update_date_modified(mapper, connection, target):
     # 'target' is the inserted object
