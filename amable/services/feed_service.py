@@ -12,6 +12,7 @@ from amable.models.post_upvote import PostUpvote
 
 s = session()
 
+
 class FeedService:
     def __init__(self, user):
         self.user = user

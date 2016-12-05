@@ -28,12 +28,14 @@
             </ul>
           </nav>
         </aside>
-        <section class="dashboard__content__feed">
-          {% for post in posts %}
-            {% include "posts/_post.html" %}
-          {% endfor %}
+        <section class="dashboard__content__feed" data-feed="{{ feed_type }}">
+          <section>
+            {% for post in posts %}
+              {% include "posts/_post.html" %}
+            {% endfor %}
+          </section>
           <footer>
-            <a class="btn btn--blue btn--small">Load More</a>
+            <a class="btn btn--blue btn--small js-load-more" data-next-page="1">Load More</a>
           </footer>
         </section>
       </div>

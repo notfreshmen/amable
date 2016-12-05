@@ -14,14 +14,15 @@ from amable.models.community import Community
 from amable.forms.post_create_form import PostCreateForm
 from amable.forms.post_report_form import PostReportForm
 
+from amable.services.feed_service import FeedService
 
 from amable.utils.misc import flash_errors
 
 
 posts = Blueprint('posts', __name__, template_folder='../templates/posts')
 
-
 s = session()
+
 
 @posts.route('/posts', methods=['POST'])
 @login_required
@@ -75,13 +76,19 @@ def create():
 
 @posts.route('/posts.json', methods=['GET'])
 def feed():
-    json = {
-        'posts': [s.query(Post).all()[0].to_dict()]
-    }
+    service = FeedService(user=current_user)
 
-    print(s.query(Post).all()[0].to_dict())
+    if request.args.get('page'):
+        page = int(request.args.get('page'))
+    else:
+        page = 0
 
-    return jsonify(json)
+    if request.args.get('top'):
+        posts = list(map(lambda post: render_template('html_view.html', post=post), service.top(page=page)))
+    else:
+        posts = list(map(lambda post: render_template('html_view.html', post=post), service.communities(page=page)))
+
+    return jsonify({'posts': posts})
 
 
 @csrf.exempt
@@ -208,3 +215,11 @@ def report_post():
 
     return redirect(url_for('communities.show',
                             permalink=post.community.permalink))
+
+
+@posts.route('/posts/<id>/view', methods=['GET'])
+@login_required
+def html_view(id):
+    post = s.query(Post).filter_by(id=id).first()
+
+    return render_template('html_view.html', post=post)
