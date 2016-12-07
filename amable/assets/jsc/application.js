@@ -111,53 +111,29 @@ $(function () {
     }
   })
 
-  $('.follow_user').click(function(r) {
-    alert("ye")
+  $('.follow_user').click(function (r) {
     r.preventDefault()
 
     var clickedElement = r.target
-    const regex = /(unfollow_)*/g;
-  
-    button_check = regex.exec(clickedElement.id)
+    var buttonCheck = clickedElement.id.match(/unfollow_*/)
 
-    if (button_check == null) {
-      $.getJSON('/follow/' + clickedElement.id.split('_')[1], function(data) {
+    if (buttonCheck == null) {
+      $.getJSON('/follow/' + clickedElement.id.split('_')[1], function (data) {
         if (data.success) {
-          // clickedElement.disabled=true
+          clickedElement.innerHTML = 'Unfollow'
         } else {
-          alert('Unable to follow user')
+          console.error('Unable to follow user')
         }
-      }) 
+      })
     } else {
-      $.getJSON('/unfollow/' + clickedElement.id.split('_')[1], function(data) {
+      $.getJSON('/unfollow/' + clickedElement.id.split('_')[1], function (data) {
         if (data.success) {
-          // clickedElement.disabled=true
+          clickedElement.innerHTML = 'Follow'
         } else {
-          alert('Unable to follow user')
+          console.error('Unable to unfollow user')
         }
-      }) 
+      })
     }
-
-    // alert(r.target_id)
-    // if (button_check != null) {
-    //   alert("following")
-    //   $.getJSON('/follow/' + clickedElement.id.split('_')[1], function(data) {
-    //     if (data.success) {
-    //       // clickedElement.disabled=true
-    //     } else {
-    //       console.error('Unable to follow user')
-    //     }
-    //   }) 
-    // } else {
-    //   $.getJSON('/unfollow/' + clickedElement.id.split('_')[1], function(data) {
-    //     alert("unfollwing")
-    //     if (data.success) {
-    //       // clickedElement.disabled=true
-    //     } else {
-    //       console.error('Unable to follow user')
-    //     }
-    //   }) 
-    // } 
   })
 })
 

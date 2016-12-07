@@ -14,9 +14,11 @@ with context('amable.models'):
     with before.each:
         self.user1 = UserFactory()
         self.user2 = UserFactory()
-        self.follower = FollowerFactory(source_user=self.user1,target_user=self.user2)
         session.add(self.user1)
         session.add(self.user2)
+        session.commit()
+        self.follower = FollowerFactory(
+            source_user=self.user1, target_user=self.user2)
         session.add(self.follower)
         session.commit()
 
@@ -35,4 +37,5 @@ with context('amable.models'):
 
             with context('__repr__'):
                 with it("Return Representation"):
-                    expect(self.follower.__repr__()).to(contain("<Follower ! Source :"))
+                    expect(self.follower.__repr__()).to(
+                        contain("<Follower ~ Source :"))

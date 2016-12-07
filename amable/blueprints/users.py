@@ -132,6 +132,7 @@ def destroy(id):
 
     return redirect(url_for('base.index'))
 
+
 @users.route('/follow/<id>', methods=['GET'])
 @login_required
 def follow(id):
@@ -140,11 +141,11 @@ def follow(id):
     user_to_follow = session.query(User).filter_by(id=id).first()
 
     # First make sure a Follower doesn't exist
-      
 
     if user_to_follow is not None:
         returnDict['success'] = True
-        follower = Follower(source_user=current_user, target_user=user_to_follow)
+        follower = Follower(source_user=current_user,
+                            target_user=user_to_follow)
         session.add(follower)
         session.commit()
     else:
@@ -152,12 +153,14 @@ def follow(id):
 
     return jsonify(**returnDict)
 
+
 @users.route('/unfollow/<id>', methods=['GET'])
 @login_required
 def unfollow_user(id):
     returnDict = {}
 
-    follower_to_delete = session.query(Follower).filter_by(target_id=id,source_id=current_user.id).first()
+    follower_to_delete = session.query(Follower).filter_by(
+        target_id=id, source_id=current_user.id).first()
 
     if follower_to_delete is not None:
         returnDict['success'] = True
@@ -167,4 +170,3 @@ def unfollow_user(id):
         returnDict['success'] = False
 
     return jsonify(**returnDict)
-

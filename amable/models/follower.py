@@ -25,6 +25,9 @@ class Follower(Base):
         self.source = source_user
         self.target = target_user
 
+        self.source_id = source_user.id
+        self.target_id = target_user.id
+
         # Default Values
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
         self.date_created = now
