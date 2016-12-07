@@ -70,7 +70,7 @@ dbsync:
 	python data_init.py
 
 reinit:
-	psql -U amable -d amable_development -c 'delete from community_upvotes; delete from community_users; delete from post_upvotes; delete from reports; delete from comments; delete from posts; delete from communities; delete from users;'
+	psql -U amable -d amable_development -c 'delete from followers; delete from community_upvotes; delete from community_users; delete from post_upvotes; delete from reports; delete from comments; delete from posts; delete from communities; delete from users;'
 	python data_init.py
 
 erd:

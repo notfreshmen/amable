@@ -4,7 +4,18 @@
       <a href="{{ url_for('users.show', username=post.user.username) }}"><img src="{{ post.user.profile_image }}" class="avatar"></a>
     </aside>
     <div class="post__content">
-      <h3 class="post__author"><a href="{{ url_for('users.show', username=post.user.username) }}">{{ post.user.name }} <span>@{{ post.user.username }}</span></a></h3>
+      <h3 class="post__author">
+        <a href="{{ url_for('users.show', username=post.user.username) }}">{{ post.user.name }} 
+          <span>@{{ post.user.username }}</span>
+        </a>
+        {% if current_user != post.user %}
+          {% if current_user.has_followed_user(post.user) %}
+          <button id="unfollow_{{post.user.id}}" class='follow_user'>Unfollow</button>
+          {% else %}
+          <button id="follow_{{post.user.id}}" class='follow_user'>Follow User</button>
+          {% endif %}
+        {% endif %}
+      </h3>
       <div class="post__text">
         {{ post.text_brief | safe }}
       </div>
