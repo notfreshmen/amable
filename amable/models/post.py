@@ -26,9 +26,12 @@ class Post(Base):
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
     reports = relationship(PostReport, backref="parent")
-    post_upvotes = relationship(PostUpvote, backref="post")
-    comments = relationship(Comment, backref="post")
-    hashtags = relationship(PostHashtag, backref="post")
+    post_upvotes = relationship(
+        PostUpvote, backref="post", cascade="all, delete-orphan")
+    comments = relationship(Comment, backref="post",
+                            cascade="all, delete-orphan")
+    hashtags = relationship(PostHashtag, backref="post",
+                            cascade="all, delete-orphan")
 
     def __init__(
             self,
@@ -124,7 +127,8 @@ class Post(Base):
         posts = s.query(Post).filter(Post.community_id.in_(user.community_ids))
 
         if filters.get('communities') != []:
-            posts = posts.filter(Post.community_id.in_(filters.get('communities')))
+            posts = posts.filter(Post.community_id.in_(
+                filters.get('communities')))
 
         return posts.order_by(Post.date_created).all()
 
