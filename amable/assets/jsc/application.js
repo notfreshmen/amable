@@ -1,4 +1,7 @@
 $(function () {
+  // Chosen
+  $('.chosen').chosen()
+
   // Nav toggle
   $('.header__toggle').on('click', function () {
     var nav = $(this).siblings('.header__nav')
@@ -26,6 +29,7 @@ $(function () {
     })
   })
 
+  // Communities vote
   $('.community_vote').click(function () {
     var communityID = this.id.split('_')[1]
     $.getJSON('/communities/' + communityID + '/vote', function (data) {
@@ -135,5 +139,28 @@ $(function () {
       })
     }
   })
-})
 
+  // Dashboard filters
+  $('.filter__community').on('change', function () {
+    var selected = $.map($(this).children('option:selected'), function (option) {
+      return $(option).attr('value')
+    })
+
+    var ids = selected.join(',')
+
+    if (ids.length === 0) {
+      window.location.href = '/'
+    } else {
+      window.location.href = '/?communities=' + ids
+    }
+  })
+
+  // Post form
+  $('.dashboard__form textarea').on('focus', function () {
+    $(this).addClass('expanded')
+    $(this).parent().siblings('.form__group--footer').removeClass('hidden')
+  }).on('blur', function () {
+    $(this).removeClass('expanded')
+    $(this).parent().siblings('.form__group--footer').addClass('hidden')
+  })
+})

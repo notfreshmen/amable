@@ -1,14 +1,21 @@
 .post {
   @include container;
 
-  margin: rhythm(0.5) 0;
+  // padding-left: rhythm(0.25);
+  // padding-right: rhythm(0.25);
+
+  & + & {
+    border-top: 1px solid $color-grey-light;
+    padding-top: rhythm(0.5);
+    margin-top: rhythm(0.5);
+  }
 
   &__left {
-    @include span(2 of 24);
+    @include span(1 of 24);
   }
 
   &__content {
-    @include span(21 of 24);
+    @include span(22 of 24);
 
     p:last-child {
       margin-bottom: 0;
