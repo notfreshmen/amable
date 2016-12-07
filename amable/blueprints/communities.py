@@ -174,6 +174,9 @@ def reports(permalink):
     post_array = []
     for x in range(0, len(reports)):
         post_array.append(session.query(Post).filter_by(id=reports[x].parent_id).all())
+    
+    post_array = [val for sublist in post_array for val in sublist]
+
     #post_array = list(map(lambda report: session.query(Post).filter_by(id=report.parent_id), reports).all())
         
    # post_reports = session.query(Post.community_id, Post.community_id).filter(Post.community_id).group_by(Post.community_id).subquery()

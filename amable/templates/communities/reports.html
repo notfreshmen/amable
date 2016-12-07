@@ -11,10 +11,10 @@
         {% endfor %}
             
         </p>
-        
+        {{ post_array }}
         <p>
         {% for x in post_array %}
-                <p> ID of the post that the report was for{{x}}<p>
+                <p> ID of the post that the report was for{{x.text_brief}}<p>
         {% endfor %}
         </p>
     </div>
