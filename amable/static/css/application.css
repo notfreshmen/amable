@@ -2074,13 +2074,12 @@ main {
     margin-bottom: 1rem;
     text-align: center;
     vertical-align: top;
-    width: calc(50% - 0.5rem); }
+    width: calc(50% - 0.5rem);
+    padding: 2rem 0; }
     .communities__community:hover {
       border-color: #c6c6b5; }
-    .communities__community a {
-      color: #111;
-      display: block;
-      padding: 2rem 0; }
+    .communities__community div {
+      display: block; }
     .communities__community h3 {
       font-weight: 500; }
     .communities__community p {

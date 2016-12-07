@@ -13,38 +13,11 @@
     <div class="communities__communities">
       {% for community in communities %}
         <article class="communities__community visible">
-          <!-- <a href="{{ url_for('communities.show', permalink=community.permalink) }}"> -->
-          <a>
-            <h3>{{ community.name }}</h3>
+          <div>
+            <h3><a href="{{ url_for('communities.show', permalink=community.permalink) }}">{{ community.name }}</a></h3>
             <p>{{ community.description }}</p>
-            <!-- {% if community.active %}
-              <span>Active</span>
-            {% elif current_user.is_authenticated %}
-              {% if community.upvoted_by(current_user) %}
-              <span>You have already voted!</span>
-              {% elif current_user.is_authenticated %}
-                <span id="vote_span_{{community.id}}"><a id="vote_{{ community.id }}" href="#" class="community_vote">Vote</a></span>
-              {% endif %}
-            {% else %}
-              <span><a href="{{ url_for('sessions.login') }}">Log in</a> to vote!</span>
-            {% endif %} -->
-            {% if current_user.is_authenticated %}
-              {% if community.active %}
-                <!-- <span class="btn btn--green btn--small" {% if community.upvoted_by(user) %}disabled{% endif %}>Join</span> -->
-                {% if current_user.in_community(community) %}
-                  <span class="js-community-membership btn btn--red btn--small" data-id="{{ community.id }}">Leave</span>
-                {% else %}
-                  <span class="js-community-membership btn btn--blue btn--small" data-id="{{ community.id }}">Join</span>
-                {% endif %}
-              {% else %}
-                {% if community.upvoted_by(current_user) %}
-                  <span class="btn btn--small" disabled>Voted</span>
-                {% else %}
-                  <span class="js-community-vote btn btn--blue btn--small" data-id="{{ community.id }}">Vote</span>
-                {% endif %}
-              {% endif %}
-            {% endif %}
-          </a>
+            {% include "communities/_actions.html" %}
+          </div>
         </article>
       {% endfor %}
     </div>

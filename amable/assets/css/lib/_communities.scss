@@ -44,15 +44,14 @@
     text-align: center;
     vertical-align: top;
     width: calc(50% - #{rhythm(0.25)});
+    padding: rhythm(1) 0;
 
     &:hover {
       border-color: $color-grey-dark;
     }
 
-    a {
-      color: $color-text;
+    div {
       display: block;
-      padding: rhythm(1) 0;
     }
 
     h3 {

@@ -4,17 +4,7 @@
 		<header class="community__header" {% if community.banner_url %} style="background-image: url(/uploads/{{ community.banner_url }})" {% endif %}>
 			<h2 class="community__name">{{ community.name }}</h2>
 			<p>{{ community.description }}</p>
-			{% if current_user.is_authenticated %}
-				<nav class="community__actions">
-					{% if current_user.in_community(community) %}
-						<button class="btn btn--small">Leave Community</button>
-					{% else %}
-						<button class="btn btn--blue btn--small">Join Community</button>
-					{% endif %}
-				</nav>
-			{% else %}
-				<a href="{{ url_for('sessions.login') }}">Login to join Community</a>
-			{% endif %}
+			{% include "communities/_actions.html" %}
 		</header>
 		<div id="make_post">
 			<form id="post_create_form" method="POST" action="{{url_for('posts.create')}}">

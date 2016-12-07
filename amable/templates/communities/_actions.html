@@ -1,0 +1,15 @@
+{% if current_user.is_authenticated %}
+  {% if community.active %}
+    {% if current_user.in_community(community) %}
+      <span class="js-community-membership btn btn--red btn--small" data-id="{{ community.id }}">Leave</span>
+    {% else %}
+      <span class="js-community-membership btn btn--blue btn--small" data-id="{{ community.id }}">Join</span>
+    {% endif %}
+  {% else %}
+    {% if community.upvoted_by(current_user) %}
+      <span class="btn btn--small" disabled>Voted</span>
+    {% else %}
+      <span class="js-community-vote btn btn--blue btn--small" data-id="{{ community.id }}">Vote</span>
+    {% endif %}
+  {% endif %}
+{% endif %}
