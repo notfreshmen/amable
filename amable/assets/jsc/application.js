@@ -30,13 +30,37 @@ $(function () {
   })
 
   // Communities vote
-  $('.community_vote').click(function () {
-    var communityID = this.id.split('_')[1]
-    $.getJSON('/communities/' + communityID + '/vote', function (data) {
+  $('.js-community-vote').on('click', function () {
+    var button = $(this)
+    var id = button.data('id')
+
+    $.getJSON('/communities/' + id + '/vote', function (data) {
+      button.removeClass('btn--blue')
+
       if (data.success) {
-        $('#vote_span_' + communityID).html('You voted!')
+        button.html('Voted')
+        button.attr('disabled', '')
       } else {
-        $('#vote_span_' + communityID).html('oh well')
+        button.addClass('btn--red')
+        button.html('Error!')
+      }
+    })
+  })
+
+  // Communities membership
+  $('.js-community-membership').on('click', function () {
+    var button = $(this)
+    var id = button.data('id')
+
+    $.getJSON('/communities/' + id + '/membership', function (data) {
+      if (data.action === 'joined') {
+        button.removeClass('btn--blue')
+        button.addClass('btn--red')
+        button.html('Leave')
+      } else if (data.action === 'left') {
+        button.removeClass('btn--red')
+        button.addClass('btn--blue')
+        button.html('Join')
       }
     })
   })

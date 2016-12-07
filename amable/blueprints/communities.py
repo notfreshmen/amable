@@ -8,6 +8,7 @@ from sqlalchemy.orm import joinedload
 from amable import session, app
 
 from amable.models.community import Community
+from amable.models.community_user import CommunityUser
 from amable.models.post import Post
 from amable.models.community_upvote import CommunityUpvote
 
@@ -31,7 +32,7 @@ s = session()
 
 @communities.route('/communities')
 def index():
-    communities = session.query(Community).all()
+    communities = session.query(Community).order_by(Community.date_created.desc()).all()
 
     return render_template('communities/index.html',
                            title="Communities",
@@ -103,6 +104,39 @@ def vote_community(community_id):
         returnDict['success'] = False
 
     return jsonify(**returnDict)
+
+
+@communities.route('/communities/<id>/membership')
+@login_required
+def membership(id):
+    json = {}
+
+    community = session.query(Community).filter_by(id=id).first()
+
+    # See if they're already in the community
+    community_user = session.query(CommunityUser).filter_by(user=current_user, community=community).first()
+
+    # If they're not in the community, add them. Otherwise, remove them
+    if community_user is None:
+        community_user = CommunityUser(
+            user=current_user,
+            community=community
+        )
+
+        session.add(community_user)
+        session.commit()
+
+        json['action'] = 'joined'
+
+    else:
+        session.delete(community_user)
+        session.commit()
+
+        json['action'] = 'left'
+
+    json['success'] = True
+
+    return jsonify(**json)
 
 
 @communities.route('/communities/create', methods=['POST'])
