@@ -20,6 +20,10 @@
       <ul class="user__info">
         {% if user.location %}<li><i class="ss-icon">location</i> {{ user.location }}</li>{% endif %}
         {% if user.website %}<li><i class="ss-icon">globe</i> <a href="{{ user.website }}">{{ user.website }}</a></li>{% endif %}
+        <li>Praying Hands - {{user.get_praying_hands()}}</li>
+        <li>Halos - {{user.get_halo()}}</li>
+        <li>Hammers - {{user.get_hammer()}}</li>
+        <li>Knees - {{user.get_knee()}}</li>
       </ul>
     </aside>
     <section class="user__posts posts">
