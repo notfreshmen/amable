@@ -65,7 +65,8 @@ $(function () {
     })
   })
 
-  $('.post_upvote').click(function () {
+  $('.post_upvote').click(function (r) {
+    r.preventDefault()
     var postID = this.id.split('_')[2]
     var alreadyUpvoted = $('#upvote_icon_' + postID).css('color') === 'rgb(0, 128, 0)' // Already green
     var currentUpvotes = $('#upvote_number_' + postID).html()
