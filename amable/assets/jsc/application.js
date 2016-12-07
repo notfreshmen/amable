@@ -47,6 +47,24 @@ $(function () {
     })
   })
 
+  // Communities membership
+  $('.js-community-membership').on('click', function () {
+    var button = $(this)
+    var id = button.data('id')
+
+    $.getJSON('/communities/' + id + '/membership', function (data) {
+      if (data.action === 'joined') {
+        button.removeClass('btn--blue')
+        button.addClass('btn--red')
+        button.html('Leave')
+      } else if (data.action === 'left') {
+        button.removeClass('btn--red')
+        button.addClass('btn--blue')
+        button.html('Join')
+      }
+    })
+  })
+
   $('.post_upvote').click(function () {
     var postID = this.id.split('_')[2]
     var alreadyUpvoted = $('#upvote_icon_' + postID).css('color') === 'rgb(0, 128, 0)' // Already green
