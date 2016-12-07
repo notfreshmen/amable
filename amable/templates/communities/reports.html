@@ -2,12 +2,20 @@
 {% block content %}
     <p>hias</p>
     <div class="post">
-        <p>{% for x in reports %}
-                <p>ID of report {{x.id}}</p>
-                <p>Title of report {{x.title}}</p>
-                <p>UserID of report {{x.user_id}}</p>
-                <p>ParentID of report {{x.parent_id}}</p>
-            {% endfor %}
+        <p>
+        {% for x in reports %}
+            <p>ID of report {{x.id}}</p>
+            <p>Title of report {{x.title}}</p>
+            <p>UserID of report {{x.user_id}}</p>
+            <p>ParentID of report {{x.parent_id}}</p>
+        {% endfor %}
+            
+        </p>
+        
+        <p>
+        {% for x in post_array %}
+                <p> ID of the post that the report was for{{x}}<p>
+        {% endfor %}
         </p>
     </div>
     
