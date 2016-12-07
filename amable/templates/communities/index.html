@@ -2,32 +2,45 @@
 {% block content %}
   <div class="communities">
     <header class="communities__header">
-      <form class="communities__search">
-        {{ form.csrf_token }}
-        <input class="form__control form__control--large" placeholder="Search...">
-      </form>
-      <span><a href="{{ url_for('communities.new') }}">Create a new Community</a></span>
+      <h2>Communities</h2>
+      <p>Find a community to share your kindness in! If you can't find one that matches a group you want to share with, go ahead and petition to start a new one!</p>
+      <a class="btn btn--blue btn--small" href="{{ url_for('communities.new') }}">Petition for Your Community</a>
     </header>
+    <form class="communities__search">
+      {{ form.csrf_token }}
+      <input class="form__control form__control--large" placeholder="Search...">
+    </form>
     <div class="communities__communities">
       {% for community in communities %}
-        <article class="communities__community visible" {% if community.banner_url %} style="background-image: url(/uploads/{{ community.banner_url }})" {% endif %}>
-          <a href="{{ url_for('communities.show', permalink=community.permalink) }}">
+        <article class="communities__community visible">
+          <!-- <a href="{{ url_for('communities.show', permalink=community.permalink) }}"> -->
+          <a>
             <h3>{{ community.name }}</h3>
-          </a>
-
-          {% if community.active %}
-            <span>Active</span>
-          {% elif current_user.is_authenticated %}
-            {% if community.upvoted_by(current_user) %}
-            <span>You have already voted!</span>
+            <p>{{ community.description }}</p>
+            <!-- {% if community.active %}
+              <span>Active</span>
             {% elif current_user.is_authenticated %}
-              <span id="vote_span_{{community.id}}"><a id="vote_{{ community.id }}" href="#" class="community_vote">Vote</a></span>
+              {% if community.upvoted_by(current_user) %}
+              <span>You have already voted!</span>
+              {% elif current_user.is_authenticated %}
+                <span id="vote_span_{{community.id}}"><a id="vote_{{ community.id }}" href="#" class="community_vote">Vote</a></span>
+              {% endif %}
+            {% else %}
+              <span><a href="{{ url_for('sessions.login') }}">Log in</a> to vote!</span>
+            {% endif %} -->
+            {% if current_user.is_authenticated %}
+              {% if community.active %}
+                <span class="btn btn--green btn--small" {% if community.upvoted_by(user) %}disabled{% endif %}>Join</span>
+              {% else %}
+                {% if community.upvoted_by(current_user) %}
+                  <span class="btn btn--small" disabled>Voted</span>
+                {% else %}
+                  <span class="js-community-vote btn btn--blue btn--small" data-id="{{ community.id }}">Vote</span>
+                {% endif %}
+              {% endif %}
             {% endif %}
-          {% else %}
-            <span><a href="{{ url_for('sessions.login') }}">Log in</a> to vote!</span>
-          {% endif %}
+          </a>
         </article>
-
       {% endfor %}
     </div>
   </div>
