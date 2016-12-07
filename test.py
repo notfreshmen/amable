@@ -1,21 +1,23 @@
-from pprint import pprint
-from amable import session
-from amable.models.post_upvote import PostUpvote
-from amable.models.post import Post
-from amable.models.comment import Comment
+from spec.factories.user_factory import UserFactory
+
+from amable.models.follower import Follower
 from amable.models.user import User
-from amable.models.post_report import PostReport
 
-# a = session.query(Post).filter_by(user_id = 19).all()
-# upvoteCount = 0
-# for b in a:
-#     upvoteCount += b.total_upvotes
+from amable import session
 
-# print(upvoteCount)
+session.query(User).delete()
+session.commit()
 
-# u = session.query(User).filter_by(id=19).first()
-# print(u.get_knee())
+print('hey')
+u1 = UserFactory(username="gi")
+u2 = UserFactory(username="giii")
 
-p = session.query(Post).filter_by(id=10).first()
-pprint(p)
-pprint(p.comment_tree)
+session.add(u1)
+session.add(u2)
+
+session.commit()
+
+follow = Follower(source_user=u1, target_user=u2)
+
+session.add(follow)
+session.commit()

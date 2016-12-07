@@ -140,6 +140,31 @@ $(function () {
     }
   })
 
+  $('.follow_user').click(function (r) {
+    r.preventDefault()
+
+    var clickedElement = r.target
+    var buttonCheck = clickedElement.id.match(/unfollow_*/)
+
+    if (buttonCheck == null) {
+      $.getJSON('/follow/' + clickedElement.id.split('_')[1], function (data) {
+        if (data.success) {
+          clickedElement.innerHTML = 'Unfollow'
+        } else {
+          console.error('Unable to follow user')
+        }
+      })
+    } else {
+      $.getJSON('/unfollow/' + clickedElement.id.split('_')[1], function (data) {
+        if (data.success) {
+          clickedElement.innerHTML = 'Follow'
+        } else {
+          console.error('Unable to unfollow user')
+        }
+      })
+    }
+  })
+
   // Dashboard filters
   $('.filter__community').on('change', function () {
     var selected = $.map($(this).children('option:selected'), function (option) {
