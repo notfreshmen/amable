@@ -1,20 +1,140 @@
-<article class="post">
-  <aside class="post__left">
-    <a href="{{ url_for('users.show', username=post.user.username) }}"><img src="{{ post.user.profile_image }}" class="avatar"></a>
-  </aside>
-  <div class="post__content">
-    <h3 class="post__author"><a href="{{ url_for('users.show', username=post.user.username) }}">{{ post.user.name }} <span>@{{ post.user.username }}</span></a></h3>
-    <div class="post__text">
-      {{ post.text_brief_markdown() | safe }}
+{% if post.can_be_shown() %}
+  <article class="post" data-id="{{ post.id }}">
+    <aside class="post__left">
+      <a href="{{ url_for('users.show', username=post.user.username) }}"><img src="{{ post.user.profile_image }}" class="avatar"></a>
+    </aside>
+    <div class="post__content">
+      <h3 class="post__author">
+        <a href="{{ url_for('users.show', username=post.user.username) }}">{{ post.user.name }} 
+          <span>@{{ post.user.username }}</span>
+        </a>
+        {% if current_user != post.user %}
+          {% if current_user.has_followed_user(post.user) %}
+          <button id="unfollow_{{post.user.id}}" class='follow_user'>Unfollow</button>
+          {% else %}
+          <button id="follow_{{post.user.id}}" class='follow_user'>Follow User</button>
+          {% endif %}
+        {% endif %}
+      </h3>
+      <div class="post__text">
+        {{ post.text_brief | safe }}
+      </div>
+      <footer class="post__actions">
+        <span class="post__date"><i class="ss-icon">clock</i> <a href="#">{{ post.date_created | time_since }}</a></span>
+        {% if current_user.is_authenticated %}
+          {% if post.user == current_user %}
+              <form action="/posts/{{ post.id }}/destroy" method="post">
+                <input type="hidden" name="redirect_to" value="{{ request.path }}"/>
+                <button type="submit">Delete Post</button>
+              </form>
+            {% if post.answered %}
+              <form action="/posts/{{ post.id }}/unanswer" method="GET">
+                <button type="submit">Mark Post as Un-Answered</button>
+              </form>
+            {% else %}
+              <form action="/posts/{{ post.id }}/answer" method="GET">
+                <button type="submit">Mark Post as Answered</button>
+              </form>
+            {% endif %}
+          {% endif %}
+
+          {% if comment_form %}
+            <button class="reply_post" id="reply_to_post_{{post.id}}" type="submit">Reply</button>
+            <form style="display:none" id="reply_to_post_{{post.id}}_form" action="/comments/new" method="POST">
+              {{ comment_form.csrf_token }}
+              {{ comment_form.post(value=post.id) }}
+              <div class="form__group">
+                {{ comment_form.content.label }}
+                {{ comment_form.content(class_="form__control") }}
+              </div>
+              <div class="form__group">
+                <button type="submit" class="btn btn--blue btn--small">Reply</button>
+              </div>
+            </form>
+          {% endif %}
+
+          {% if report_form %}
+            {% if current_user.has_reported_post(post) %}
+            <button disabled class="report_post" id="report_post_{{post.id}}" type="submit">Already Reported</button>
+            {% else %}
+            <button class="report_post" id="report_post_{{post.id}}" type="submit">Report</button>
+            {% endif %}
+
+            <form style="display:none" id="report_post_{{post.id}}_form" action="/posts/report" method="POST">
+              {{ report_form.csrf_token }}
+              {{ report_form.post(value=post.id) }}
+              <div class="form__group">
+                {{ report_form.title.label }}
+                {{ report_form.title(class_="form__control") }}
+              </div>
+              <div class="form__group">
+                {{ report_form.content.label }}
+                {{ report_form.content(class_="form__control") }}
+              </div>
+              <div class="form__group">
+                {{ report_form.category.label }}
+                {{ report_form.category(class_="form__control") }}
+              </div>
+              <div class="form__group">
+                <button type="submit" class="btn btn--blue btn--small">Report Post</button>
+              </div>
+            </form>
+          {% endif %}
+        {% endif %}
+
+
+      </footer>
+      <ul id="post_{{post.id}}_comments" style="">
+          {%- for comment in post.comment_tree recursive %}
+              <li style="list-style-type:disc">
+                {{comment.content}}_{{comment.id}} -
+                <a href="#" id="reply_comment_{{comment.id}}" class='reply_comment'>Reply</a>
+                {% if comment_form %}
+                <form style="display:none;" id="reply_to_comment_{{comment.id}}_form" action="/comments/new" method="POST">
+                  {{ comment_form.csrf_token }}
+                  {{ comment_form.parent(value=comment.id)}}
+                  {{ comment_form.post(value=post.id) }}
+                  <div class="form__group">
+                    {{ comment_form.content.label }}
+                    {{ comment_form.content(class_="form__control") }}
+                  </div>
+                  <div class="form__group">
+                    <button type="submit" class="btn btn--blue btn--small">Reply</button>
+                  </div>
+                </form>
+                {% endif %}
+
+                {%- if comment.children -%}
+                    <ul style="margin-left:10px">{{ loop(comment.children) }}</ul>
+                {%- endif %}
+              </li>
+          {%- endfor %}
+      </ul>
     </div>
-    <footer class="post__actions">
-      <span class="post__date"><i class="ss-icon">clock</i> <a href="#">{{ post.date_created | time_since }}</a></span>
-    </footer>
-  </div>
-  <aside class="post__right">
-    <div class="score">
-      <span class="score__action"><a href="#"><i class="ss-icon">up</i></a></span>
-      <span class="score__number">{{ post.post_upvotes | length }}</span>
-    </div>
-  </aside>
-</article>
+    <aside class="post__right">
+      <div class="score">
+        <span class="score__action">
+          {% if current_user.is_authenticated %}
+          <a id="post_upvote_{{ post.id }}" class="post_upvote" href="#">
+            {% if current_user.is_authenticated %}
+              {% if current_user.has_upvoted_post(post) %}
+              <i style="color:green" id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+              {% else %}
+              <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+              {% endif %}
+            {% else %}
+              <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+            {% endif %}
+          </a>
+          {% else %}
+            <a id="post_upvote_{{ post.id }}" class="post_upvote" href="#" disabled>
+              <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+            </a>
+          {% endif %}
+        </span>
+        <span id="upvote_number_{{ post.id }}" class="score__number">{{ post.post_upvotes | length }}</span>
+      </div>
+    </aside><br><br>
+
+  </article>
+{% endif %}

@@ -13,11 +13,6 @@ from .comment import Comment
 from sqlalchemy import event
 from sqlalchemy.orm import relationship
 
-from CommonMark import commonmark
-
-
-s = session()
-
 
 class Post(Base):
     __tablename__ = 'posts'
@@ -31,9 +26,12 @@ class Post(Base):
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
     reports = relationship(PostReport, backref="parent")
-    post_upvotes = relationship(PostUpvote, backref="post")
-    comments = relationship(Comment, backref="post")
-    hashtags = relationship(PostHashtag, backref="post")
+    post_upvotes = relationship(
+        PostUpvote, backref="post", cascade="all, delete-orphan")
+    comments = relationship(Comment, backref="post",
+                            cascade="all, delete-orphan")
+    hashtags = relationship(PostHashtag, backref="post",
+                            cascade="all, delete-orphan")
 
     def __init__(
             self,
@@ -81,15 +79,12 @@ class Post(Base):
             user in self.community.moderators() or \
             user.is_admin()
 
-    def text_brief_markdown(self):
-        return commonmark(self.text_brief)
-
     @property
     def comment_tree(self):
         root_tree = OrderedDict()
 
-        root_level = s.query(Comment).filter_by(
-            post_id=self.id, parent=None).all()
+        root_level = session.query(Comment).filter_by(
+            post_id=self.id, parent_id=None).all()
 
         def get_children(comment, child_tree):
             for child in comment.children:
@@ -112,6 +107,30 @@ class Post(Base):
             cache.set(str(self.id) + "_post_upvotes",
                       cacheTotal, timeout=5 * 60)
         return cacheTotal
+
+    def can_be_shown(self, invalidate=False):
+        reportCount = cache.get(str(self.id) + "_report_count")
+
+        if reportCount is None or invalidate:
+            reportCount = session.query(
+                PostReport).filter_by(parent=self).count()
+            cache.set(str(self.id) + "_report_count",
+                      reportCount, timeout=5 * 60)
+
+        if int(reportCount) >= 10:
+            return False
+        else:
+            return True
+
+    @staticmethod
+    def for_user(user, filters=dict()):
+        posts = s.query(Post).filter(Post.community_id.in_(user.community_ids))
+
+        if filters.get('communities') != []:
+            posts = posts.filter(Post.community_id.in_(
+                filters.get('communities')))
+
+        return posts.order_by(Post.date_created).all()
 
 
 def update_date_modified(mapper, connection, target):

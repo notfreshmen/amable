@@ -14,14 +14,12 @@ from .community_user import CommunityUser
 from .comment import Comment
 from .community_upvote import CommunityUpvote
 from .post_report import PostReport
+from .follower import Follower
 
 from sqlalchemy import event
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, load_only
 
-from flask import flash
-
-
-s = session()
+from flask import flash, url_for
 
 
 class User(Base):
@@ -41,12 +39,17 @@ class User(Base):
     profile_image = db.Column(db.String(128))
     date_created = db.Column(db.String(128), nullable=False)
     date_modified = db.Column(db.String(128), nullable=False)
+    active = db.Column(db.Boolean)
     reports = relationship(Report, backref="user")
     posts = relationship(Post, backref="user")
     post_upvotes = relationship(PostUpvote, backref="user")
-    community_user = relationship(CommunityUser, backref="user")
+    community_users = relationship(CommunityUser, backref="user")
     comments = relationship(Comment, backref="user")
     community_upvotes = relationship(CommunityUpvote, backref="user")
+    followers = relationship(
+        Follower, backref='follow_user', foreign_keys='[Follower.target_id]')
+    followees = relationship(
+        Follower, backref='source_user', foreign_keys='[Follower.source_id]')
 
     def __init__(self,
                  username,
@@ -91,6 +94,7 @@ class User(Base):
         now = dt.now().isoformat()  # Current Time to Insert into Datamodels
         self.date_created = now
         self.date_modified = now
+        self.active = True
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -102,7 +106,7 @@ class User(Base):
         return self.role == 'admin'
 
     def in_community(self, community):
-        return s.query(CommunityUser).filter_by(community_id=community.id, user_id=self.id).count() == 1
+        return session.query(CommunityUser).filter_by(community_id=community.id, user_id=self.id).count() == 1
 
     def viewable_by(self, _):
         return True
@@ -116,6 +120,7 @@ class User(Base):
     def destroyable_by(self, user):
         return self == user or user.is_admin()
 
+    @property
     def avatar(self):
         if self.profile_image:
             return self.profile_image
@@ -202,7 +207,6 @@ class User(Base):
     def get_knee(self, invalidate=False):
         def updateKneeCount():
             kneeCount = 0
-            allPosts = session.query(Post).filter_by(user_id=self.id).all()
             for post in self.posts:
                 if (post.total_upvotes - 1) > 0:
                     kneeCount += 1
@@ -234,6 +238,14 @@ class User(Base):
     def is_anonymous(self):
         return False
 
+    @property
+    def communities(self):
+        return list(map(lambda x: x.community, self.community_users))
+
+    @property
+    def community_ids(self):
+        return list(map(lambda x: x.community_id, self.community_users))
+
     def get_id(self):
         try:
             return unicode(self.id)  # python 2
@@ -258,15 +270,38 @@ class User(Base):
     def vote_for_community(self, community):
         # First we want to make sure that this user
         # hasn't yet voted for this community
-        upvoteCount = s.query(CommunityUpvote).filter_by(
+        upvoteCount = session.query(CommunityUpvote).filter_by(
             user_id=self.id,
             community_id=community.id).count()
         if upvoteCount == 0:  # Has not voted
             newUpvote = CommunityUpvote(self, community)
-            s.add(newUpvote)
-            s.commit()
+            session.add(newUpvote)
+            session.commit()
         else:
             flash("You have already voted for this community")
+
+    def get_communities(self):
+        communities = []
+
+        for cu in self.community_users:
+            communities.append(cu.community)
+
+        return communities
+
+    def has_upvoted_post(self, post):
+        return session.query(PostUpvote).filter_by(
+            post_id=post.id,
+            user_id=self.id).count() == 1
+
+    def has_reported_post(self, post):
+        return session.query(PostReport).filter_by(
+            parent=post,
+            user=self).count() == 1
+
+    def has_followed_user(self, user):
+        return session.query(Follower).filter_by(
+            target_id=user.id,
+            source_id=self.id).count() == 1
 
 
 def update_date_modified(mapper, connection, target):

@@ -2,7 +2,6 @@ from datetime import datetime as dt
 
 from amable import db
 
-from .base import Base
 from .report import Report
 
 from sqlalchemy import event
