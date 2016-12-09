@@ -1765,24 +1765,45 @@ main {
     .btn[disabled]:hover {
       background: #f2f2ee;
       cursor: not-allowed; }
-  .btn--blue {
-    background: #0074D9;
-    color: #fefefe; }
-    .btn--blue:hover {
-      background: #0059a6;
-      color: #fefefe; }
   .btn--red {
     background: #FF4136;
     color: #fefefe; }
     .btn--red:hover {
       background: #ff1103;
       color: #fefefe; }
+  .btn--link--red {
+    color: #FF4136 !important; }
+    .btn--link--red:hover {
+      color: #ff1103 !important; }
   .btn--green {
     background: #2ECC40;
     color: #fefefe; }
     .btn--green:hover {
       background: #25a233;
       color: #fefefe; }
+  .btn--link--green {
+    color: #2ECC40 !important; }
+    .btn--link--green:hover {
+      color: #25a233 !important; }
+  .btn--blue {
+    background: #0074D9;
+    color: #fefefe; }
+    .btn--blue:hover {
+      background: #0059a6;
+      color: #fefefe; }
+  .btn--link--blue {
+    color: #0074D9 !important; }
+    .btn--link--blue:hover {
+      color: #0059a6 !important; }
+  .btn--link {
+    background: none;
+    color: #0074D9;
+    display: inline;
+    padding: 0;
+    border-radius: 0; }
+    .btn--link:hover {
+      background: none;
+      color: #0059a6; }
   .btn--small {
     font-size: 0.8em;
     line-height: 1rem; }
@@ -1802,6 +1823,9 @@ main {
     background: #FFDC00; }
   .flash--error {
     background: #FF4136; }
+
+.form--inline {
+  display: inline-block; }
 
 .form__label, .form label {
   display: block;

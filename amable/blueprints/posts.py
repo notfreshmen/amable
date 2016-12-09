@@ -217,6 +217,12 @@ def report_post():
                             permalink=post.community.permalink))
 
 
+@posts.route('/posts/<id>', methods=['GET'])
+def show(id):
+    post = s.query(Post).filter_by(id=id).first()
+
+    return render_template('show.html', post=post)
+
 @posts.route('/posts/<id>/view', methods=['GET'])
 @login_required
 def html_view(id):
