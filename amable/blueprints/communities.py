@@ -10,6 +10,7 @@ from amable import session, app
 from amable.models.community import Community
 from amable.models.community_user import CommunityUser
 from amable.models.post import Post
+from amable.models.post_report import PostReport
 from amable.models.community_upvote import CommunityUpvote
 
 from amable.forms.community_search_form import CommunitySearchForm
@@ -214,3 +215,19 @@ def create():
         return redirect(url_for('communities.show', permalink=community.permalink))
 
     return redirect(url_for('communities.new'))
+
+
+@communities.route('/communities/<permalink>/reports')
+def reports(permalink):
+    community = session.query(Community).filter_by(permalink=permalink).first()
+
+    reports = session.query(PostReport).all()
+    post_array = []
+
+    for x in range(0, len(reports)):
+        post_array.append(session.query(Post).filter_by(id=reports[x].parent_id).all())
+
+    post_array = [val for sublist in post_array for val in sublist]
+    post_array = list(set(post_array))
+
+    return render_template('communities/reports.html', community=community, reports=reports, post_array=post_array)
