@@ -210,32 +210,24 @@ def create():
         # community.banner_url = banner_url
         # community.thumbnail_url = thumbnail_url
         community.vote(current_user)
-        session.commit()    
+        session.commit()
 
         return redirect(url_for('communities.show', permalink=community.permalink))
 
     return redirect(url_for('communities.new'))
 
- 
+
 @communities.route('/communities/<permalink>/reports')
 def reports(permalink):
     community = session.query(Community).filter_by(permalink=permalink).first()
-   
+
     reports = session.query(PostReport).all()
     post_array = []
+
     for x in range(0, len(reports)):
         post_array.append(session.query(Post).filter_by(id=reports[x].parent_id).all())
-    
-    
+
     post_array = [val for sublist in post_array for val in sublist]
     post_array = list(set(post_array))
- 
-        
 
-    #post_array = list(map(lambda report: session.query(Post).filter_by(id=report.parent_id), reports).all())
-        
-   # post_reports = session.query(Post.community_id, Post.community_id).filter(Post.community_id).group_by(Post.community_id).subquery()
-    #report_text = session.query(Post.text_long).filter(Post.community_id == post_reports)
     return render_template('communities/reports.html', community=community, reports=reports, post_array=post_array)
-
- 
