@@ -11,6 +11,8 @@ from amable.forms.post_create_form import PostCreateForm
 from amable import session
 
 from amable.services.feed_service import FeedService
+from ..forms.login_form import LoginForm
+
 
 base = Blueprint('base', __name__, template_folder='../templates/base')
 
@@ -36,8 +38,10 @@ def index():
             feed_type = 'top'
 
         return render_template('index.html', posts=posts, form=form, feed=service, feed_type=feed_type)
-
-    return render_template('index.html')
+    login_form = LoginForm()
+    return render_template('index.html',
+                           form=login_form,
+                           title="Amable - Login")
 
 
 @base.route('/ui')
