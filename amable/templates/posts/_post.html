@@ -39,7 +39,7 @@
             <span>
               <form class="form form--inline" action="/posts/{{ post.id }}/destroy" method="post">
                 <input type="hidden" name="redirect_to" value="{{ request.path }}"/>
-                <button class="btn btn--link btn--link--red" type="submit">Delete</button>
+                <button class="btn btn--link btn--link--red btn--delete" type="submit">Delete</button>
               </form>
             </span>
           {% endif %}
@@ -169,4 +169,5 @@
     </div>
   </aside>
   </article>
+
 {% endif %}
