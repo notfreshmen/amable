@@ -25,7 +25,7 @@ def index():
 
         service = FeedService(user=current_user)
 
-        if request.args.get('feed') is None or request.args.get('feed') is 'communities':
+        if request.args.get('feed') is None or request.args.get('feed') == 'communities':
             posts = service.communities()
             feed_type = 'communities'
         elif request.args.get('feed') == 'users':
