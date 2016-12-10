@@ -108,35 +108,33 @@ $(function () {
     }
   })
 
-  $('.reply_post').click(function (r) {
-    // Don't scroll to top of screen
-    r.preventDefault()
+  $('.js-toggle-post-comment').click(function (e) {
+    e.preventDefault()
 
-    // Get the target of the click (element)
-    var clickedElement = r.target
-    var formElement = $('#reply_to_post_' + clickedElement.id.split('_')[3] + '_form')
+    var button = $(this)
+    var postID = $(this).data('post-id')
+    var form = $('form[data-post-id="' + postID + '"][data-action="comment"]')
 
-    // Lets create our form!
-    if (formElement.is(':visible')) {
-      formElement.hide()
+    if (form.is(':visible')) {
+      form.hide()
     } else {
-      formElement.show()
+      form.show()
     }
   })
 
-  $('.report_post').click(function (r) {
-    // Don't scroll to top of screen
-    r.preventDefault()
+  $('.js-toggle-post-report').click(function (e) {
+    e.preventDefault()
 
-    // Get the target of the click (element)
-    var clickedElement = r.target
-    var formElement = $('#report_post_' + clickedElement.id.split('_')[2] + '_form')
+    var button = $(this)
+    var postID = $(this).data('post-id')
+    // var form = $('#report_post_' + clickedElement.id.split('_')[2] + '_form')
+    var form = $('form[data-post-id="' + postID + '"][data-action="report"]')
 
     // Lets create our form!
-    if (formElement.is(':visible')) {
-      formElement.hide()
+    if (form.is(':visible')) {
+      form.hide()
     } else {
-      formElement.show()
+      form.show()
     }
   })
 

@@ -2167,12 +2167,30 @@ main {
       color: #b0b098; }
       .post__actions a:hover {
         color: #9a9a7b; }
+    .post__actions span + span:before {
+      content: '\2022';
+      padding: 0 0.3rem; }
   .post__date i {
     margin-right: 3px;
     position: relative;
     top: 1px; }
   .post .avatar {
     max-width: 80%; }
+
+.comment {
+  border-left: 5px solid #f2f2ee;
+  font-size: 0.8rem;
+  padding-left: 1rem;
+  margin-top: 0.5rem; }
+  .comment > .comment {
+    margin-left: 1rem; }
+  .comment__author span {
+    color: #b0b098; }
+  .comment__actions {
+    color: #b0b098; }
+    .comment__actions span + span:before {
+      content: '\2022';
+      padding: 0 0.3rem; }
 
 .dashboard__header {
   max-width: 100%;

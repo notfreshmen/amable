@@ -13,6 +13,7 @@ from amable.models.community import Community
 
 from amable.forms.post_create_form import PostCreateForm
 from amable.forms.post_report_form import PostReportForm
+from amable.forms.comment_create_form import CommentCreateForm
 
 from amable.services.feed_service import FeedService
 
@@ -221,7 +222,7 @@ def report_post():
 def show(id):
     post = s.query(Post).filter_by(id=id).first()
 
-    return render_template('show.html', post=post)
+    return render_template('show.html', post=post, comment_form=CommentCreateForm(), report_form=PostReportForm())
 
 @posts.route('/posts/<id>/view', methods=['GET'])
 @login_required
