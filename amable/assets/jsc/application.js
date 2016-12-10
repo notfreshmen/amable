@@ -180,9 +180,6 @@ $(function () {
   $('.dashboard__form textarea').on('focus', function () {
     $(this).addClass('expanded')
     $(this).parent().siblings('.form__group--footer').removeClass('hidden')
-  }).on('blur', function () {
-    $(this).removeClass('expanded')
-    $(this).parent().siblings('.form__group--footer').addClass('hidden')
   })
 
   $('.btn--delete').on('click', function (e) {
