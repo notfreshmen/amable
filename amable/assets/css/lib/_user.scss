@@ -21,6 +21,17 @@
         @include span(last 19 of 24);
       }
     }
+
+    &__details {
+      border-bottom: 1px solid $color-grey-light;
+      margin-bottom: rhythm(0.5);
+      padding-bottom: rhythm(0.5);
+
+      @media (max-width: $breakpoint) {
+        border: none;
+        margin-bottom: 0;
+      }
+    }
   }
 
   &__name {
@@ -35,15 +46,7 @@
 
   &__bio {
     color: $color-text-light;
-    border-bottom: 1px solid $color-grey-light;
     font-size: $font-size-n1;
-    margin-bottom: rhythm(0.5);
-    padding-bottom: rhythm(0.5);
-
-    @media (max-width: $breakpoint) {
-      border: none;
-      margin-bottom: 0;
-    }
   }
 
   &__username {

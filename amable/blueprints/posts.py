@@ -84,8 +84,10 @@ def feed():
     else:
         page = 0
 
-    if request.args.get('top'):
+    if request.args.get('feed') == 'top':
         posts = list(map(lambda post: render_template('html_view.html', post=post), service.top(page=page)))
+    elif request.args.get('feed') == 'users':
+        posts = list(map(lambda post: render_template('html_view.html', post=post), service.users(page=page)))
     else:
         posts = list(map(lambda post: render_template('html_view.html', post=post), service.communities(page=page)))
 

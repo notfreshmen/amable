@@ -1873,6 +1873,13 @@ main {
   margin: 2rem auto;
   max-width: 50%; }
 
+.form__search {
+  width: 15%;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out; }
+  .form__search:focus {
+    width: 100%; }
+
 .avatar {
   max-width: 100%;
   border-radius: 50%; }
@@ -1988,6 +1995,14 @@ main {
           float: right;
           padding-left: 0.41667%;
           padding-right: 0.41667%; } }
+    .user__sidebar__details {
+      border-bottom: 1px solid #f2f2ee;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem; }
+      @media (max-width: 870px) {
+        .user__sidebar__details {
+          border: none;
+          margin-bottom: 0; } }
   .user__name {
     font-size: 1.5em;
     font-weight: 700;
@@ -1997,14 +2012,7 @@ main {
         margin-top: 0; } }
   .user__bio {
     color: #2b2b2b;
-    border-bottom: 1px solid #f2f2ee;
-    font-size: 0.8em;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem; }
-    @media (max-width: 870px) {
-      .user__bio {
-        border: none;
-        margin-bottom: 0; } }
+    font-size: 0.8em; }
   .user__username {
     color: #b0b098;
     font-size: 1.15em; }

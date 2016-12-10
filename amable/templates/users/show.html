@@ -4,18 +4,20 @@
     <aside class="user__sidebar">
       <div class="user__sidebar__image">
         <img class="user__avatar avatar" src="{{ user.profile_image }}"><br>
-        {% if current_user != user %}
-          {% if current_user.has_followed_user(user) %}
-          <button id="unfollow_{{user.id}}" class='follow_user'>Unfollow</button>
-          {% else %}
-          <button id="follow_{{user.id}}" class='follow_user'>Follow</button>
-          {% endif %}
-        {% endif %}
       </div>
       <div class="user__sidebar__details">
         <h1 class="user__name">{{ user.name }}</h1>
         <h3 class="user__username">@{{ user.username }}</h3>
         <p class="user__bio">{% if user.bio %}{{ user.bio }}{% endif %}</p>
+        {% if current_user != user %}
+          <p>
+            {% if current_user.has_followed_user(user) %}
+              <button id="unfollow_{{user.id}}" class='btn btn--small follow_user'>Unfollow</button>
+            {% else %}
+              <button id="follow_{{user.id}}" class='btn btn--small follow_user'>Follow</button>
+            {% endif %}
+          </p>
+        {% endif %}
       </div>
       <ul class="user__info">
         {% if user.location %}<li><i class="ss-icon">location</i> {{ user.location }}</li>{% endif %}
