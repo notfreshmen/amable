@@ -106,8 +106,8 @@
         <article class="comment">
           <header class="comment__header">
             <h3 class="comment__author">
-              <a href="{{ url_for('users.show', username=post.user.username) }}">{{ post.user.name }}
-                <span>@{{ post.user.username }}</span>
+              <a href="{{ url_for('users.show', username=post.user.username) }}">{{ comment.user.name }}
+                <span>@{{ comment.user.username }}</span>
               </a>
             </h3>
           </header>
