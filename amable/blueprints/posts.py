@@ -224,6 +224,7 @@ def show(id):
 
     return render_template('show.html', post=post, comment_form=CommentCreateForm(), report_form=PostReportForm())
 
+
 @posts.route('/posts/<id>/view', methods=['GET'])
 @login_required
 def html_view(id):

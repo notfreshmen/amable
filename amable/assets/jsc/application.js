@@ -111,7 +111,6 @@ $(function () {
   $('.js-toggle-post-comment').click(function (e) {
     e.preventDefault()
 
-    var button = $(this)
     var postID = $(this).data('post-id')
     var form = $('form[data-post-id="' + postID + '"][data-action="comment"]')
 
@@ -125,7 +124,6 @@ $(function () {
   $('.js-toggle-post-report').click(function (e) {
     e.preventDefault()
 
-    var button = $(this)
     var postID = $(this).data('post-id')
     // var form = $('#report_post_' + clickedElement.id.split('_')[2] + '_form')
     var form = $('form[data-post-id="' + postID + '"][data-action="report"]')
