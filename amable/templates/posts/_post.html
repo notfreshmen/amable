@@ -146,27 +146,27 @@
   </div>
   <aside class="post__right">
     <div class="score">
-    <span class="score__action">
-    {% if current_user.is_authenticated %}
-    <a id="post_upvote_{{ post.id }}" class="post_upvote" href="#">
-    {% if current_user.is_authenticated %}
-    {% if current_user.has_upvoted_post(post) %}
-    <i style="color:green" id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
-    {% else %}
-    <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
-    {% endif %}
-    {% else %}
-    <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
-    {% endif %}
-    </a>
-    {% else %}
-    <a id="post_upvote_{{ post.id }}" class="post_upvote" href="#" disabled>
-    <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
-    </a>
-    {% endif %}
-    </span>
+      <span class="score__action">
+        {% if current_user.is_authenticated %}
+          <a id="post_upvote_{{ post.id }}" class="post_upvote" href="#">
+          {% if current_user.is_authenticated %}
+            {% if current_user.has_upvoted_post(post) %}
+              <i style="color:green" id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+            {% else %}
+              <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+            {% endif %}
+          {% else %}
+            <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+          {% endif %}
+          </a>
+        {% else %}
+          <a id="post_upvote_{{ post.id }}" class="post_upvote" href="#" disabled>
+            <i id="upvote_icon_{{ post.id }}" class="ss-icon ">up</i>
+          </a>
+        {% endif %}
+      </span>
     <span id="upvote_number_{{ post.id }}" class="score__number">{{ post.post_upvotes | length }}</span>
     </div>
-  </aside><br><br>
+  </aside>
   </article>
 {% endif %}
