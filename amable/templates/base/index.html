@@ -24,6 +24,7 @@
           <nav class="nav--side">
             <ul>
               <li class="{% if feed_type == 'communities' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='communities') }}">Communities</a></li>
+              <li class="{% if feed_type == 'users' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='users') }}">Users</a></li>
               <li class="{% if feed_type == 'top' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='top') }}">Top</a></li>
             </ul>
           </nav>
@@ -44,5 +45,19 @@
     <div class="content">
       <p>Welcome to Amable!</p>
     </div>
+    <form class="form form--center" method="POST" action="/sessions/create">
+      {{form.hidden_tag()}}
+      <div class="form__group">
+        <label class="form__label">Email</label>
+        {{form.email}}
+      </div>
+      <div class="form__group">
+        <label class="form__label">Password</label>
+        {{form.password}}
+      </div>
+      <div class="form__group">
+        <button class="btn btn--blue" type="submit">Login</button>
+      </div>
+    </form>
   {% endif %}
 {% endblock %}

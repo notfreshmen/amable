@@ -56,6 +56,13 @@
         color: darken($color-grey-darkest, 10%);
       }
     }
+
+    span + span {
+      &:before {
+        content: '\2022';
+        padding: 0 rhythm(0.15);
+      }
+    }
   }
 
   &__date {

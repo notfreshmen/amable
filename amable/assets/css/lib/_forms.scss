@@ -1,10 +1,14 @@
 .form {
+  &--inline {
+    display: inline-block;
+  }
+
   &__label, label {
     display: block;
     font-size: $font-size-n1;
   }
 
-  &__control, input {
+  &__control:not([type="checkbox"]), input:not([type="checkbox"]) {
     border: 1px solid $color-grey;
     border-radius: 2px;
     box-sizing: border-box;
@@ -16,6 +20,7 @@
     outline: none;
     padding: rhythm(0.25);
     width: 100%;
+
 
     &:focus {
       border-color: $color-grey-darkest;
@@ -56,6 +61,16 @@
         margin: rhythm(1) auto;
         max-width: 50%;
 
+    }
+  }
+  
+  &__search{
+    width: 15%;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;    
+    
+    &:focus{
+      width: 100%
     }
   }
 }

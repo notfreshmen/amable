@@ -27,6 +27,18 @@ class FeedService:
 
         return list(query)
 
+    def users(self, page=0, per_page=25):
+        query = s.query(Post)
+
+        following_ids = list(map(lambda follower: follower.target_id, self.user.followees))
+
+        query = query.filter(Post.user_id.in_(following_ids)) \
+                     .order_by(Post.date_created) \
+                     .offset(page * per_page) \
+                     .limit(per_page)
+
+        return list(query)
+
     def top(self, page=0, per_page=25):
         upvote_counts = s.query(PostUpvote.post_id, func.count(PostUpvote.id).label('count')) \
                          .group_by(PostUpvote.id) \

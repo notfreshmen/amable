@@ -26,33 +26,51 @@
     }
   }
 
-  &--blue {
-    background: $color-blue;
-    color: $color-white;
+  $button_colors: (
+    red: (
+      light: $color-red,
+      dark: $color-red-dark
+    ),
+    green: (
+      light: $color-green,
+      dark: $color-green-dark
+    ),
+    blue: (
+      light: $color-blue,
+      dark: $color-blue-dark
+    )
+  );
 
-    &:hover {
-      background: $color-blue-dark;
+  @each $name, $colors in $button_colors {
+    &--#{$name} {
+      background: map-get($colors, light);
       color: $color-white;
+
+      &:hover {
+        background: map-get($colors, dark);
+        color: $color-white;
+      }
+    }
+
+    &--link--#{$name} {
+      color: map-get($colors, light) !important;
+
+      &:hover {
+        color: map-get($colors, dark) !important;
+      }
     }
   }
 
-  &--red {
-    background: $color-red;
-    color: $color-white;
+  &--link {
+    background: none;
+    color: $color-blue;
+    display: inline;
+    padding: 0;
+    border-radius: 0;
 
     &:hover {
-      background: $color-red-dark;
-      color: $color-white;
-    }
-  }
-
-  &--green {
-    background: $color-green;
-    color: $color-white;
-
-    &:hover {
-      background: $color-green-dark;
-      color: $color-white;
+      background: none;
+      color: $color-blue-dark;
     }
   }
 
