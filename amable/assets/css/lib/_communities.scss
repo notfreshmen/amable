@@ -5,31 +5,65 @@
 
   &__header {
     border-bottom: 1px solid $color-grey-darkest;
-    padding-bottom: rhythm(0.5);
+    padding-bottom: rhythm(1);
+    margin-bottom: rhythm(0.5);
+    text-align: center;
+
+    h2 {
+      font-size: $font-size-2;
+      font-weight: $font-weight-medium;
+      margin-bottom: rhythm(0.25);
+    }
+
+    p {
+      display: block;
+      max-width: 50%;
+      margin: 0 auto rhythm(0.5) auto;
+    }
+  }
+
+  &__search {
     margin-bottom: rhythm(0.5);
   }
 
-  &__community {
-    @include span(11 of 24);
+  &__communities {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 
-    background: $color-grey;
+  &__community {
+    border: 1px solid $color-grey;
     background-size: cover;
     background-blend-mode: screen;
-    margin-bottom: rhythm(1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: rhythm(0.5);
+    // float: left;
     text-align: center;
+    vertical-align: top;
+    width: calc(50% - #{rhythm(0.25)});
+    padding: rhythm(1) 0;
 
-    &:nth-child(2n + 2) {
-      @include omega;
+    &:hover {
+      border-color: $color-grey-dark;
     }
 
-    a {
-      color: $color-text;
+    div {
       display: block;
-      padding: rhythm(1) 0;
     }
 
     h3 {
       font-weight: $font-weight-medium;
+    }
+
+    p {
+      margin-bottom: rhythm(0.25)
+    }
+
+    &:nth-child(2n+2) {
+      float: right;
     }
   }
 }

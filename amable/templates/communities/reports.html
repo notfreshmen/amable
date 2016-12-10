@@ -1,0 +1,12 @@
+{% extends "application.html" %}
+{% block content %}
+   
+    <div>
+        <p>
+        {% for post in post_array %}
+                {% include "posts/_post.html"%}
+        {% endfor %}
+        </p>
+    </div>
+    
+{% endblock %}

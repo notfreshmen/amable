@@ -15,14 +15,14 @@ s = session()
 with context('amable.models'):
     with before.each:
         self.community_user = CommunityUserFactory()
-        s.add(self.community_user)
-        s.commit()
+        session.add(self.community_user)
+        session.commit()
 
     with after.all:
-        s.query(CommunityUser).delete()
-        s.query(Community).delete()
-        s.query(User).delete()
-        s.commit()
+        session.query(CommunityUser).delete()
+        session.query(Community).delete()
+        session.query(User).delete()
+        session.commit()
 
     with context('community_user'):
         with context('CommunityUser'):

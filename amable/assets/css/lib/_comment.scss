@@ -1,0 +1,27 @@
+.comment {
+  border-left: 5px solid $color-grey-light;
+  font-size: 0.8rem;
+  padding-left: rhythm(0.5);
+  margin-top: rhythm(0.25);
+
+  & > .comment {
+    margin-left: rhythm(0.5);
+  }
+
+  &__author {
+    span {
+      color: $color-grey-darkest;
+    }
+  }
+
+  &__actions {
+    color: $color-grey-darkest;
+
+    span + span {
+      &:before {
+        content: '\2022';
+        padding: 0 rhythm(0.15);
+      }
+    }
+  }
+}

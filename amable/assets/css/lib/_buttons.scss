@@ -17,23 +17,60 @@
     box-shadow: inset 0 0 3px rgba($color-black, 0.1);
   }
 
-  &--blue {
-    background: $color-blue;
-    color: $color-white;
+  &[disabled] {
+    opacity: 0.75;
 
     &:hover {
-      background: $color-blue-dark;
-      color: $color-white;
+      background: $color-grey-light;
+      cursor: not-allowed;
     }
   }
 
-  &--red {
-    background: $color-red;
-    color: $color-white;
+  $button_colors: (
+    red: (
+      light: $color-red,
+      dark: $color-red-dark
+    ),
+    green: (
+      light: $color-green,
+      dark: $color-green-dark
+    ),
+    blue: (
+      light: $color-blue,
+      dark: $color-blue-dark
+    )
+  );
+
+  @each $name, $colors in $button_colors {
+    &--#{$name} {
+      background: map-get($colors, light);
+      color: $color-white;
+
+      &:hover {
+        background: map-get($colors, dark);
+        color: $color-white;
+      }
+    }
+
+    &--link--#{$name} {
+      color: map-get($colors, light) !important;
+
+      &:hover {
+        color: map-get($colors, dark) !important;
+      }
+    }
+  }
+
+  &--link {
+    background: none;
+    color: $color-blue;
+    display: inline;
+    padding: 0;
+    border-radius: 0;
 
     &:hover {
-      background: $color-red-dark;
-      color: $color-white;
+      background: none;
+      color: $color-blue-dark;
     }
   }
 

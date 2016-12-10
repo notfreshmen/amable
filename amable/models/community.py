@@ -6,8 +6,11 @@ from slugify import slugify
 
 from .base import Base
 
+from flask_login import current_user
+
 from sqlalchemy import event, func
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from .post import Post
 from .community_user import CommunityUser
@@ -38,11 +41,11 @@ class Community(Base):
             self,
             name,
             description,
-            banner_url,
-            thumbnail_url,
             nsfw,
-            active,
+            banner_url="",
+            thumbnail_url="",
             permalink=None,
+            active=False,
     ):
         self.name = name
         self.description = description
@@ -57,7 +60,7 @@ class Community(Base):
             candidate = slugify(self.name)
 
             count = s.query(Community).filter(
-                Community.permalink.like(candidate)).count()
+                Community.permalink.like(candidate + '%')).count()
 
             if count == 0:
                 self.permalink = candidate
@@ -83,14 +86,21 @@ class Community(Base):
             'date_created': self.date_created,
         }
 
+    def upvoted_by(self, user):
+        if user:
+            num_upvotes = session.query(CommunityUpvote).filter_by(
+                user_id=user.id, community_id=self.id).count()
+            return num_upvotes >= 1
+        else:
+            return False
+
     @property
     def is_active(self):
         if self.active is True:
             return True
         else:
             # Let's see if the community has enough upvotes
-            upvote_count = s.query(CommunityUpvote).filter_by(
-                community_id=self.id).count()
+            upvote_count = self.queryNumUpvotes()
 
             if upvote_count >= 10:
                 self.active = True
@@ -120,6 +130,35 @@ class Community(Base):
 
     def destroyable_by(self, user):
         return user.is_admin()
+
+    def queryNumUpvotes(self):
+        return s.query(CommunityUpvote).filter_by(
+            community_id=self.id).count()
+
+    def vote(self, user):
+        # First lets make sure the user hasn't voted
+        # for this community yet
+        voteCount = session.query(CommunityUpvote).filter_by(
+            user_id=user.id, community_id=self.id).count()
+
+        if voteCount == 0:
+            newUpvote = CommunityUpvote(user, self)
+            session.add(newUpvote)
+            session.commit()
+
+            if self.queryNumUpvotes() >= 10:
+                self.active = True
+
+            session.commit()
+            return True
+        else:
+            return False
+
+    def set_default_banner(self):
+        self.banner_url = "http://dsedutech.org/images/demo/placement_banner1.jpg"
+
+    def set_default_thumbnail(self):
+        self.thumbnail_url = 'http://i.imgur.com/7mo7QHW.gif'
 
 
 def update_date_modified(mapper, connection, target):

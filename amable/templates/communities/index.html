@@ -2,17 +2,22 @@
 {% block content %}
   <div class="communities">
     <header class="communities__header">
-      <form class="communities__search">
-        {{ form.csrf_token }}
-        <input class="form__control form__control--large" placeholder="Search...">
-      </form>
+      <h2>Communities</h2>
+      <p>Find a community to share your kindness in! If you can't find one that matches a group you want to share with, go ahead and petition to start a new one!</p>
+      <a class="btn btn--blue btn--small" href="{{ url_for('communities.new') }}">Petition for Your Community</a>
     </header>
+    <form class="communities__search">
+      {{ form.csrf_token }}
+      <input class="form__control form__control--large" placeholder="Search...">
+    </form>
     <div class="communities__communities">
       {% for community in communities %}
-        <article class="communities__community visible" {% if community.banner_url %} style="background-image: url({{ community.banner_url }})" {% endif %}>
-          <a href="{{ url_for('communities.show', permalink=community.permalink) }}">
-            <h3>{{ community.name }}</h3>
-          </a>
+        <article class="communities__community visible">
+          <div>
+            <h3><a href="{{ url_for('communities.show', permalink=community.permalink) }}">{{ community.name }}</a></h3>
+            <p>{{ community.description }}</p>
+            {% include "communities/_actions.html" %}
+          </div>
         </article>
       {% endfor %}
     </div>

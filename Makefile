@@ -14,7 +14,7 @@ server:
 	python ./server.py
 
 test:
-	psql -U amable -d amable_test -c 'delete from community_users; delete from post_upvotes; delete from reports; delete from comments; delete from posts; delete from communities; delete from users;'
+	psql -U amable -d amable_test -c 'delete from community_upvotes; delete from community_users; delete from post_upvotes; delete from reports; delete from comments; delete from posts; delete from communities; delete from users;'
 	AMABLE_ENV=test mamba --enable-coverage --format=documentation
 
 lint:
@@ -67,9 +67,18 @@ dbsync:
 	AMABLE_ENV=test python db/manage.py version_control
 	AMABLE_ENV=test python db/manage.py upgrade
 
+	python data_init.py
+
 reinit:
-	psql -U amable -d amable_development -c 'delete from community_users; delete from post_upvotes; delete from reports; delete from comments; delete from posts; delete from communities; delete from users;'
+	psql -U amable -d amable_development -c 'delete from followers; delete from community_upvotes; delete from community_users; delete from post_upvotes; delete from reports; delete from comments; delete from posts; delete from communities; delete from users;'
 	python data_init.py
 
 erd:
 	eralchemy -i postgres://amable:domislove@localhost:5432/amable_development -o docs/erd.pdf
+
+script:
+	@read -p "What is the name of the migration :" script_name; \
+	python db/manage.py script $$script_name;
+
+upgrade:
+	python db/manage.py upgrade

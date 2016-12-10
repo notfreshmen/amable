@@ -12,13 +12,13 @@ s = session()
 with context('amable.models'):
     with before.each:
         self.community = CommunityFactory()
-        s.add(self.community)
-        s.commit()
+        session.add(self.community)
+        session.commit()
 
     with after.all:
-        s.rollback()
-        s.query(Community).delete()
-        s.commit()
+        session.rollback()
+        session.query(Community).delete()
+        session.commit()
 
     with context('community'):
         with context('Community'):
@@ -30,7 +30,6 @@ with context('amable.models'):
                         banner_url='love.png',
                         thumbnail_url='love.png',
                         nsfw=False,
-                        active=True
                     )
 
                     expect(c.name).to(equal('The Love'))
@@ -47,7 +46,6 @@ with context('amable.models'):
                                 banner_url='love.png',
                                 thumbnail_url='love.png',
                                 nsfw=False,
-                                active=True,
                                 permalink='foobar'
                             )
 
@@ -61,7 +59,6 @@ with context('amable.models'):
                                 banner_url='love.png',
                                 thumbnail_url='love.png',
                                 nsfw=False,
-                                active=True
                             )
 
                             expect(c.permalink).to(equal('blah-blah'))
@@ -73,7 +70,6 @@ with context('amable.models'):
                                 banner_url='love.png',
                                 thumbnail_url='love.png',
                                 nsfw=False,
-                                active=True
                             )
 
                             expect(c.permalink).to(contain('the-love-'))

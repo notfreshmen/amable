@@ -17,6 +17,11 @@ from sqlalchemy import create_engine
 # CSRF
 from flask_wtf.csrf import CsrfProtect
 
+# File Uploads
+dire = dirname(__file__)
+UPLOAD_FOLDER = dire + '/uploads'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
 # Cache
 from werkzeug.contrib.cache import MemcachedCache
 cache = MemcachedCache(['127.0.0.1:11211'])
@@ -34,6 +39,7 @@ if env is None:
 app = Flask(__name__)
 app.config.from_envvar('AMABLE_%s_SETTINGS' % env.upper())
 app.secret_key = 'domislove'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # DB setup
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
@@ -41,7 +47,7 @@ session = scoped_session(sessionmaker(bind=engine))
 db = SQLAlchemy(app)
 
 # CSRF setup
-CsrfProtect(app)
+csrf = CsrfProtect(app)
 
 # Login Manager
 login_manager = LoginManager()
@@ -52,15 +58,17 @@ login_manager.login_view = "/login"
 # Blueprints
 from amable.blueprints.base import base
 from amable.blueprints.sessions import sessions
+from amable.blueprints.posts import posts
 from amable.blueprints.communities import communities
 from amable.blueprints.users import users
-
+from amable.blueprints.comments import comments
 
 app.register_blueprint(base)
 app.register_blueprint(sessions)
 app.register_blueprint(communities)
+app.register_blueprint(posts)
 app.register_blueprint(users)
-
+app.register_blueprint(comments)
 
 # Assets
 from amable.utils.assets import assets_env

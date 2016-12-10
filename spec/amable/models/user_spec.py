@@ -1,6 +1,7 @@
 from expects import *
 
 from amable import session
+from amable.utils.password import check_password
 from amable.models.user import User, update_date_modified
 from amable.models.comment import Comment
 from amable.models.post_upvote import PostUpvote
@@ -23,14 +24,18 @@ with context('amable.models'):
     with before.each:
         self.user = UserFactory()
         self.admin = UserFactory(role='admin')
-        s.add(self.user)
-        s.add(self.admin)
-        s.commit()
+        session.add(self.user)
+        session.add(self.admin)
+        session.commit()
 
     with after.all:
-        s.rollback()
-        s.query(User).delete()
-        s.commit()
+        session.rollback()
+        session.query(PostUpvote).delete()
+        session.query(PostReport).delete()
+        session.query(Post).delete()
+        session.query(Community).delete()
+        session.query(User).delete()
+        session.commit()
 
     with context('user'):
         with context('User'):
@@ -120,14 +125,14 @@ with context('amable.models'):
                     com1 = CommentFactory(user=self.user)
                     com2 = CommentFactory(user=self.user)
 
-                    s.commit()
+                    session.commit()
 
                     expect(self.user.get_praying_hands()).to(equal(3))
 
                     # Now we are going to check the cache
                     # Delete a comment and the praying hands should still = 3
-                    s.query(Comment).filter_by(id=com0.id).delete()
-                    s.commit()
+                    session.query(Comment).filter_by(id=com0.id).delete()
+                    session.commit()
 
                     expect(self.user.get_praying_hands()).to(equal(3))
 
@@ -135,11 +140,11 @@ with context('amable.models'):
                     expect(self.user.get_praying_hands(True)).to(equal(2))
 
                     # Cleanup
-                    s.query(Comment).delete()
-                    s.query(PostUpvote).delete()
-                    s.query(Post).delete()
-                    s.query(Community).delete()
-                    s.commit()
+                    session.query(Comment).delete()
+                    session.query(PostUpvote).delete()
+                    session.query(Post).delete()
+                    session.query(Community).delete()
+                    session.commit()
 
             with context('get_halo'):
                 with it('cache and counts'):
@@ -148,14 +153,14 @@ with context('amable.models'):
 
                     com0.post.answered = True
 
-                    s.commit()
+                    session.commit()
 
                     expect(self.user.get_halo()).to(equal(1))
 
                     # Lets make the other comment answered too!
                     # We should still get 1 because of cache
                     com1.post.answered = True
-                    s.commit()
+                    session.commit()
 
                     expect(self.user.get_halo()).to(equal(1))
 
@@ -163,11 +168,11 @@ with context('amable.models'):
                     expect(self.user.get_halo(True)).to(equal(2))
 
                     # Cleanup
-                    s.query(Comment).delete()
-                    s.query(PostUpvote).delete()
-                    s.query(Post).delete()
-                    s.query(Community).delete()
-                    s.commit()
+                    session.query(Comment).delete()
+                    session.query(PostUpvote).delete()
+                    session.query(Post).delete()
+                    session.query(Community).delete()
+                    session.commit()
 
             with context('get_hammer'):
                 with it('cache and counts'):
@@ -181,7 +186,7 @@ with context('amable.models'):
 
                     postR1 = PostReportFactory(post=post0, user=user0)
 
-                    s.commit()
+                    session.commit()
 
                     # Now we can expect get_knee to return 1
                     expect(self.user.get_hammer()).to(equal(1))
@@ -200,11 +205,11 @@ with context('amable.models'):
                     expect(self.user.get_hammer(True)).to(equal(2))
 
                     # Cleanup
-                    s.query(PostReport).delete()
-                    s.query(PostUpvote).delete()
-                    s.query(Post).delete()
-                    s.query(Community).delete()
-                    s.commit()
+                    session.query(PostReport).delete()
+                    session.query(PostUpvote).delete()
+                    session.query(Post).delete()
+                    session.query(Community).delete()
+                    session.commit()
 
             with context('get_knee'):
                 with it('cache and counts'):
@@ -214,7 +219,7 @@ with context('amable.models'):
 
                     pu0 = PostUpvoteFactory(post=post0, user=user0)
 
-                    s.commit()
+                    session.commit()
 
                     expect(self.user.get_knee()).to(equal(1))
 
@@ -222,7 +227,7 @@ with context('amable.models'):
                     user1 = UserFactory()
                     pu1 = PostUpvoteFactory(post=post0, user=user1)
 
-                    s.commit()
+                    session.commit()
 
                     # Should stay the same
                     expect(self.user.get_knee()).to(equal(1))
@@ -231,10 +236,16 @@ with context('amable.models'):
                     expect(self.user.get_knee(True)).to(equal(1))
 
                     # Cleanup
-                    s.query(PostUpvote).delete()
-                    s.query(Post).delete()
-                    s.query(Community).delete()
-                    s.commit()
+                    session.query(PostUpvote).delete()
+                    session.query(Post).delete()
+                    session.query(Community).delete()
+                    session.commit()
+
+            with context('set_password'):
+                with it('changes the password'):
+                    self.user.set_password('foobar')
+
+                    expect(check_password(self.user, 'foobar')).to(be_true)
 
         with context('update_date_modified'):
             with it('updates the date for the user'):

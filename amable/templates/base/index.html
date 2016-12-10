@@ -1,109 +1,63 @@
 {% extends "application.html" %}
 {% block content %}
-  <div class="content">
+  {% if current_user.is_authenticated %}
     <div class="dashboard">
       <header class="dashboard__header">
-        <form class="dashboard__form form">
+        <form class="dashboard__form form" action="{{url_for('posts.create')}}" method="Post">
+          {{ form.csrf_token }}
           <aside>
-            <img src="https://pbs.twimg.com/profile_images/606232291438829568/8liw3txV.jpg" class="avatar">
+            <img src="{{ current_user.avatar }}" class="avatar">
           </aside>
           <section>
             <div class="form__group">
-              <textarea class="form__control" placeholder="What kindness did you experience today?"></textarea>
+              {{ form.text_brief(class_="form__control", placeholder="What kindness did you experience today?") }}
             </div>
-            <div class="form__group--footer">
+            <div class="form__group--footer hidden">
               <button type="submit" class="btn btn--blue btn--small">Post</button>
+              {{ form.community_select(class_="chosen") }}
             </div>
           </section>
         </form>
       </header>
       <div class="dashboard__content">
-        <section class="dashboard__stream stream">
-          <article class="post">
-            <aside class="post__left">
-              <img src="https://pbs.twimg.com/profile_images/606232291438829568/8liw3txV.jpg" class="avatar">
-            </aside>
-            <div class="post__content">
-              <h3 class="post__author"><a href="#">Bill Nye <span>billnye</span></a></h3>
-              <div class="post__text">
-                <p>Billions upon billions the carbon in our apple pies? Consciousness from which we spring concept of the number one, trillion Vangelis cosmic fugue corpus callosum, across the centuries dream of the mind's eye rings of Uranus finite but unbounded Euclid rogue with pretty stories for which there's little good evidence ship of the imagination explorations light years great turbulent clouds paroxysm of global death extraplanetary a billion trillion, two ghostly white figures in coveralls and helmets are soflty dancing a still more glorious dawn awaits consciousness, cosmos a very small stage in a vast cosmic arena globular star cluster colonies. Hydrogen atoms network of wormholes.</p>
-              </div>
-              <footer class="post__actions">
-                <span class="post__date"><i class="ss-icon">clock</i> <a href="#">29 minutes ago</a></span>
-              </footer>
-            </div>
-            <aside class="post__right">
-              <div class="score">
-                <span class="score__action"><a href="#"><i class="ss-icon">up</i></a></span>
-                <span class="score__number">42</span>
-              </div>
-            </aside>
-          </article>
-          <article class="post">
-            <aside class="post__left">
-              <img src="https://pbs.twimg.com/profile_images/606232291438829568/8liw3txV.jpg" class="avatar">
-            </aside>
-            <div class="post__content">
-              <h3 class="post__author"><a href="#">Bill Nye <span>billnye</span></a></h3>
-              <div class="post__text">
-                <p>Billions upon billions the carbon in our apple pies? Consciousness from which we spring concept of the number one, trillion Vangelis cosmic fugue corpus callosum, across the centuries dream of the mind's eye rings of Uranus finite but unbounded Euclid rogue with pretty stories for which there's little good evidence ship of the imagination explorations light years great turbulent clouds paroxysm of global death extraplanetary a billion trillion, two ghostly white figures in coveralls and helmets are soflty dancing a still more glorious dawn awaits consciousness, cosmos a very small stage in a vast cosmic arena globular star cluster colonies. Hydrogen atoms network of wormholes.</p>
-              </div>
-              <footer class="post__actions">
-                <span class="post__date"><i class="ss-icon">clock</i> <a href="#">29 minutes ago</a></span>
-              </footer>
-            </div>
-            <aside class="post__right">
-              <div class="score">
-                <span class="score__action"><a href="#"><i class="ss-icon">up</i></a></span>
-                <span class="score__number">42</span>
-              </div>
-            </aside>
-          </article>
-          <article class="post">
-            <aside class="post__left">
-              <img src="https://pbs.twimg.com/profile_images/606232291438829568/8liw3txV.jpg" class="avatar">
-            </aside>
-            <div class="post__content">
-              <h3 class="post__author"><a href="#">Bill Nye <span>billnye</span></a></h3>
-              <div class="post__text">
-                <p>Billions upon billions the carbon in our apple pies? Consciousness from which we spring concept of the number one, trillion Vangelis cosmic fugue corpus callosum, across the centuries dream of the mind's eye rings of Uranus finite but unbounded Euclid rogue with pretty stories for which there's little good evidence ship of the imagination explorations light years great turbulent clouds paroxysm of global death extraplanetary a billion trillion, two ghostly white figures in coveralls and helmets are soflty dancing a still more glorious dawn awaits consciousness, cosmos a very small stage in a vast cosmic arena globular star cluster colonies. Hydrogen atoms network of wormholes.</p>
-              </div>
-              <footer class="post__actions">
-                <span class="post__date"><i class="ss-icon">clock</i> <a href="#">29 minutes ago</a></span>
-              </footer>
-            </div>
-            <aside class="post__right">
-              <div class="score">
-                <span class="score__action"><a href="#"><i class="ss-icon">up</i></a></span>
-                <span class="score__number">42</span>
-              </div>
-            </aside>
-          </article>
-          <article class="post">
-            <aside class="post__left">
-              <img src="https://pbs.twimg.com/profile_images/606232291438829568/8liw3txV.jpg" class="avatar">
-            </aside>
-            <div class="post__content">
-              <h3 class="post__author"><a href="#">Bill Nye <span>billnye</span></a></h3>
-              <div class="post__text">
-                <p>Billions upon billions the carbon in our apple pies? Consciousness from which we spring concept of the number one, trillion Vangelis cosmic fugue corpus callosum, across the centuries dream of the mind's eye rings of Uranus finite but unbounded Euclid rogue with pretty stories for which there's little good evidence ship of the imagination explorations light years great turbulent clouds paroxysm of global death extraplanetary a billion trillion, two ghostly white figures in coveralls and helmets are soflty dancing a still more glorious dawn awaits consciousness, cosmos a very small stage in a vast cosmic arena globular star cluster colonies. Hydrogen atoms network of wormholes.</p>
-              </div>
-              <footer class="post__actions">
-                <span class="post__date"><i class="ss-icon">clock</i> <a href="#">29 minutes ago</a></span>
-              </footer>
-            </div>
-            <aside class="post__right">
-              <div class="score">
-                <span class="score__action"><a href="#"><i class="ss-icon">up</i></a></span>
-                <span class="score__number">42</span>
-              </div>
-            </aside>
-          </article>
-        </section>
-        <aside class="dashboard__filters">
-
+        <aside class="dashboard__content__filters">
+          <nav class="nav--side">
+            <ul>
+              <li class="{% if feed_type == 'communities' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='communities') }}">Communities</a></li>
+              <li class="{% if feed_type == 'users' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='users') }}">Users</a></li>
+              <li class="{% if feed_type == 'top' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='top') }}">Top</a></li>
+            </ul>
+          </nav>
         </aside>
+        <section class="dashboard__content__feed" data-feed="{{ feed_type }}">
+          <section>
+            {% for post in posts %}
+              {% include "posts/_post.html" %}
+            {% endfor %}
+          </section>
+          <footer>
+            <a class="btn btn--blue btn--small js-load-more" data-next-page="1">Load More</a>
+          </footer>
+        </section>
       </div>
     </div>
-  </div>
+  {% else %}
+    <div class="content">
+      <p>Welcome to Amable!</p>
+    </div>
+    <form class="form form--center" method="POST" action="/sessions/create">
+      {{form.hidden_tag()}}
+      <div class="form__group">
+        <label class="form__label">Email</label>
+        {{form.email}}
+      </div>
+      <div class="form__group">
+        <label class="form__label">Password</label>
+        {{form.password}}
+      </div>
+      <div class="form__group">
+        <button class="btn btn--blue" type="submit">Login</button>
+      </div>
+    </form>
+  {% endif %}
 {% endblock %}

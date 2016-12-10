@@ -1,19 +1,30 @@
 {% extends "application.html" %}
 {% block content %}
 	<div class="community">
-		<header class="community__header" {% if community.banner_url %} style="background-image: url({{ community.banner_url }})" {% endif %}>
+    
+    <li><a href="{{ url_for('communities.reports', permalink=community.permalink) }}">Reports</a></li> 
+   
+		<header class="community__header" {% if community.banner_url %} style="background-image: url(/uploads/{{ community.banner_url }})" {% endif %}>
 			<h2 class="community__name">{{ community.name }}</h2>
+            
 			<p>{{ community.description }}</p>
-			{% if logged_in %}
-				<nav class="community__actions">
-					{% if current_user.in_community(community) %}
-						<button class="btn btn--small">Leave</button>
-					{% else %}
-						<button class="btn btn--blue btn--small">Join</button>
-					{% endif %}
-				</nav>
-			{% endif %}
+			{% include "communities/_actions.html" %}
 		</header>
+		<div id="make_post">
+			<form id="post_create_form" method="POST" action="{{url_for('posts.create')}}">
+				{% if post_form %}
+				{{ post_form.csrf_token }}
+				{{ post_form.community_id }}
+				<div class="form__group">
+				  {{ post_form.text_brief.label }}
+				  {{ post_form.text_brief(class_="form__control") }}
+				</div>
+				<div class="form__group">
+				  <button type="submit" class="btn btn--blue btn--small">Make Post</button>
+				</div>
+				{% endif %}
+			</form>
+		</div>
 		<div class="community__posts">
 			{% for post in posts %}
 				{% include "posts/_post.html" %}

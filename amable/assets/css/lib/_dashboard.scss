@@ -2,37 +2,56 @@
   &__header {
     @include container;
 
-    border-bottom: 1px solid $color-grey-light;
+    border-bottom: 1px solid $color-grey;
     padding-bottom: rhythm(0.5);
   }
 
   &__form {
+    margin: rhythm(0.5);
+
     aside {
-      @include span(2 of 24);
-      @include post(1 of 24);
+      @include span(1 of 24);
     }
 
     section {
-      @include span(last 21 of 24);
+      @include span(last 23 of 24);
     }
 
     textarea {
-      height: rhythm(3);
+      height: rhythm(1.5);
       width: 100%;
+
+      &.expanded {
+        height: rhythm(3);
+      }
+    }
+
+    .avatar {
+      max-width: 80%;
     }
   }
 
   &__content {
     @include container;
 
-    margin-top: rhythm(0.5);
-  }
+    margin: rhythm(0.5);
 
-  &__stream {
-    @include span(20 of 24);
-  }
+    &__filters {
+      @include span(3 of 24);
+      @include post(1 of 24);
+    }
 
-  &__filters {
-    @include span(last 4 of 24);
+    &__feed {
+      @include span(last 20 of 24);
+
+      & > footer {
+        margin-top: rhythm(0.5);
+
+        a {
+          display: block;
+          text-align: center;
+        }
+      }
+    }
   }
 }

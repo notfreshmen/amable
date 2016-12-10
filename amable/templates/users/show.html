@@ -3,16 +3,29 @@
   <div class="user content">
     <aside class="user__sidebar">
       <div class="user__sidebar__image">
-        <img class="user__avatar avatar" src="{{ user.profile_image }}">
+        <img class="user__avatar avatar" src="{{ user.profile_image }}"><br>
       </div>
       <div class="user__sidebar__details">
         <h1 class="user__name">{{ user.name }}</h1>
         <h3 class="user__username">@{{ user.username }}</h3>
         <p class="user__bio">{% if user.bio %}{{ user.bio }}{% endif %}</p>
+        {% if current_user != user %}
+          <p>
+            {% if current_user.has_followed_user(user) %}
+              <button id="unfollow_{{user.id}}" class='btn btn--small follow_user'>Unfollow</button>
+            {% else %}
+              <button id="follow_{{user.id}}" class='btn btn--small follow_user'>Follow</button>
+            {% endif %}
+          </p>
+        {% endif %}
       </div>
       <ul class="user__info">
         {% if user.location %}<li><i class="ss-icon">location</i> {{ user.location }}</li>{% endif %}
         {% if user.website %}<li><i class="ss-icon">globe</i> <a href="{{ user.website }}">{{ user.website }}</a></li>{% endif %}
+        <li><i>🙏</i> {{user.get_praying_hands()}}</li>
+        <li><i>😇</i> {{user.get_halo()}}</li>
+        <li><i>🔨</i> {{user.get_hammer()}}</li>
+        <li><i>🍗</i> {{user.get_knee()}}</li>
       </ul>
     </aside>
     <section class="user__posts posts">
