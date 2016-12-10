@@ -28,6 +28,9 @@ def index():
         if request.args.get('feed') is None or request.args.get('feed') is 'communities':
             posts = service.communities()
             feed_type = 'communities'
+        elif request.args.get('feed') == 'users':
+            posts = service.users()
+            feed_type = 'users'
         else:
             posts = service.top()
             feed_type = 'top'
