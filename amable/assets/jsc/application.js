@@ -181,4 +181,11 @@ $(function () {
     $(this).addClass('expanded')
     $(this).parent().siblings('.form__group--footer').removeClass('hidden')
   })
+
+  $('.btn--delete').on('click', function (e) {
+    var confirmed = window.confirm('Are you sure?')
+    if (!confirmed) {
+      e.preventDefault()
+    }
+  })
 })
