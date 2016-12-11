@@ -24,6 +24,7 @@
           <nav class="nav--side">
             <ul>
               <li class="{% if feed_type == 'communities' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='communities') }}">Communities</a></li>
+              <li class="{% if feed_type == 'users' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='users') }}">Users</a></li>
               <li class="{% if feed_type == 'top' %}selected{% endif %}"><a href="{{ url_for('base.index', feed='top') }}">Top</a></li>
             </ul>
           </nav>

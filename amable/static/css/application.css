@@ -1648,6 +1648,9 @@ a {
 .hidden {
   display: none; }
 
+.test {
+  background-color: yellow; }
+
 .header {
   background: #0074D9;
   color: #fefefe; }
@@ -1831,7 +1834,7 @@ main {
   display: block;
   font-size: 0.8em; }
 
-.form__control, .form input {
+.form__control:not([type="checkbox"]), .form input:not([type="checkbox"]) {
   border: 1px solid #d1d1c3;
   border-radius: 2px;
   box-sizing: border-box;
@@ -1843,9 +1846,9 @@ main {
   outline: none;
   padding: 0.5rem;
   width: 100%; }
-  .form__control:focus, .form input:focus {
+  .form__control:not([type="checkbox"]):focus, .form input:not([type="checkbox"]):focus {
     border-color: #b0b098; }
-  .form__control--right, .form input--right {
+  .form__control:not([type="checkbox"])--right, .form input:not([type="checkbox"])--right {
     float: right; }
 
 .form textarea {
@@ -1872,6 +1875,13 @@ main {
 .form--center .form__group {
   margin: 2rem auto;
   max-width: 50%; }
+
+.form__search {
+  width: 15%;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out; }
+  .form__search:focus {
+    width: 100%; }
 
 .avatar {
   max-width: 100%;
@@ -1988,6 +1998,14 @@ main {
           float: right;
           padding-left: 0.41667%;
           padding-right: 0.41667%; } }
+    .user__sidebar__details {
+      border-bottom: 1px solid #f2f2ee;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem; }
+      @media (max-width: 870px) {
+        .user__sidebar__details {
+          border: none;
+          margin-bottom: 0; } }
   .user__name {
     font-size: 1.5em;
     font-weight: 700;
@@ -1997,14 +2015,7 @@ main {
         margin-top: 0; } }
   .user__bio {
     color: #2b2b2b;
-    border-bottom: 1px solid #f2f2ee;
-    font-size: 0.8em;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem; }
-    @media (max-width: 870px) {
-      .user__bio {
-        border: none;
-        margin-bottom: 0; } }
+    font-size: 0.8em; }
   .user__username {
     color: #b0b098;
     font-size: 1.15em; }
@@ -2058,7 +2069,7 @@ main {
   margin-top: 1rem; }
 
 .community__posts {
-  margin: 2rem; }
+  margin: 2rem 1rem; }
 
 .communities {
   max-width: 100%;
@@ -2205,6 +2216,10 @@ main {
 
 .dashboard__form {
   margin: 1rem; }
+  .dashboard__form:after {
+    content: "";
+    display: table;
+    clear: both; }
   .dashboard__form aside {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;

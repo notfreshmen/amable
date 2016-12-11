@@ -1,28 +1,26 @@
 {% extends "application.html" %}
 {% block content %}
 	<div class="community">
-    
-    <li><a href="{{ url_for('communities.reports', permalink=community.permalink) }}">Reports</a></li> 
-   
 		<header class="community__header" {% if community.banner_url %} style="background-image: url(/uploads/{{ community.banner_url }})" {% endif %}>
 			<h2 class="community__name">{{ community.name }}</h2>
-            
 			<p>{{ community.description }}</p>
 			{% include "communities/_actions.html" %}
 		</header>
 		<div id="make_post">
-			<form id="post_create_form" method="POST" action="{{url_for('posts.create')}}">
-				{% if post_form %}
+			<form class="dashboard__form form" action="{{url_for('posts.create')}}" method="Post">
 				{{ post_form.csrf_token }}
 				{{ post_form.community_id }}
-				<div class="form__group">
-				  {{ post_form.text_brief.label }}
-				  {{ post_form.text_brief(class_="form__control") }}
-				</div>
-				<div class="form__group">
-				  <button type="submit" class="btn btn--blue btn--small">Make Post</button>
-				</div>
-				{% endif %}
+				<aside>
+					<img src="{{ current_user.avatar }}" class="avatar">
+				</aside>
+				<section>
+					<div class="form__group">
+						{{ post_form.text_brief(class_="form__control", placeholder="What kindness did you experience today?") }}
+					</div>
+					<div class="form__group--footer hidden">
+						<button type="submit" class="btn btn--blue btn--small">Post</button>
+					</div>
+				</section>
 			</form>
 		</div>
 		<div class="community__posts">
