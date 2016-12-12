@@ -7,7 +7,7 @@ from amable import session, login_manager
 from ..forms.login_form import LoginForm
 
 from amable.utils.password import check_password
-from amable.utils.misc import flash_errors
+from amable.utils.flash import flash_errors
 
 sessions = Blueprint('sessions', __name__,
                      template_folder='../templates')

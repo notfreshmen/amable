@@ -13,7 +13,7 @@ from amable.models.community import Community
 
 from amable.forms.comment_create_form import CommentCreateForm
 
-from amable.utils.misc import flash_errors
+from amable.utils.flash import flash_errors
 
 import sys
 
