@@ -12,4 +12,5 @@
       <span class="js-community-vote btn btn--blue btn--small" data-id="{{ community.id }}">Vote</span>
     {% endif %}
   {% endif %}
+  <a class="btn btn--small" href="{{ url_for('communities.reports', permalink=community.permalink) }}">Reports</a>
 {% endif %}
