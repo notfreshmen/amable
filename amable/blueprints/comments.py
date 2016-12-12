@@ -13,7 +13,7 @@ from amable.models.community import Community
 
 from amable.forms.comment_create_form import CommentCreateForm
 
-from amable.utils.misc import flash_errors
+from amable.utils.flash import flash_errors
 
 import sys
 
@@ -30,8 +30,6 @@ comments = Blueprint('comments', __name__,
 @comments.route('/comments/new', methods=['POST'])
 @login_required
 def create():
-    pprint("Got to create()")
-    # return render_template('index.html')
     comment = None
     parent_post = None
 
@@ -80,7 +78,6 @@ def create():
                                 permalink=parent_post.community.permalink))
 
     else:
-        pprint(form.errors)
         flash_errors(form)
 
         return redirect(url_for('base.index'))
