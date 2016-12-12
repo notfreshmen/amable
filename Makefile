@@ -53,7 +53,6 @@ psql:
 
 
 dbsync:
-	export PGPASSWORD='domislove'
 
 	# amable_development ~~ Drop->Create->Version Control->InitDB->[INIT DATA]
 	dropdb -U amable amable_development --if-exists
