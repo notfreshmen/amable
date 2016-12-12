@@ -18,6 +18,9 @@ from amable.models.follower import Follower
 from amable.forms.user_create_form import UserCreateForm
 from amable.forms.user_update_form import UserUpdateForm
 
+from amable.forms.comment_create_form import CommentCreateForm
+from amable.forms.post_report_form import PostReportForm
+
 from sqlalchemy import desc
 from sqlalchemy import asc
 
@@ -35,7 +38,7 @@ def show(username):
     posts = session.query(Post).filter_by(user_id=user.id).order_by(
         desc(Post.date_created)).all()
 
-    return render_template('users/show.html', user=user, posts=posts)
+    return render_template('users/show.html', user=user, posts=posts, comment_form=CommentCreateForm(), report_form=PostReportForm())
 
 
 @users.route('/join')

@@ -232,4 +232,4 @@ def show(id):
 def html_view(id):
     post = s.query(Post).filter_by(id=id).first()
 
-    return render_template('html_view.html', post=post)
+    return render_template('html_view.html', post=post, comment_form=CommentCreateForm(), report_form=PostReportForm())
