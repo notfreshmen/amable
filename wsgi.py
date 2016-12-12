@@ -1,6 +1,6 @@
 from amable import app
 
 if __name__ == "wsgi":
-	app.run()
+    app.run()
 else:
-	print("dan jast")
+    print("dan jast")
