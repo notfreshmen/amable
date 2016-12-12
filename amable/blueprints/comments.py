@@ -73,7 +73,7 @@ def create():
 
         print(request.form.get('redirect_to'))
 
-        if request.form.get('redirect_to') != None:
+        if request.form.get('redirect_to') is not None:
             return redirect(request.form.get('redirect_to'))
 
         return redirect(url_for('communities.show',
