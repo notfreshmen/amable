@@ -30,8 +30,6 @@ comments = Blueprint('comments', __name__,
 @comments.route('/comments/new', methods=['POST'])
 @login_required
 def create():
-    pprint("Got to create()")
-    # return render_template('index.html')
     comment = None
     parent_post = None
 
@@ -75,7 +73,6 @@ def create():
                                 permalink=parent_post.community.permalink))
 
     else:
-        pprint(form.errors)
         flash_errors(form)
 
         return redirect(url_for('base.index'))

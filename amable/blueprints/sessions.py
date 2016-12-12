@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, login_required
 from amable.models.user import User
 from amable import session, login_manager
 
-from ..forms.login_form import LoginForm
+from amable.forms.login_form import LoginForm
 
 from amable.utils.password import check_password
 from amable.utils.flash import flash_errors
