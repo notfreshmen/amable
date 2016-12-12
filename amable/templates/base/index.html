@@ -3,18 +3,18 @@
   {% if current_user.is_authenticated %}
     <div class="dashboard">
       <header class="dashboard__header">
-        <form class="dashboard__form form" action="{{url_for('posts.create')}}" method="Post">
-          {{ form.csrf_token }}
+        <form class="dashboard__form form" action="{{ url_for('posts.create') }}" method="post">
+          {{ post_form.csrf_token }}
           <aside>
             <img src="{{ current_user.avatar }}" class="avatar">
           </aside>
           <section>
             <div class="form__group">
-              {{ form.text_brief(class_="form__control", placeholder="What kindness did you experience today?") }}
+              {{ post_form.text_brief(class_="form__control", placeholder="What kindness did you experience today?") }}
             </div>
             <div class="form__group--footer hidden">
               <button type="submit" class="btn btn--blue btn--small">Post</button>
-              {{ form.community_select(class_="chosen") }}
+              {{ post_form.community_select(class_="chosen") }}
             </div>
           </section>
         </form>
@@ -46,14 +46,14 @@
       <p>Welcome to Amable!</p>
     </div>
     <form class="form form--center" method="POST" action="/sessions/create">
-      {{form.hidden_tag()}}
+      {{login_form.hidden_tag()}}
       <div class="form__group">
         <label class="form__label">Email</label>
-        {{form.email}}
+        {{login_form.email}}
       </div>
       <div class="form__group">
         <label class="form__label">Password</label>
-        {{form.password}}
+        {{login_form.password}}
       </div>
       <div class="form__group">
         <button class="btn btn--blue" type="submit">Login</button>

@@ -18,8 +18,7 @@ from sqlalchemy import create_engine
 from flask_wtf.csrf import CsrfProtect
 
 # File Uploads
-dire = dirname(__file__)
-UPLOAD_FOLDER = dire + '/uploads'
+UPLOAD_FOLDER = dirname(__file__) + '/uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 # Cache
@@ -52,7 +51,7 @@ csrf = CsrfProtect(app)
 # Login Manager
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "/login"
+login_manager.login_view = '/login'
 
 
 # Blueprints
