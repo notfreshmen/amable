@@ -61,6 +61,7 @@
 
       {% if comment_form %}
         <form class="form" style="display:none" data-post-id="{{ post.id }}" data-action="comment" id="reply_to_post_{{post.id}}_form" action="/comments/new" method="POST">
+          <input type="hidden" name="redirect_to" value="{{ request.path }}">
           {{ comment_form.csrf_token }}
           {{ comment_form.post(value=post.id) }}
           <div class="form__group">
@@ -123,6 +124,7 @@
           {% if comment_form %}
             <footer class="comment__form">
               <form style="display:none;" id="reply_to_comment_{{comment.id}}_form" action="/comments/new" method="POST" data-comment-id="{{ comment.id }}">
+                <input type="hidden" name="redirect_to" value="{{ request.path }}">
                 {{ comment_form.csrf_token }}
                 {{ comment_form.parent(value=comment.id)}}
                 {{ comment_form.post(value=post.id) }}

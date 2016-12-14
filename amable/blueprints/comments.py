@@ -69,6 +69,11 @@ def create():
         except:
             print("Unexpected Error : %s" % sys.exc_info()[0])
 
+        print(request.form.get('redirect_to'))
+
+        if request.form.get('redirect_to') is not None:
+            return redirect(request.form.get('redirect_to'))
+
         return redirect(url_for('communities.show',
                                 permalink=parent_post.community.permalink))
 
