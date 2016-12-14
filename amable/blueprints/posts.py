@@ -17,7 +17,7 @@ from amable.forms.comment_create_form import CommentCreateForm
 
 from amable.services.feed_service import FeedService
 
-from amable.utils.misc import flash_errors
+from amable.utils.flash import flash_errors
 
 
 posts = Blueprint('posts', __name__, template_folder='../templates/posts')

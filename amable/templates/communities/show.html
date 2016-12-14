@@ -7,7 +7,7 @@
 			{% include "communities/_actions.html" %}
 		</header>
 		<div id="make_post">
-			<form class="dashboard__form form" action="{{url_for('posts.create')}}" method="Post">
+			<form class="dashboard__form form" action="{{ url_for('posts.create') }}" method="post">
 				{{ post_form.csrf_token }}
 				{{ post_form.community_id }}
 				<aside>
