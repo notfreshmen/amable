@@ -146,6 +146,7 @@ $(function () {
       $.getJSON('/follow/' + clickedElement.id.split('_')[1], function (data) {
         if (data.success) {
           clickedElement.innerHTML = 'Unfollow'
+          clickedElement.id = 'unfollow_' + clickedElement.id.split('_')[1]
         } else {
           console.error('Unable to follow user')
         }
@@ -154,6 +155,7 @@ $(function () {
       $.getJSON('/unfollow/' + clickedElement.id.split('_')[1], function (data) {
         if (data.success) {
           clickedElement.innerHTML = 'Follow'
+          clickedElement.id = 'follow_' + clickedElement.id.split('_')[1]
         } else {
           console.error('Unable to unfollow user')
         }
