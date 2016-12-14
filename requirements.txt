@@ -17,6 +17,7 @@ CommonMark
 Flask-WTF
 Flask-Login
 python-slugify
+flask-admin
 
 # documentation
 eralchemy
