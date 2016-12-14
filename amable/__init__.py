@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 # Flask
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 
 # Session|Engine(SQLAlchemy)
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -77,3 +77,31 @@ from amable.utils.filters import time_since
 
 # Base
 from amable.models.base import Base
+
+# Flask Admin
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+admin = Admin(app, name='amable', template_mode='bootstrap3')
+
+
+class MyModelView(ModelView):
+
+    def is_accessible(self):
+        if current_user is not None:
+            return current_user.role == 'admin'
+        else:
+            return False
+
+# Admin Views
+from amable.models.user import User
+from amable.models.post import Post
+from amable.models.comment import Comment
+from amable.models.community import Community
+from amable.models.post_report import PostReport
+from amable.models.follower import Follower
+admin.add_view(MyModelView(User, session))
+admin.add_view(MyModelView(Post, session))
+admin.add_view(MyModelView(Comment, session))
+admin.add_view(MyModelView(Community, session))
+admin.add_view(MyModelView(PostReport, session))
+admin.add_view(MyModelView(Follower, session))
