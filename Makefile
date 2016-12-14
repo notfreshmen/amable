@@ -41,6 +41,11 @@ db_setup:
 	createdb -U amable -h localhost -p 5432 amable_test
 	AMABLE_ENV=test python db/manage.py version_control
 
+production_setup:
+	createdb -U amable -h localhost -p 5432 amable
+	AMABLE_ENV=production python db/manage.py version_control
+	AMABLE_ENV=production python db/manage.py upgrade
+
 version_control:
 	python db/manage.py version_control
 
