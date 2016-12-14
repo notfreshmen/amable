@@ -1,6 +1,5 @@
 from amable import app
 
-if __name__ == "wsgi":
+if __name__ == "__main__":
+    # app.debug = True
     app.run()
-else:
-    print("dan jast")

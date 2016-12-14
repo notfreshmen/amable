@@ -37,7 +37,7 @@ if env is None:
 # App setup
 app = Flask(__name__)
 app.config.from_envvar('AMABLE_%s_SETTINGS' % env.upper())
-app.secret_key = 'domislove'
+app.secret_key = 'SshHUD33J6UwTygB'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # DB setup
